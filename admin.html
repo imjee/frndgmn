@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin - DRC Victory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-iqos">
+        <div class="nav-logo">
+            <img src="images/logo-drc.png" alt="DRC Victory" height="48">
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </nav>
+    <main style="padding-top:75px;">
+        <form id="barangForm" autocomplete="off" class="admin-form">
+            <h2 style="text-align:center;color:#e63946;">Tambah / Edit Produk</h2>
+            <input type="hidden" name="id" value="">
+            <label>Nama Barang:<br>
+                <input type="text" name="nama" required>
+            </label>
+            <label>Deskripsi:<br>
+                <textarea name="deskripsi" required></textarea>
+            </label>
+            <label>Harga:<br>
+                <input type="number" name="harga" required>
+            </label>
+            <label>Foto Barang:<br>
+                <input type="file" name="foto" accept="image/*">
+                <img id="currentFoto" style="display:none;max-width:100px;margin-top:8px;border-radius:6px;">
+            </label>
+            <label>Link Pembelian:<br>
+                <input type="url" name="link" required placeholder="https://...">
+            </label>
+            <label>
+                <input type="checkbox" name="newLaunching"> New Launching
+            </label>
+            <label>
+                <input type="checkbox" name="bestSeller"> Best Seller
+            </label>
+            <button type="submit" id="submitBtn">Tambah Produk</button>
+            <div id="success-message" style="color: #2ecc71; text-align: center; margin-top: 10px;"></div>
+        </form>
+        <div class="barang-admin-list">
+            <h2 style="text-align:center;color:#e63946;margin-top:40px;">Semua Produk</h2>
+            <div id="admin-barang-list" class="produk-list produk-list-iqos"></div>
+            <div id="dashboard-loading" class="loading" style="display:none;">Loading...</div>
+        </div>
+    </main>
+    <footer>
+        <span>© 2025 DRC Victory Racing Exhaust</span>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+    if(!localStorage.getItem('drc_token')) window.location.href="login.html";
+    document.getElementById('logoutBtn').onclick = function() {
+        localStorage.removeItem('drc_token');
+        window.location.href="login.html";
+    }
+    </script>
+</body>
+</html>
