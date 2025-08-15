@@ -1,0 +1,427 @@
+/* Gaya Umum */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  scroll-behavior: smooth;
+  color: #fff;
+  background-color: #000;
+}
+.section {
+  padding: 80px 0;
+  text-align: center;
+}
+.section-iqos {
+  background: linear-gradient(to bottom, #000, #1a1a1a);
+  color: #fff;
+  padding: 100px 0;
+}
+.section-kicker {
+  color: #e63946;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section-title-iqos {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 48px;
+  margin-bottom: 40px;
+}
+.highlight {
+  color: #e63946;
+}
+.red {
+  color: #e63946;
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.loading {
+  font-size: 20px;
+  color: #888;
+  text-align: center;
+  margin: 40px 0;
+}
+.hidden {
+  display: none !important;
+}
+
+/* Navbar */
+.navbar-iqos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  transition: background-color 0.3s ease;
+}
+.nav-logo img {
+  height: 54px;
+}
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+.nav-menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+.nav-menu li a:hover {
+  color: #e63946;
+}
+
+/* Hero Section */
+.hero-iqos {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+}
+.hero-content-iqos {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 20px;
+}
+.hero-logo-iqos {
+  max-height: 100px;
+  margin-bottom: 20px;
+}
+.hero-title-iqos {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 80px;
+  margin: 0;
+  line-height: 1;
+}
+.hero-subtitle-iqos {
+  font-size: 20px;
+  margin-top: 20px;
+  color: #ccc;
+}
+.hero-btn-iqos {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 15px 40px;
+  background-color: #e63946;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.hero-btn-iqos:hover {
+  background-color: #b32a37;
+  transform: translateY(-3px);
+}
+
+/* Produk Section */
+.produk-tabs-iqos {
+  margin-bottom: 40px;
+}
+.produk-tab {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+.produk-tab.active {
+  color: #e63946;
+  border-bottom-color: #e63946;
+}
+.produk-tab:hover {
+  color: #e63946;
+}
+.produk-list-iqos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.produk-card-iqos {
+  background-color: #111;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.produk-card-iqos:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+}
+.produk-card-image-iqos {
+  height: 250px;
+  overflow: hidden;
+}
+.produk-card-image-iqos img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.produk-card-image-iqos img:hover {
+  transform: scale(1.05);
+}
+.produk-card-content-iqos {
+  padding: 20px;
+  text-align: left;
+}
+.produk-card-content-iqos h3 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+.produk-card-content-iqos p {
+  color: #ccc;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.produk-card-content-iqos strong {
+  font-size: 20px;
+  color: #e63946;
+}
+.produk-btn-iqos {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e63946;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+.produk-btn-iqos:hover {
+  background-color: #b32a37;
+}
+
+/* Tentang Section */
+.tentang-content-iqos {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+.tentang-title-iqos {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.tentang-content-iqos p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+.tentang-content-iqos ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.tentang-content-iqos ul li {
+  background-color: #1a1a1a;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+.tentang-content-iqos ul li i {
+  color: #e63946;
+  margin-right: 10px;
+}
+
+/* Footer */
+.footer-iqos {
+  background-color: #000;
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer-container-iqos {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-socials a {
+  color: #fff;
+  font-size: 24px;
+  margin: 0 15px;
+  transition: color 0.3s;
+}
+.footer-socials a:hover {
+  color: #e63946;
+}
+.footer-info {
+  margin-top: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Admin Form */
+.admin-form {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+.admin-form h2 {
+  text-align: center;
+  color: #e63946;
+  margin-bottom: 30px;
+  font-family: 'Bebas Neue', cursive;
+}
+.admin-form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form input[type="url"],
+.admin-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.admin-form input[type="checkbox"] {
+  margin-right: 10px;
+}
+.admin-form button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.admin-form button:hover {
+  background-color: #b32a37;
+}
+.barang-admin-list {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+.barang-admin-list h2 {
+  font-family: 'Bebas Neue', cursive;
+  text-align: center;
+  color: #e63946;
+  margin-bottom: 30px;
+}
+.admin-barang-card {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.admin-barang-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+.admin-barang-card .content {
+  flex-grow: 1;
+}
+.admin-barang-card .content h3 {
+  margin: 0;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 24px;
+}
+.admin-barang-card .actions {
+  display: flex;
+  gap: 10px;
+}
+.admin-barang-card .actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+}
+.btn-edit {
+  background-color: #3498db;
+}
+.btn-hapus {
+  background-color: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-iqos {
+    padding: 10px 20px;
+  }
+  .nav-menu {
+    gap: 15px;
+  }
+  .hero-title-iqos {
+    font-size: 50px;
+  }
+  .produk-list-iqos {
+    grid-template-columns: 1fr;
+  }
+  .tentang-content-iqos ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
