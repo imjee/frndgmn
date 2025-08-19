@@ -10,7 +10,7 @@ body {
   align-items: center;
   background: #000;
   padding: 18px 40px;
-  border-bottom: 2px solid #e63946;
+  border-bottom: 2px solid #e63946; /* merah */
 }
 .nav-logo img { vertical-align: middle; }
 .nav-menu {
@@ -28,10 +28,11 @@ body {
   transition: color .2s;
 }
 .nav-menu li a:hover { color: #e63946; }
+
 .hero {
   position: relative;
   min-height: 420px;
-  background: linear-gradient(120deg, #000 60%, #e63946 100%);
+  background: linear-gradient(120deg, #000 60%, #e63946 100%); /* hitam ke merah */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,8 +52,8 @@ body {
 }
 .hero-kicker {
   display: inline-block;
-  background: #fff;
-  color: #e63946;
+  background: #fff; /* putih */
+  color: #e63946; /* merah */
   font-family: 'Bebas Neue', cursive;
   font-size: 16px;
   letter-spacing: 2px;
@@ -75,8 +76,8 @@ body {
   margin-bottom: 28px;
 }
 .hero-btn {
-  background: #e63946;
-  color: #fff;
+  background: #e63946; /* merah */
+  color: #fff; /* putih */
   font-size: 20px;
   padding: 14px 40px;
   border-radius: 25px;
@@ -88,8 +89,9 @@ body {
   transition: background .2s;
 }
 .hero-btn:hover { background: #fff; color: #e63946; }
+
 .section-kicker {
-  color: #e63946;
+  color: #e63946; /* merah */
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
   letter-spacing: 1.5px;
@@ -104,7 +106,7 @@ body {
   text-align: center;
 }
 .produk-section {
-  background: #000;
+  background: #000; /* hitam */
   padding: 60px 0 40px 0;
 }
 .produk-series-selector {
@@ -114,8 +116,8 @@ body {
   margin-bottom: 18px;
 }
 .series-btn {
-  background: #222;
-  color: #fff;
+  background: #fff; /* putih */
+  color: #e63946; /* merah */
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
   padding: 10px 24px;
@@ -125,8 +127,8 @@ body {
   transition: background .2s, color .2s;
 }
 .series-btn.active, .series-btn:hover {
-  background: #e63946;
-  color: #fff;
+  background: #e63946; /* merah */
+  color: #fff; /* putih */
 }
 .jenis-selector {
   display: flex;
@@ -135,8 +137,8 @@ body {
   margin-bottom: 20px;
 }
 .jenis-btn {
-  background: #fff;
-  color: #e63946;
+  background: #fff; /* putih */
+  color: #e63946; /* merah */
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 16px;
   padding: 8px 20px;
@@ -146,8 +148,8 @@ body {
   transition: background .2s, color .2s;
 }
 .jenis-btn.active, .jenis-btn:hover {
-  background: #e63946;
-  color: #fff;
+  background: #e63946; /* merah */
+  color: #fff; /* putih */
 }
 .produk-searchbar {
   display: flex;
@@ -163,10 +165,12 @@ body {
   border: 2px solid #e63946;
   outline: none;
   width: 220px;
+  background: #fff; /* putih */
+  color: #111;     /* hitam */
 }
 .produk-searchbar button {
-  background: #e63946;
-  color: #fff;
+  background: #e63946; /* merah */
+  color: #fff; /* putih */
   border: 2px solid #e63946;
   border-radius: 0 20px 20px 0;
   padding: 10px 18px;
@@ -183,6 +187,7 @@ body {
   margin-bottom: 4px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  color: #e63946; /* merah */
 }
 .produk-kategori-subtitle {
   font-size: 16px;
@@ -197,12 +202,12 @@ body {
   margin-top: 6px;
 }
 .produk-card {
-  background: #222;
+  background: #222; /* hitam lebih terang */
   border-radius: 14px;
   padding: 22px;
   box-shadow: 0 4px 12px #e6394630;
   text-align: center;
-  border: 2px solid #e63946;
+  border: 2px solid #e63946; /* merah */
   position: relative;
 }
 .produk-img {
@@ -210,7 +215,7 @@ body {
   max-width: 180px;
   border-radius: 10px;
   margin-bottom: 14px;
-  background: #fff;
+  background: #fff; /* putih */
 }
 .produk-card h3 {
   font-family: 'Bebas Neue', cursive;
@@ -220,7 +225,7 @@ body {
 }
 .produk-jenis {
   font-size: 13px;
-  color: #e63946;
+  color: #e63946; /* merah */
   font-family: 'Montserrat', Arial, sans-serif;
   margin-bottom: 8px;
   font-weight: 600;
@@ -233,12 +238,12 @@ body {
 .produk-harga {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 20px;
-  color: #e63946;
+  color: #e63946; /* merah */
   margin-bottom: 18px;
 }
 .produk-btn {
-  background: #e63946;
-  color: #fff;
+  background: #e63946; /* merah */
+  color: #fff; /* putih */
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
   padding: 10px 28px;
@@ -252,8 +257,8 @@ body {
 }
 .produk-btn:hover { background: #fff; color: #e63946; transform: scale(1.05);}
 .tentang-section {
-  background: #111;
-  color: #fff;
+  background: #111; /* hitam */
+  color: #fff; /* putih */
   padding: 50px 0;
   text-align: center;
 }
@@ -264,11 +269,11 @@ body {
 }
 .red { color: #e63946; }
 .footer {
-  background: #000;
-  color: #fff;
+  background: #000; /* hitam */
+  color: #fff; /* putih */
   text-align: center;
   padding: 28px 0 18px 0;
-  border-top: 2px solid #e63946;
+  border-top: 2px solid #e63946; /* merah */
 }
 .footer-logo img {
   margin-bottom: 10px;
@@ -292,7 +297,7 @@ body {
   transition: color .2s;
 }
 .footer-socials a:hover {
-  color: #e63946;
+  color: #e63946; /* merah */
 }
 
 /* Modal Beli */
@@ -313,7 +318,7 @@ body {
   pointer-events: all;
 }
 .modal-beli-card {
-  background: #1a1a1a;
+  background: #1a1a1a; /* hitam */
   border-radius: 18px;
   padding: 36px 28px 28px 28px;
   min-width: 270px;
@@ -372,16 +377,18 @@ body {
   transition: background .2s, color .2s, transform .1s;
 }
 .modal-beli-btn.tokopedia {
-  background: #03AC0E;
+  background: #e63946; /* merah */
   color: #fff;
 }
 .modal-beli-btn.shopee {
-  background: #F53D2D;
-  color: #fff;
+  background: #fff; /* putih */
+  color: #e63946; /* merah */
+  border: 2px solid #e63946;
 }
 .modal-beli-btn.whatsapp {
-  background: #25D366;
-  color: #fff;
+  background: #000; /* hitam */
+  color: #fff; /* putih */
+  border: 2px solid #e63946;
 }
 .modal-beli-btn:hover {
   opacity: .85;
