@@ -1,67 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Admin - DRC Victory</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Admin Panel Produk DRC Victory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar navbar-iqos">
-        <div class="nav-logo">
-            <img src="images/logo-drc.png" alt="DRC Victory" height="48">
-        </div>
-        <ul class="nav-menu">
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="#" id="logoutBtn">Logout</a></li>
-        </ul>
-    </nav>
-    <main style="padding-top:75px;">
-        <form id="barangForm" autocomplete="off" class="admin-form">
-            <h2 style="text-align:center;color:#e63946;">Tambah / Edit Produk</h2>
-            <input type="hidden" name="id" value="">
-            <label>Nama Barang:<br>
-                <input type="text" name="nama" required>
-            </label>
-            <label>Deskripsi:<br>
-                <textarea name="deskripsi" required></textarea>
-            </label>
-            <label>Harga:<br>
-                <input type="number" name="harga" required>
-            </label>
-            <label>Foto Barang:<br>
-                <input type="file" name="foto" accept="image/*">
-                <img id="currentFoto" style="display:none;max-width:100px;margin-top:8px;border-radius:6px;">
-            </label>
-            <label>Link Pembelian:<br>
-                <input type="url" name="link" required placeholder="https://...">
-            </label>
-            <label>
-                <input type="checkbox" name="newLaunching"> New Launching
-            </label>
-            <label>
-                <input type="checkbox" name="bestSeller"> Best Seller
-            </label>
-            <button type="submit" id="submitBtn">Tambah Produk</button>
-            <div id="success-message" style="color: #2ecc71; text-align: center; margin-top: 10px;"></div>
-        </form>
-        <div class="barang-admin-list">
-            <h2 style="text-align:center;color:#e63946;margin-top:40px;">Semua Produk</h2>
-            <div id="admin-barang-list" class="produk-list produk-list-iqos"></div>
-            <div id="dashboard-loading" class="loading" style="display:none;">Loading...</div>
-        </div>
-    </main>
-    <footer>
-        <span>© 2025 DRC Victory Racing Exhaust</span>
-    </footer>
-    <script src="script.js"></script>
-    <script>
-    if(!localStorage.getItem('drc_token')) window.location.href="login.html";
-    document.getElementById('logoutBtn').onclick = function() {
-        localStorage.removeItem('drc_token');
-        window.location.href="login.html";
-    }
-    </script>
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="/logo-drc.png" alt="DRC Victory" height="40"/>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="/">Kembali ke Website</a></li>
+    </ul>
+  </nav>
+  <section class="admin-section" style="max-width:500px;margin:40px auto;padding:32px 28px;background:#fff;border-radius:18px;box-shadow:0 4px 24px #e6394630;">
+    <h2 class="section-title" style="color:#e63946;">Admin Produk DRC</h2>
+    <form id="form-produk">
+      <input type="hidden" name="edit_idx" value="-1"/>
+      <label>Nama Produk:<br>
+        <input type="text" name="nama" required/>
+      </label><br><br>
+      <label>Deskripsi:<br>
+        <textarea name="deskripsi" required></textarea>
+      </label><br><br>
+      <label>Harga:<br>
+        <input type="number" name="harga" required/>
+      </label><br><br>
+      <label>Foto (URL):<br>
+        <input type="text" name="foto" required/>
+      </label><br><br>
+      <label>Tokopedia (link):<br>
+        <input type="text" name="tokopedia"/>
+      </label><br><br>
+      <label>Shopee (link):<br>
+        <input type="text" name="shopee"/>
+      </label><br><br>
+      <label>WhatsApp (nomor):<br>
+        <input type="text" name="whatsapp" value="6281234567890"/>
+      </label><br><br>
+      <label>Kategori:<br>
+        <select name="kategori">
+          <option value="matic">Matic</option>
+          <option value="herex">Herex</option>
+          <option value="vespa">Vespa</option>
+          <option value="ninja">Ninja</option>
+        </select>
+      </label><br><br>
+      <label>Jenis:<br>
+        <input type="text" name="jenis" required/>
+      </label><br><br>
+      <label>
+        <input type="checkbox" name="newlaunching"/> New Launching
+      </label>
+      <label style="margin-left:20px;">
+        <input type="checkbox" name="bestseller"/> Best Seller
+      </label>
+      <br><br>
+      <button type="submit" class="produk-btn">Simpan Produk</button>
+      <button type="button" id="cancel-edit" style="display:none;margin-left:10px;background:#aaa;color:#fff;border:none;border-radius:6px;padding:10px;font-weight:bold;cursor:pointer;">Batal Edit</button>
+    </form>
+    <hr style="margin:32px 0;">
+    <div>
+      <h3>Produk Saat Ini</h3>
+      <div id="produk-list"></div>
+    </div>
+  </section>
+  <script>
+let produk = [];
+async function loadProduk() {
+  const res = await fetch('/data/barang.json');
+  const data = await res.json();
+  produk = data.data || [];
+  renderProdukList();
+}
+function renderProdukList() {
+  const list = document.getElementById('produk-list');
+  list.innerHTML = '';
+  if (!produk.length) {
+    list.innerHTML = '<p>Belum ada produk.</p>';
+    return;
+  }
+  produk.forEach((b, idx) => {
+    const el = document.createElement('div');
+    el.style = 'border:1px solid #e63946;padding:12px;margin-bottom:12px;border-radius:8px;position:relative;';
+    el.innerHTML = `
+      <b>${b.nama}</b> <span style="color:#e63946;">${b.kategori}/${b.jenis}</span>
+      <span>${b.newlaunching ? '🔔' : ''} ${b.bestseller ? '🔥' : ''}</span>
+      <br>
+      <small>Rp${b.harga.toLocaleString('id-ID')}</small>
+      <button style="float:right;background:#e63946;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;margin-left:10px;" onclick="deleteProduk(${idx})">Hapus</button>
+      <button style="float:right;background:#888;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;" onclick="editProduk(${idx})">Edit</button>
+    `;
+    list.appendChild(el);
+  });
+}
+function deleteProduk(idx) {
+  if (confirm("Hapus produk ini?")) {
+    produk.splice(idx, 1);
+    renderProdukList();
+    saveProduk();
+    cancelEdit();
+  }
+}
+window.deleteProduk = deleteProduk; // For inline event
+
+function editProduk(idx) {
+  const b = produk[idx];
+  const f = document.getElementById('form-produk');
+  f.edit_idx.value = idx;
+  f.nama.value = b.nama || "";
+  f.deskripsi.value = b.deskripsi || "";
+  f.harga.value = b.harga || "";
+  f.foto.value = b.foto || "";
+  f.tokopedia.value = b.tokopedia || "";
+  f.shopee.value = b.shopee || "";
+  f.whatsapp.value = b.whatsapp || "6281234567890";
+  f.kategori.value = b.kategori || "matic";
+  f.jenis.value = b.jenis || "";
+  f.newlaunching.checked = !!b.newlaunching;
+  f.bestseller.checked = !!b.bestseller;
+  document.getElementById("cancel-edit").style.display = "inline-block";
+  f.querySelector(".produk-btn").textContent = "Update Produk";
+}
+window.editProduk = editProduk;
+
+function cancelEdit() {
+  const f = document.getElementById('form-produk');
+  f.edit_idx.value = "-1";
+  f.reset();
+  document.getElementById("cancel-edit").style.display = "none";
+  f.querySelector(".produk-btn").textContent = "Tambah Produk";
+}
+document.getElementById("cancel-edit").onclick = cancelEdit;
+
+document.getElementById('form-produk').onsubmit = function(e) {
+  e.preventDefault();
+  const f = e.target;
+  const idx = parseInt(f.edit_idx.value);
+  const data = {
+    _id: idx >= 0 ? produk[idx]._id : Date.now().toString(),
+    nama: f.nama.value,
+    deskripsi: f.deskripsi.value,
+    harga: parseInt(f.harga.value),
+    foto: f.foto.value,
+    tokopedia: f.tokopedia.value,
+    shopee: f.shopee.value,
+    whatsapp: f.whatsapp.value,
+    kategori: f.kategori.value,
+    jenis: f.jenis.value,
+    newlaunching: f.newlaunching.checked,
+    bestseller: f.bestseller.checked
+  };
+  if (idx >= 0) {
+    produk[idx] = data;
+  } else {
+    produk.push(data);
+  }
+  renderProdukList();
+  saveProduk();
+  cancelEdit();
+};
+
+function saveProduk() {
+  // Untuk demo static site: tampilkan hasil JSON di bawah.
+  // Untuk backend: lakukan POST ke server/API / update file barang.json
+  const hasil = {
+    data: produk
+  };
+  // Tampilkan hasil di bawah list
+  let hasilBlock = document.getElementById('hasil-json');
+  if (!hasilBlock) {
+    hasilBlock = document.createElement('pre');
+    hasilBlock.id = 'hasil-json';
+    hasilBlock.style = 'background:#f5f5f5;padding:10px;border-radius:8px;max-width:100%;overflow:auto;margin-top:18px;font-size:13px;';
+    document.querySelector('.admin-section').appendChild(hasilBlock);
+  }
+  hasilBlock.textContent = JSON.stringify(hasil, null, 2);
+}
+loadProduk();
+  </script>
 </body>
 </html>
