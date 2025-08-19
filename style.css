@@ -6,8 +6,9 @@ body {
 }
 .navbar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row; /* FIX: always horizontal */
   align-items: center;
+  justify-content: space-between;
   background: #fff;
   padding: 18px 40px;
   border-bottom: 2px solid #e63946;
@@ -406,9 +407,14 @@ body {
 }
 
 @media (max-width: 700px) {
-  .navbar { flex-direction: row; align-items: center; justify-content: space-between; padding: 12px 10px; }
-  .nav-menu { gap: 10px; font-size: 17px; }
+  .navbar {
+    flex-direction: row; /* FIX: always horizontal */
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 10px;
+  }
   .nav-logo img { height: 32px; }
+  .nav-menu { gap: 10px; font-size: 17px; }
   .hero-title { font-size: 32px; }
   .hero-btn { font-size: 16px; padding: 10px 24px; }
   .produk-section { padding: 24px 0 12px 0; }
