@@ -28,7 +28,6 @@ body {
   transition: color .2s;
 }
 .nav-menu li a:hover { color: #e63946; }
-
 .hero {
   position: relative;
   min-height: 420px;
@@ -89,7 +88,6 @@ body {
   transition: background .2s;
 }
 .hero-btn:hover { background: #fff; color: #e63946; }
-
 .section-kicker {
   color: #e63946;
   font-family: 'Bebas Neue', cursive;
@@ -205,6 +203,7 @@ body {
   box-shadow: 0 4px 12px #e6394630;
   text-align: center;
   border: 2px solid #e63946;
+  position: relative;
 }
 .produk-img {
   width: 100%;
@@ -247,10 +246,11 @@ body {
   text-decoration: none;
   display: inline-block;
   margin-top: 8px;
-  transition: background .2s;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .1s;
 }
-.produk-btn:hover { background: #fff; color: #e63946; }
-
+.produk-btn:hover { background: #fff; color: #e63946; transform: scale(1.05);}
 .tentang-section {
   background: #111;
   color: #fff;
@@ -263,7 +263,6 @@ body {
   margin-bottom: 18px;
 }
 .red { color: #e63946; }
-
 .footer {
   background: #000;
   color: #fff;
@@ -295,6 +294,100 @@ body {
 .footer-socials a:hover {
   color: #e63946;
 }
+
+/* Modal Beli */
+.modal-beli-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .25s;
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-beli-bg.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-beli-card {
+  background: #1a1a1a;
+  border-radius: 18px;
+  padding: 36px 28px 28px 28px;
+  min-width: 270px;
+  max-width: 96vw;
+  box-shadow: 0 8px 32px #e6394650;
+  position: relative;
+  animation: modalPop .3s cubic-bezier(.5,2,.5,1.3);
+}
+@keyframes modalPop {
+  0% { transform: scale(.6); opacity:0; }
+  100% { transform: scale(1); opacity:1; }
+}
+.modal-beli-close {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  transition: color .2s;
+}
+.modal-beli-close:hover { color: #e63946; }
+.modal-beli-card h3 {
+  font-family: 'Bebas Neue', cursive;
+  margin: 0 0 12px 0;
+  font-size: 26px;
+  color: #e63946;
+  text-align: center;
+}
+.modal-beli-desc {
+  font-size: 15px;
+  color: #fff;
+  margin-bottom: 22px;
+  text-align: center;
+}
+.modal-beli-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.modal-beli-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 18px;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 2px 8px #0003;
+  padding: 12px 18px;
+  font-weight: 600;
+  transition: background .2s, color .2s, transform .1s;
+}
+.modal-beli-btn.tokopedia {
+  background: #03AC0E;
+  color: #fff;
+}
+.modal-beli-btn.shopee {
+  background: #F53D2D;
+  color: #fff;
+}
+.modal-beli-btn.whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+.modal-beli-btn:hover {
+  opacity: .85;
+  transform: scale(1.05);
+}
+
 @media (max-width: 700px) {
   .navbar { flex-direction: column; padding: 14px 12px; }
   .nav-menu { gap: 16px; }
@@ -304,4 +397,7 @@ body {
   .produk-series-selector, .jenis-selector { flex-wrap: wrap; gap: 8px; }
   .produk-searchbar input { width: 130px; }
   .produk-list-grid { grid-template-columns: 1fr; gap: 18px; padding: 10px; }
+  .modal-beli-card { padding: 22px 7vw 18px 7vw; min-width: 0; }
+  .modal-beli-card h3 { font-size: 20px; }
+  .modal-beli-btn { font-size: 16px; padding: 10px 8px; }
 }
