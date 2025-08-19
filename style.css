@@ -1,7 +1,7 @@
 body {
   font-family: 'Montserrat', Arial, sans-serif;
-  background: #e63946; /* Red background */
-  color: #fff; /* White text */
+  background: #fff;
+  color: #111;
   margin: 0;
 }
 .navbar {
@@ -9,9 +9,9 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background: #fff; /* White navbar background */
+  background: #fff;
   padding: 18px 40px;
-  border-bottom: 2px solid #111; /* Black border */
+  border-bottom: 2px solid #e63946;
 }
 .nav-logo img { vertical-align: middle; }
 .nav-menu {
@@ -22,19 +22,19 @@ body {
   padding: 0;
 }
 .nav-menu li a {
-  color: #111; /* Black link text */
+  color: #e63946;
   font-family: 'Bebas Neue', cursive;
   font-size: 20px;
   text-decoration: none;
   transition: color .2s;
   font-weight: bold;
 }
-.nav-menu li a:hover { color: #e63946; } /* Red hover */
+.nav-menu li a:hover { color: #111; }
 
 .hero {
   position: relative;
   min-height: 420px;
-  background: linear-gradient(120deg, #e63946 60%, #111 100%); /* Red to black gradient */
+  background: linear-gradient(120deg, #fff 60%, #e63946 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@ body {
 }
 .hero-kicker {
   display: inline-block;
-  background: #111; /* Black kicker */
+  background: #e63946;
   color: #fff;
   font-family: 'Bebas Neue', cursive;
   font-size: 16px;
@@ -69,31 +69,31 @@ body {
   margin: 0 0 18px;
   font-weight: bold;
   letter-spacing: 3px;
-  color: #fff; /* White title */
+  color: #111;
 }
-.highlight { color: #fff; text-shadow: 2px 2px 4px #111; } /* White highlight with black shadow */
+.highlight { color: #e63946; }
 .hero-subtitle {
   font-size: 22px;
-  color: #fff; /* White subtitle */
+  color: #e63946;
   margin-bottom: 28px;
 }
 .hero-btn {
-  background: #111; /* Black button */
+  background: #e63946;
   color: #fff;
   font-size: 20px;
   padding: 14px 40px;
   border-radius: 25px;
-  border: 2px solid #111;
+  border: none;
   font-family: 'Bebas Neue', cursive;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 4px 12px #00000040;
-  transition: all .2s;
+  box-shadow: 0 4px 12px #e6394640;
+  transition: background .2s;
 }
-.hero-btn:hover { background: #fff; color: #111; }
+.hero-btn:hover { background: #fff; color: #e63946; border: 2px solid #e63946; }
 
 .section-kicker {
-  color: #fff; /* White kicker text */
+  color: #e63946;
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
   letter-spacing: 1.5px;
@@ -104,7 +104,7 @@ body {
   font-family: 'Bebas Neue', cursive;
   font-size: 38px;
   margin-bottom: 22px;
-  color: #fff; /* White title text */
+  color: #111;
   text-align: center;
 }
 
@@ -112,7 +112,7 @@ body {
   display: flex;
   gap: 40px;
   justify-content: center;
-  background: #e63946; /* Red background */
+  background: #fff;
   padding: 40px 0 0 0;
 }
 .produk-highlight-col {
@@ -125,12 +125,12 @@ body {
   gap: 18px;
 }
 .produk-card.highlight {
-  border: 2px solid #111; /* Black border */
-  box-shadow: 0 4px 18px #11133;
+  border: 2px solid #e63946;
+  box-shadow: 0 4px 18px #e6394633;
 }
 
 .produk-section {
-  background: #e63946; /* Red background */
+  background: #fff;
   padding: 60px 0 40px 0;
 }
 .produk-series-selector {
@@ -140,19 +140,19 @@ body {
   margin-bottom: 18px;
 }
 .series-btn {
-  background: #fff; /* White button */
-  color: #111; /* Black text */
+  background: #fff;
+  color: #e63946;
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
   padding: 10px 24px;
   border-radius: 20px;
-  border: 2px solid #111; /* Black border */
+  border: 2px solid #e63946;
   cursor: pointer;
   transition: background .2s, color .2s;
   font-weight: bold;
 }
 .series-btn.active, .series-btn:hover {
-  background: #111; /* Black active/hover */
+  background: #e63946;
   color: #fff;
 }
 .jenis-selector {
@@ -162,19 +162,19 @@ body {
   margin-bottom: 20px;
 }
 .jenis-btn {
-  background: #fff; /* White button */
-  color: #111; /* Black text */
+  background: #fff;
+  color: #e63946;
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 16px;
   padding: 8px 20px;
   border-radius: 16px;
-  border: 2px solid #111; /* Black border */
+  border: 2px solid #e63946;
   cursor: pointer;
   transition: background .2s, color .2s;
   font-weight: 500;
 }
 .jenis-btn.active, .jenis-btn:hover {
-  background: #111; /* Black active/hover */
+  background: #e63946;
   color: #fff;
 }
 .produk-searchbar {
@@ -188,16 +188,16 @@ body {
   font-size: 16px;
   padding: 10px 18px;
   border-radius: 20px 0 0 20px;
-  border: 2px solid #111; /* Black border */
+  border: 2px solid #e63946;
   outline: none;
   width: 220px;
   background: #fff;
   color: #111;
 }
 .produk-searchbar button {
-  background: #111; /* Black button */
+  background: #e63946;
   color: #fff;
-  border: 2px solid #111;
+  border: 2px solid #e63946;
   border-radius: 0 20px 20px 0;
   padding: 10px 18px;
   font-size: 18px;
@@ -210,17 +210,17 @@ body {
   margin-top: 6px;
 }
 .produk-card {
-  background: #fff; /* White card */
+  background: #fff;
   border-radius: 14px;
   padding: 22px;
-  box-shadow: 0 4px 18px #11130;
+  box-shadow: 0 4px 18px #e6394630;
   text-align: center;
-  border: 2px solid #111; /* Black border */
+  border: 2px solid #e63946;
   position: relative;
   transition: box-shadow .2s;
 }
 .produk-card:hover {
-  box-shadow: 0 8px 26px #11140;
+  box-shadow: 0 8px 26px #e6394640;
 }
 .produk-img {
   width: 100%;
@@ -228,35 +228,35 @@ body {
   border-radius: 10px;
   margin-bottom: 14px;
   background: #fff;
-  border: 2px solid #111; /* Black border */
+  border: 2px solid #e63946;
 }
 .produk-card h3 {
   font-family: 'Bebas Neue', cursive;
   font-size: 26px;
-  color: #111; /* Black title */
+  color: #e63946;
   margin: 0 0 10px;
 }
 .produk-jenis {
   font-size: 13px;
-  color: #111; /* Black type */
+  color: #e63946;
   font-family: 'Montserrat', Arial, sans-serif;
   margin-bottom: 8px;
   font-weight: 600;
 }
 .produk-desc {
   font-size: 15px;
-  color: #111; /* Black description */
+  color: #111;
   margin-bottom: 12px;
 }
 .produk-harga {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 20px;
-  color: #111; /* Black price */
+  color: #111;
   margin-bottom: 18px;
   font-weight: bold;
 }
 .produk-btn {
-  background: #111; /* Black button */
+  background: #e63946;
   color: #fff;
   font-family: 'Bebas Neue', cursive;
   font-size: 18px;
@@ -265,15 +265,15 @@ body {
   text-decoration: none;
   display: inline-block;
   margin-top: 8px;
-  border: 2px solid #111;
+  border: none;
   cursor: pointer;
-  transition: all .2s, transform .1s;
+  transition: background .2s, color .2s, transform .1s;
   font-weight: bold;
 }
-.produk-btn:hover { background: #fff; color: #111; transform: scale(1.05);}
+.produk-btn:hover { background: #fff; color: #e63946; border: 2px solid #e63946; transform: scale(1.05);}
 .tentang-section {
-  background: #e63946; /* Red background */
-  color: #fff; /* White text */
+  background: #fff;
+  color: #111;
   padding: 50px 0;
   text-align: center;
 }
@@ -282,13 +282,13 @@ body {
   font-size: 32px;
   margin-bottom: 18px;
 }
-.red { color: #fff; }
+.red { color: #e63946; }
 .footer {
-  background: #fff; /* White footer */
-  color: #111; /* Black text */
+  background: #fff;
+  color: #111;
   text-align: center;
   padding: 28px 0 18px 0;
-  border-top: 2px solid #111; /* Black border */
+  border-top: 2px solid #e63946;
 }
 .footer-logo img {
   margin-bottom: 10px;
@@ -299,20 +299,20 @@ body {
   color: #111;
 }
 .footer-contact i {
-  color: #111; /* Black icon */
+  color: #e63946;
   margin-right: 5px;
 }
 .footer-socials {
   margin: 10px 0 6px 0;
 }
 .footer-socials a {
-  color: #111; /* Black icon */
+  color: #e63946;
   font-size: 22px;
   margin-right: 16px;
   transition: color .2s;
 }
 .footer-socials a:hover {
-  color: #e63946; /* Red hover */
+  color: #111;
 }
 
 /* Modal Beli */
@@ -333,12 +333,12 @@ body {
   pointer-events: all;
 }
 .modal-beli-card {
-  background: #fff; /* White modal */
+  background: #fff;
   border-radius: 18px;
   padding: 36px 28px 28px 28px;
   min-width: 270px;
   max-width: 96vw;
-  box-shadow: 0 8px 32px #11150;
+  box-shadow: 0 8px 32px #e6394650;
   position: relative;
   animation: modalPop .3s cubic-bezier(.5,2,.5,1.3);
 }
@@ -351,23 +351,23 @@ body {
   right: 18px;
   top: 18px;
   background: transparent;
-  color: #111; /* Black close button */
+  color: #e63946;
   border: none;
   font-size: 26px;
   cursor: pointer;
   transition: color .2s;
 }
-.modal-beli-close:hover { color: #e63946; } /* Red hover */
+.modal-beli-close:hover { color: #111; }
 .modal-beli-card h3 {
   font-family: 'Bebas Neue', cursive;
   margin: 0 0 12px 0;
   font-size: 26px;
-  color: #111; /* Black title */
+  color: #e63946;
   text-align: center;
 }
 .modal-beli-desc {
   font-size: 15px;
-  color: #111; /* Black description */
+  color: #111;
   margin-bottom: 22px;
   text-align: center;
 }
@@ -385,19 +385,19 @@ body {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 18px;
   border-radius: 16px;
-  border: 2px solid #111; /* Black border */
-  box-shadow: 0 2px 8px #11130;
+  border: 2px solid #e63946;
+  box-shadow: 0 2px 8px #e6394630;
   padding: 12px 18px;
   font-weight: 600;
   transition: background .2s, color .2s, transform .1s;
 }
 .modal-beli-btn.tokopedia {
-  background: #111; /* Black button */
+  background: #e63946;
   color: #fff;
 }
 .modal-beli-btn.shopee {
   background: #fff;
-  color: #111;
+  color: #e63946;
 }
 .modal-beli-btn.whatsapp {
   background: #111;
@@ -406,9 +406,8 @@ body {
 .modal-beli-btn:hover {
   opacity: .85;
   transform: scale(1.05);
-  background: #111;
+  background: #e63946;
   color: #fff;
-  border-color: #fff; /* White border on hover */
 }
 
 @media (max-width: 900px) {
