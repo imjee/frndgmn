@@ -32,6 +32,21 @@
       <a href="#produk" class="hero-btn">Lihat Produk</a>
     </div>
   </section>
+
+  <!-- New Launching & Best Seller Row -->
+  <section class="produk-highlight-row">
+    <div class="produk-highlight-col">
+      <div class="section-kicker">NEW LAUNCHING</div>
+      <h2 class="section-title">Terbaru</h2>
+      <div id="launching-list"></div>
+    </div>
+    <div class="produk-highlight-col">
+      <div class="section-kicker">BEST SELLER</div>
+      <h2 class="section-title">Terlaris</h2>
+      <div id="best-seller-list"></div>
+    </div>
+  </section>
+
   <!-- Produk Section -->
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
@@ -114,6 +129,8 @@ async function loadPublicBarangList() {
     allBarang = result.data || [];
     renderJenisSelector();
     showGridBarangList();
+    renderLaunchingProducts();
+    renderBestSellerProducts();
   } catch (err) {
     document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
   } finally {
@@ -180,36 +197,76 @@ function showGridBarangList() {
 
 // Modal logic
 function openModalBeli(barangRaw) {
-  // Convert property quotes back to "
   let barang = typeof barangRaw === "string" ? JSON.parse(barangRaw.replace(/'/g,'"')) : barangRaw;
   document.getElementById('modal-beli-title').textContent = barang.nama;
   document.getElementById('modal-beli-desc').textContent = barang.deskripsi;
-  // Set links
   document.querySelector('.modal-beli-btn.tokopedia').href = barang.tokopedia || "#";
   document.querySelector('.modal-beli-btn.shopee').href = barang.shopee || "#";
-  // WhatsApp link format
   let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis})`);
   let waNumber = barang.whatsapp || "6281234567890";
   document.querySelector('.modal-beli-btn.whatsapp').href = `https://wa.me/${waNumber}?text=${waMsg}`;
-  // Show modal
   document.getElementById('modal-beli').style.display = 'flex';
   setTimeout(() => {
     document.getElementById('modal-beli').classList.add('show');
   }, 10);
 }
-// Close modal
 document.querySelector('.modal-beli-close').onclick = function() {
   document.getElementById('modal-beli').classList.remove('show');
   setTimeout(() => {
     document.getElementById('modal-beli').style.display = 'none';
   }, 200);
 };
-// Close modal on background click
 document.getElementById('modal-beli').onclick = function(e) {
   if (e.target === this) {
     document.querySelector('.modal-beli-close').onclick();
   }
 };
+
+// Produk highlight (New Launching & Best Seller)
+function renderLaunchingProducts() {
+  const container = document.getElementById('launching-list');
+  container.innerHTML = '';
+  const launchingProducts = allBarang.filter(b => b.newlaunching);
+  if (!launchingProducts.length) {
+    container.innerHTML = '<p>Belum ada produk launching.</p>';
+    return;
+  }
+  launchingProducts.forEach(barang => {
+    const el = document.createElement('div');
+    el.className = 'produk-card highlight';
+    el.innerHTML = `
+      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
+      <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
+      <p class="produk-desc">${barang.deskripsi}</p>
+      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
+      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
+    `;
+    container.appendChild(el);
+  });
+}
+function renderBestSellerProducts() {
+  const container = document.getElementById('best-seller-list');
+  container.innerHTML = '';
+  const bestSellerProducts = allBarang.filter(b => b.bestseller);
+  if (!bestSellerProducts.length) {
+    container.innerHTML = '<p>Belum ada produk best seller.</p>';
+    return;
+  }
+  bestSellerProducts.forEach(barang => {
+    const el = document.createElement('div');
+    el.className = 'produk-card highlight';
+    el.innerHTML = `
+      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
+      <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
+      <p class="produk-desc">${barang.deskripsi}</p>
+      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
+      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
+    `;
+    container.appendChild(el);
+  });
+}
 
 // Category series selector
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showGridBarangList();
     });
   });
-  // Search bar events
   document.getElementById('search-input').addEventListener('input', function(e) {
     searchTerm = e.target.value;
     showGridBarangList();
