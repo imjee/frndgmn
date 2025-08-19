@@ -10,6 +10,7 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "matic",
+      "jenis": "Vario",
       "newlaunching": true
     },
     {
@@ -22,6 +23,7 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "matic",
+      "jenis": "Mio",
       "bestseller": true
     },
     {
@@ -33,7 +35,8 @@
       "tokopedia": "https://tokopedia.com/produk-cb",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex"
+      "kategori": "herex",
+      "jenis": "CB"
     },
     {
       "_id": "4",
@@ -44,7 +47,8 @@
       "tokopedia": "https://tokopedia.com/produk-gl",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex"
+      "kategori": "herex",
+      "jenis": "GL"
     },
     {
       "_id": "5",
@@ -55,7 +59,8 @@
       "tokopedia": "https://tokopedia.com/produk-tiger",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex"
+      "kategori": "herex",
+      "jenis": "Tiger"
     },
     {
       "_id": "6",
@@ -66,18 +71,20 @@
       "tokopedia": "https://tokopedia.com/produk-vespa",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "vespa"
+      "kategori": "vespa",
+      "jenis": "PX"
     },
     {
       "_id": "7",
       "nama": "Knalpot Vespa Excel",
       "deskripsi": "Knalpot racing Vespa Excel.",
       "harga": 410000,
-      "foto": "/images/produk-mio.jpg",
+      "foto": "/images/produk-vespa-excel.jpg",
       "tokopedia": "https://tokopedia.com/produk-vespa-excel",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "vespa"
+      "kategori": "vespa",
+      "jenis": "Excel"
     },
     {
       "_id": "8",
@@ -88,7 +95,8 @@
       "tokopedia": "https://tokopedia.com/produk-ninja-r",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja"
+      "kategori": "ninja",
+      "jenis": "Ninja R"
     },
     {
       "_id": "9",
@@ -99,30 +107,20 @@
       "tokopedia": "https://tokopedia.com/produk-ninja-rr",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja"
+      "kategori": "ninja",
+      "jenis": "Ninja RR"
     },
     {
       "_id": "10",
       "nama": "Knalpot Ninja KIS",
       "deskripsi": "Knalpot Ninja KIS untuk performa maksimal.",
       "harga": 440000,
-      "foto": "/images/produk-mio.jpg",
+      "foto": "/images/produk-ninja-kis.jpg",
       "tokopedia": "https://tokopedia.com/produk-ninja-kis",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja"
-    },{
-      "_id": "11",
-      "nama": "Knalpot Standar Vario Racing",
-      "deskripsi": "Knalpot racing mantap untuk Honda Vario.",
-      "harga": 350000,
-      "foto": "/images/produk-vario.jpg",
-      "tokopedia": "https://tokopedia.com/produk-vario",
-      "shopee": "#",
-      "whatsapp": "6281234567890",
-      "kategori": "matic",
-      "jenis": "Vario",
-      "newlaunching": true
+      "kategori": "ninja",
+      "jenis": "Ninja KIS"
     }
   ]
 }
