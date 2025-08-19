@@ -82,7 +82,7 @@
 let produk = [];
 let adminAuth = '';
 async function loadProduk() {
-  const res = await fetch('/data/barang.json', { headers: { 'Authorization': adminAuth } });
+  const res = await fetch('/api/barang', { headers: { 'Authorization': adminAuth } });
   const data = await res.json();
   produk = data.data || [];
   renderProdukList();
@@ -168,7 +168,7 @@ document.getElementById('form-produk').onsubmit = function(e) {
   cancelEdit();
 };
 function saveProduk() {
-  fetch('/data/barang.json', {
+  fetch('/api/barang', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ document.getElementById('login-form').onsubmit = async function(e) {
   const username = f.username.value;
   const password = f.password.value;
   const authStr = 'Basic ' + btoa(username + ':' + password);
-  const test = await fetch('/admin.html', {
+  const test = await fetch('/api/barang', {
     headers: { 'Authorization': authStr }
   });
   if (test.ok) {
