@@ -1,442 +1,442 @@
 body {
-font-family: 'Montserrat', Arial, sans-serif;
-background: #e63946; /* Red background /
-color: #fff; / White text /
-margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #e63946;
+  color: #fff;
+  margin: 0;
 }
 .navbar {
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-background: #fff; / White navbar background /
-padding: 18px 40px;
-border-bottom: 2px solid #111; / Black border /
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 18px 40px;
+  border-bottom: 2px solid #e63946;
 }
 .nav-logo img { vertical-align: middle; }
 .nav-menu {
-list-style: none;
-display: flex;
-gap: 30px;
-margin: 0;
-padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
 }
 .nav-menu li a {
-color: #111; / Black link text */
-font-family: 'Bebas Neue', cursive;
-font-size: 20px;
-text-decoration: none;
-transition: color .2s;
-font-weight: bold;
+  color: #fff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px;
+  text-decoration: none;
+  transition: color .2s;
+  font-weight: bold;
 }
-.nav-menu li a:hover { color: #fff; }
+.nav-menu li a:hover { color: #111; }
 
 .hero {
-position: relative;
-min-height: 420px;
-background: linear-gradient(120deg, #e63946 60%, #111 100%); /* Red to black gradient /
-display: flex;
-align-items: center;
-justify-content: center;
-overflow: hidden;
+  position: relative;
+  min-height: 420px;
+  background: linear-gradient(120deg, #fff 60%, #e63946 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .hero-overlay {
-position: absolute;
-inset: 0;
-opacity: 0.10;
-background: url('/images/hero-bg.jpg') center/cover no-repeat;
-z-index: 0;
+  position: absolute;
+  inset: 0;
+  opacity: 0.10;
+  background: url('/images/hero-bg.jpg') center/cover no-repeat;
+  z-index: 0;
 }
 .hero-content {
-position: relative;
-z-index: 1;
-text-align: center;
+  position: relative;
+  z-index: 1;
+  text-align: center;
 }
 .hero-kicker {
-display: inline-block;
-background: #111; / Black kicker /
-color: #fff; / White kicker text /
-font-family: 'Bebas Neue', cursive;
-font-size: 16px;
-letter-spacing: 2px;
-border-radius: 12px;
-padding: 7px 14px;
-margin-bottom: 18px;
+  display: inline-block;
+  background: #fff;
+  color: #111;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 16px;
+  letter-spacing: 2px;
+  border-radius: 12px;
+  padding: 7px 14px;
+  margin-bottom: 18px;
 }
 .hero-title {
-font-family: 'Bebas Neue', cursive;
-font-size: 62px;
-margin: 0 0 18px;
-font-weight: bold;
-letter-spacing: 3px;
-color: #fff; / White title text /
+  font-family: 'Bebas Neue', cursive;
+  font-size: 62px;
+  margin: 0 0 18px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #fff;
 }
-.highlight { color: #111; } / Black highlight /
+.highlight { color: #e63946; }
 .hero-subtitle {
-font-size: 22px;
-color: #fff; / White subtitle text /
-margin-bottom: 28px;
+  font-size: 22px;
+  color: #111;
+  margin-bottom: 28px;
 }
 .hero-btn {
-background: #111; / Black button /
-color: #fff; / White button text */
-font-size: 20px;
-padding: 14px 40px;
-border-radius: 25px;
-border: none;
-font-family: 'Bebas Neue', cursive;
-cursor: pointer;
-text-decoration: none;
-box-shadow: 0 4px 12px #11140;
-transition: background .2s;
+  background: #fff;
+  color: #111;
+  font-size: 20px;
+  padding: 14px 40px;
+  border-radius: 25px;
+  border: none;
+  font-family: 'Bebas Neue', cursive;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 12px #fff;
+  transition: background .2s;
 }
-.hero-btn:hover { background: #fff; color: #111; border: 2px solid #111; }
+.hero-btn:hover { background: #e63946; color: #fff; border: 2px solid #fff; }
 
 .section-kicker {
-color: #fff; /* White kicker text /
-font-family: 'Bebas Neue', cursive;
-font-size: 18px;
-letter-spacing: 1.5px;
-margin-bottom: 8px;
-text-align: center;
+  color: #fff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 .section-title {
-font-family: 'Bebas Neue', cursive;
-font-size: 38px;
-margin-bottom: 22px;
-color: #fff; / White title text */
-text-align: center;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 38px;
+  margin-bottom: 22px;
+  color: #111;
+  text-align: center;
 }
 
 .produk-highlight-row {
-display: flex;
-gap: 40px;
-justify-content: center;
-background: #e63946; /* Red background /
-padding: 40px 0 0 0;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  background: #fff;
+  padding: 40px 0 0 0;
 }
 .produk-highlight-col {
-flex: 1 1 300px;
-max-width: 500px;
+  flex: 1 1 300px;
+  max-width: 500px;
 }
 #launching-list, #best-seller-list {
-display: flex;
-flex-direction: column;
-gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .produk-card.highlight {
-border: 2px solid #111; / Black border */
-box-shadow: 0 4px 18px #11133;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 18px #fff;
 }
 
 .produk-section {
-background: #e63946; /* Red background /
-padding: 60px 0 40px 0;
+  background: #fff;
+  padding: 60px 0 40px 0;
 }
 .produk-series-selector {
-display: flex;
-justify-content: center;
-gap: 16px;
-margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 .series-btn {
-background: #fff; / White button /
-color: #111; / Black text /
-font-family: 'Bebas Neue', cursive;
-font-size: 18px;
-padding: 10px 24px;
-border-radius: 20px;
-border: 2px solid #111; / Black border /
-cursor: pointer;
-transition: background .2s, color .2s;
-font-weight: bold;
+  background: #e63946;
+  color: #fff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: 2px solid #e63946;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  font-weight: bold;
 }
 .series-btn.active, .series-btn:hover {
-background: #111; / Black background /
-color: #fff; / White text /
+  background: #e63946;
+  color: #fff;
 }
 .jenis-selector {
-display: flex;
-justify-content: center;
-gap: 10px;
-margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 .jenis-btn {
-background: #fff; / White button /
-color: #111; / Black text /
-font-family: 'Montserrat', Arial, sans-serif;
-font-size: 16px;
-padding: 8px 20px;
-border-radius: 16px;
-border: 2px solid #111; / Black border /
-cursor: pointer;
-transition: background .2s, color .2s;
-font-weight: 500;
+  background: #e63946;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 16px;
+  padding: 8px 20px;
+  border-radius: 16px;
+  border: 2px solid #e63946;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  font-weight: 500;
 }
 .jenis-btn.active, .jenis-btn:hover {
-background: #111; / Black background /
-color: #fff; / White text /
+  background: #e63946;
+  color: #fff;
 }
 .produk-searchbar {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 0;
-margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 24px;
 }
 .produk-searchbar input {
-font-size: 16px;
-padding: 10px 18px;
-border-radius: 20px 0 0 20px;
-border: 2px solid #111; / Black border /
-outline: none;
-width: 220px;
-background: #fff; / White background /
-color: #111; / Black text /
+  font-size: 16px;
+  padding: 10px 18px;
+  border-radius: 20px 0 0 20px;
+  border: 2px solid #fff;
+  outline: none;
+  width: 220px;
+  background: #e63946;
+  color: #111;
 }
 .produk-searchbar button {
-background: #111; / Black button /
-color: #fff; / White text /
-border: 2px solid #111; / Black border /
-border-radius: 0 20px 20px 0;
-padding: 10px 18px;
-font-size: 18px;
-cursor: pointer;
+  background: #fff;
+  color: #e63946;
+  border: 2px solid #111;
+  border-radius: 0 20px 20px 0;
+  padding: 10px 18px;
+  font-size: 18px;
+  cursor: pointer;
 }
 .produk-list-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-gap: 28px;
-margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  margin-top: 6px;
 }
 .produk-card {
-background: #fff; / White card /
-border-radius: 14px;
-padding: 22px;
-box-shadow: 0 4px 18px #11130;
-text-align: center;
-border: 2px solid #111; / Black border /
-position: relative;
-transition: box-shadow .2s;
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 4px 18px #e6394630;
+  text-align: center;
+  border: 2px solid #e63946;
+  position: relative;
+  transition: box-shadow .2s;
 }
 .produk-card:hover {
-box-shadow: 0 8px 26px #11140;
+  box-shadow: 0 8px 26px #e6394640;
 }
 .produk-img {
-width: 100%;
-max-width: 180px;
-border-radius: 10px;
-margin-bottom: 14px;
-background: #fff; / White image background /
-border: 2px solid #111; / Black border /
+  width: 100%;
+  max-width: 180px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  background: #fff;
+  border: 2px solid #111;
 }
 .produk-card h3 {
-font-family: 'Bebas Neue', cursive;
-font-size: 26px;
-color: #111; / Black title /
-margin: 0 0 10px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 26px;
+  color: #fff;
+  margin: 0 0 10px;
 }
 .produk-jenis {
-font-size: 13px;
-color: #111; / Black type /
-font-family: 'Montserrat', Arial, sans-serif;
-margin-bottom: 8px;
-font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 .produk-desc {
-font-size: 15px;
-color: #111; / Black description /
-margin-bottom: 12px;
+  font-size: 15px;
+  color: #111;
+  margin-bottom: 12px;
 }
 .produk-harga {
-font-family: 'Montserrat', Arial, sans-serif;
-font-size: 20px;
-color: #111; / Black price /
-margin-bottom: 18px;
-font-weight: bold;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 18px;
+  font-weight: bold;
 }
 .produk-btn {
-background: #111; / Black button /
-color: #fff; / White text /
-font-family: 'Bebas Neue', cursive;
-font-size: 18px;
-padding: 10px 28px;
-border-radius: 22px;
-text-decoration: none;
-display: inline-block;
-margin-top: 8px;
-border: none;
-cursor: pointer;
-transition: background .2s, color .2s, transform .1s;
-font-weight: bold;
+  background: #fff;
+  color: #e63946;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 18px;
+  padding: 10px 28px;
+  border-radius: 22px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .1s;
+  font-weight: bold;
 }
-.produk-btn:hover { background: #fff; color: #111; border: 2px solid #111; transform: scale(1.05);}
+.produk-btn:hover { background: #e63946; color: #fff; border: 2px solid #fff; transform: scale(1.05);}
 .tentang-section {
-background: #e63946; / Red background /
-color: #fff; / White text /
-padding: 50px 0;
-text-align: center;
+  background: #e63946;
+  color: #fff;
+  padding: 50px 0;
+  text-align: center;
 }
 .tentang-title {
-font-family: 'Bebas Neue', cursive;
-font-size: 32px;
-margin-bottom: 18px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px;
+  margin-bottom: 18px;
 }
-.red { color: #111; } / Black color /
+.red { color: #fff; }
 .footer {
-background: #fff; / White footer /
-color: #111; / Black text /
-text-align: center;
-padding: 28px 0 18px 0;
-border-top: 2px solid #111; / Black border /
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 28px 0 18px 0;
+  border-top: 2px solid #fff;
 }
 .footer-logo img {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .footer-contact {
-margin: 12px 0 6px 0;
-font-size: 16px;
-color: #111; / Black text /
+  margin: 12px 0 6px 0;
+  font-size: 16px;
+  color: #fff;
 }
 .footer-contact i {
-color: #111; / Black icon /
-margin-right: 5px;
+  color: #fff;
+  margin-right: 5px;
 }
 .footer-socials {
-margin: 10px 0 6px 0;
+  margin: 10px 0 6px 0;
 }
 .footer-socials a {
-color: #111; / Black icon /
-font-size: 22px;
-margin-right: 16px;
-transition: color .2s;
+  color: #fff;
+  font-size: 22px;
+  margin-right: 16px;
+  transition: color .2s;
 }
 .footer-socials a:hover {
-color: #e63946; / Red hover */
+  color: #fff;
 }
 
-/* Modal Beli /
+/* Modal Beli */
 .modal-beli-bg {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.7);
-z-index: 9999;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: opacity .25s;
-opacity: 0;
-pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .25s;
+  opacity: 0;
+  pointer-events: none;
 }
 .modal-beli-bg.show {
-opacity: 1;
-pointer-events: all;
+  opacity: 1;
+  pointer-events: all;
 }
 .modal-beli-card {
-background: #fff; / White modal /
-border-radius: 18px;
-padding: 36px 28px 28px 28px;
-min-width: 270px;
-max-width: 96vw;
-box-shadow: 0 8px 32px #11150;
-position: relative;
-animation: modalPop .3s cubic-bezier(.5,2,.5,1.3);
+  background: #fff;
+  border-radius: 18px;
+  padding: 36px 28px 28px 28px;
+  min-width: 270px;
+  max-width: 96vw;
+  box-shadow: 0 8px 32px #fff;
+  position: relative;
+  animation: modalPop .3s cubic-bezier(.5,2,.5,1.3);
 }
 @keyframes modalPop {
-0% { transform: scale(.6); opacity:0; }
-100% { transform: scale(1); opacity:1; }
+  0% { transform: scale(.6); opacity:0; }
+  100% { transform: scale(1); opacity:1; }
 }
 .modal-beli-close {
-position: absolute;
-right: 18px;
-top: 18px;
-background: transparent;
-color: #111; / Black close /
-border: none;
-font-size: 26px;
-cursor: pointer;
-transition: color .2s;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  transition: color .2s;
 }
-.modal-beli-close:hover { color: #e63946; } / Red hover /
+.modal-beli-close:hover { color: #111; }
 .modal-beli-card h3 {
-font-family: 'Bebas Neue', cursive;
-margin: 0 0 12px 0;
-font-size: 26px;
-color: #111; / Black title /
-text-align: center;
+  font-family: 'Bebas Neue', cursive;
+  margin: 0 0 12px 0;
+  font-size: 26px;
+  color: #fff;
+  text-align: center;
 }
 .modal-beli-desc {
-font-size: 15px;
-color: #111; / Black description /
-margin-bottom: 22px;
-text-align: center;
+  font-size: 15px;
+  color: #111;
+  margin-bottom: 22px;
+  text-align: center;
 }
 .modal-beli-actions {
-display: flex;
-flex-direction: column;
-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 .modal-beli-btn {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-text-decoration: none;
-font-family: 'Montserrat', Arial, sans-serif;
-font-size: 18px;
-border-radius: 16px;
-border: 2px solid #111; / Black border /
-box-shadow: 0 2px 8px #11130;
-padding: 12px 18px;
-font-weight: 600;
-transition: background .2s, color .2s, transform .1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 18px;
+  border-radius: 16px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px #fff;
+  padding: 12px 18px;
+  font-weight: 600;
+  transition: background .2s, color .2s, transform .1s;
 }
 .modal-beli-btn.tokopedia {
-background: #111; / Black button /
-color: #fff; / White text /
+  background: #e63946;
+  color: #fff;
 }
 .modal-beli-btn.shopee {
-background: #fff; / White button /
-color: #111; / Black text /
+  background: #fff;
+  color: #e63946;
 }
 .modal-beli-btn.whatsapp {
-background: #111; / Black button /
-color: #fff; / White text /
+  background: #111;
+  color: #fff;
 }
 .modal-beli-btn:hover {
-opacity: .85;
-transform: scale(1.05);
-background: #111; / Black hover /
-color: #fff; / White hover text */
+  opacity: .85;
+  transform: scale(1.05);
+  background: #fff;
+  color: #e63946;
 }
 
 @media (max-width: 900px) {
-.produk-highlight-row {
-flex-direction: column;
-gap: 24px;
-padding: 24px 0 0 0;
-}
-.produk-highlight-col {
-max-width: 100%;
-}
+  .produk-highlight-row {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 0 0 0;
+  }
+  .produk-highlight-col {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
-.navbar {
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
-padding: 12px 10px;
-}
-.nav-logo img { height: 32px; }
-.nav-menu { gap: 10px; font-size: 17px; }
-.hero-title { font-size: 32px; }
-.hero-btn { font-size: 16px; padding: 10px 24px; }
-.produk-section { padding: 24px 0 12px 0; }
-.produk-series-selector, .jenis-selector { flex-wrap: wrap; gap: 8px; }
-.produk-searchbar input { width: 120px; }
-.produk-list-grid { grid-template-columns: 1fr; gap: 18px; padding: 10px; }
-.modal-beli-card { padding: 22px 7vw 18px 7vw; min-width: 0; }
-.modal-beli-card h3 { font-size: 20px; }
-.modal-beli-btn { font-size: 16px; padding: 10px 8px; }
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 10px;
+  }
+  .nav-logo img { height: 32px; }
+  .nav-menu { gap: 10px; font-size: 17px; }
+  .hero-title { font-size: 32px; }
+  .hero-btn { font-size: 16px; padding: 10px 24px; }
+  .produk-section { padding: 24px 0 12px 0; }
+  .produk-series-selector, .jenis-selector { flex-wrap: wrap; gap: 8px; }
+  .produk-searchbar input { width: 120px; }
+  .produk-list-grid { grid-template-columns: 1fr; gap: 18px; padding: 10px; }
+  .modal-beli-card { padding: 22px 7vw 18px 7vw; min-width: 0; }
+  .modal-beli-card h3 { font-size: 20px; }
+  .modal-beli-btn { font-size: 16px; padding: 10px 8px; }
 }
