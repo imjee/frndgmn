@@ -54,6 +54,19 @@
     <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
+  <!-- Modal Pembelian -->
+  <div id="modal-beli" class="modal-beli-bg" style="display:none;">
+    <div class="modal-beli-card">
+      <button class="modal-beli-close"><i class="fas fa-times"></i></button>
+      <h3 id="modal-beli-title"></h3>
+      <div class="modal-beli-desc" id="modal-beli-desc"></div>
+      <div class="modal-beli-actions">
+        <a href="#" target="_blank" class="modal-beli-btn tokopedia"><i class="fab fa-shopify"></i> Tokopedia</a>
+        <a href="#" target="_blank" class="modal-beli-btn shopee"><i class="fas fa-store"></i> Shopee</a>
+        <a href="#" target="_blank" class="modal-beli-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
   <!-- Tentang Section -->
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
@@ -78,7 +91,7 @@
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
-  <!-- Script Produk Grid Per Kategori dan Search -->
+  <!-- Script Produk Grid Per Kategori dan Modal -->
   <script>
 const kategoriMotor = {
   matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
@@ -158,12 +171,45 @@ function showGridBarangList() {
       <div class="produk-jenis">${barang.jenis}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-      <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
+      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
     `;
     grid.appendChild(el);
   });
   list.appendChild(grid);
 }
+
+// Modal logic
+function openModalBeli(barangRaw) {
+  // Convert property quotes back to "
+  let barang = typeof barangRaw === "string" ? JSON.parse(barangRaw.replace(/'/g,'"')) : barangRaw;
+  document.getElementById('modal-beli-title').textContent = barang.nama;
+  document.getElementById('modal-beli-desc').textContent = barang.deskripsi;
+  // Set links
+  document.querySelector('.modal-beli-btn.tokopedia').href = barang.tokopedia || "#";
+  document.querySelector('.modal-beli-btn.shopee').href = barang.shopee || "#";
+  // WhatsApp link format
+  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis})`);
+  let waNumber = barang.whatsapp || "6281234567890";
+  document.querySelector('.modal-beli-btn.whatsapp').href = `https://wa.me/${waNumber}?text=${waMsg}`;
+  // Show modal
+  document.getElementById('modal-beli').style.display = 'flex';
+  setTimeout(() => {
+    document.getElementById('modal-beli').classList.add('show');
+  }, 10);
+}
+// Close modal
+document.querySelector('.modal-beli-close').onclick = function() {
+  document.getElementById('modal-beli').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('modal-beli').style.display = 'none';
+  }, 200);
+};
+// Close modal on background click
+document.getElementById('modal-beli').onclick = function(e) {
+  if (e.target === this) {
+    document.querySelector('.modal-beli-close').onclick();
+  }
+};
 
 // Category series selector
 document.addEventListener('DOMContentLoaded', () => {
