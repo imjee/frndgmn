@@ -1,24 +1,24 @@
 {
   "data": [
     {
-      "id": "1",
-      "nama": "Knalpot Racing V1",
-      "deskripsi": "Knalpot racing berkualitas tinggi untuk performa maksimal.",
-      "harga": 1500000,
-      "foto": "/images/drc1.jpeg",
+      "_id": "1",
+      "nama": "Knalpot Racing DRC",
+      "deskripsi": "Knalpot racing suara mantap, material stainless.",
+      "harga": 350000,
+      "foto": "/images/produk1.jpg",
       "link": "https://tokopedia.com/produk1",
       "bestSeller": true,
-      "newLaunching": false
+      "newLaunching": true
     },
     {
-      "id": "2",
-      "nama": "Knalpot Racing V2",
-      "deskripsi": "Model terbaru dengan desain sporty.",
-      "harga": 1750000,
-      "foto": "/images/drc2.jpeg",
+      "_id": "2",
+      "nama": "Knalpot Harian DRC",
+      "deskripsi": "Knalpot harian, hemat bahan bakar.",
+      "harga": 250000,
+      "foto": "/images/produk2.jpg",
       "link": "https://tokopedia.com/produk2",
       "bestSeller": false,
-      "newLaunching": true
+      "newLaunching": false
     }
   ]
 }
