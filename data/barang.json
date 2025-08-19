@@ -2,23 +2,103 @@
   "data": [
     {
       "_id": "1",
-      "nama": "Knalpot Racing DRC",
-      "deskripsi": "Knalpot racing suara mantap, material stainless.",
+      "nama": "Knalpot Vario Racing",
+      "deskripsi": "Knalpot racing mantap untuk Honda Vario.",
       "harga": 350000,
-      "foto": "/images/produk1.jpg",
-      "link": "https://tokopedia.com/produk1",
-      "bestSeller": true,
-      "newLaunching": true
+      "foto": "/images/produk-vario.jpg",
+      "link": "https://tokopedia.com/produk-vario",
+      "kategori": "matic",
+      "jenis": "Vario"
     },
     {
       "_id": "2",
-      "nama": "Knalpot Harian DRC",
-      "deskripsi": "Knalpot harian, hemat bahan bakar.",
-      "harga": 250000,
-      "foto": "/images/produk2.jpg",
-      "link": "https://tokopedia.com/produk2",
-      "bestSeller": false,
-      "newLaunching": false
+      "nama": "Knalpot Mio Racing",
+      "deskripsi": "Knalpot racing untuk Yamaha Mio.",
+      "harga": 340000,
+      "foto": "/images/produk-mio.jpg",
+      "link": "https://tokopedia.com/produk-mio",
+      "kategori": "matic",
+      "jenis": "Mio"
+    },
+    {
+      "_id": "3",
+      "nama": "Knalpot CB Herex",
+      "deskripsi": "Knalpot balap untuk CB, suara ngebas.",
+      "harga": 370000,
+      "foto": "/images/produk-cb.jpg",
+      "link": "https://tokopedia.com/produk-cb",
+      "kategori": "herex",
+      "jenis": "CB"
+    },
+    {
+      "_id": "4",
+      "nama": "Knalpot GL Herex",
+      "deskripsi": "Knalpot herex untuk GL, suara gahar.",
+      "harga": 375000,
+      "foto": "/images/produk-gl.jpg",
+      "link": "https://tokopedia.com/produk-gl",
+      "kategori": "herex",
+      "jenis": "GL"
+    },
+    {
+      "_id": "5",
+      "nama": "Knalpot Tiger Herex",
+      "deskripsi": "Knalpot khusus Tiger Herex.",
+      "harga": 380000,
+      "foto": "/images/produk-tiger.jpg",
+      "link": "https://tokopedia.com/produk-tiger",
+      "kategori": "herex",
+      "jenis": "Tiger"
+    },
+    {
+      "_id": "6",
+      "nama": "Knalpot Vespa PX",
+      "deskripsi": "Knalpot classic Vespa PX.",
+      "harga": 400000,
+      "foto": "/images/produk-vespa.jpg",
+      "link": "https://tokopedia.com/produk-vespa",
+      "kategori": "vespa",
+      "jenis": "PX"
+    },
+    {
+      "_id": "7",
+      "nama": "Knalpot Vespa Excel",
+      "deskripsi": "Knalpot racing Vespa Excel.",
+      "harga": 410000,
+      "foto": "/images/produk-vespa-excel.jpg",
+      "link": "https://tokopedia.com/produk-vespa-excel",
+      "kategori": "vespa",
+      "jenis": "Excel"
+    },
+    {
+      "_id": "8",
+      "nama": "Knalpot Ninja R",
+      "deskripsi": "Knalpot racing Ninja R.",
+      "harga": 420000,
+      "foto": "/images/produk-ninja-r.jpg",
+      "link": "https://tokopedia.com/produk-ninja-r",
+      "kategori": "ninja",
+      "jenis": "Ninja R"
+    },
+    {
+      "_id": "9",
+      "nama": "Knalpot Ninja RR",
+      "deskripsi": "Knalpot racing Ninja RR.",
+      "harga": 430000,
+      "foto": "/images/produk-ninja-rr.jpg",
+      "link": "https://tokopedia.com/produk-ninja-rr",
+      "kategori": "ninja",
+      "jenis": "Ninja RR"
+    },
+    {
+      "_id": "10",
+      "nama": "Knalpot Ninja KIS",
+      "deskripsi": "Knalpot Ninja KIS untuk performa maksimal.",
+      "harga": 440000,
+      "foto": "/images/produk-ninja-kis.jpg",
+      "link": "https://tokopedia.com/produk-ninja-kis",
+      "kategori": "ninja",
+      "jenis": "Ninja KIS"
     }
   ]
 }
