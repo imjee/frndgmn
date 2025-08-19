@@ -7,6 +7,9 @@
       "harga": 350000,
       "foto": "/images/produk-vario.jpg",
       "link": "https://tokopedia.com/produk-vario",
+      "tokopedia": "https://tokopedia.com/produk-vario",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "matic",
       "jenis": "Vario"
     },
@@ -17,6 +20,9 @@
       "harga": 340000,
       "foto": "/images/produk-mio.jpg",
       "link": "https://tokopedia.com/produk-mio",
+      "tokopedia": "https://tokopedia.com/produk-mio",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "matic",
       "jenis": "Mio"
     },
@@ -27,6 +33,9 @@
       "harga": 370000,
       "foto": "/images/produk-cb.jpg",
       "link": "https://tokopedia.com/produk-cb",
+      "tokopedia": "https://tokopedia.com/produk-cb",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "CB"
     },
@@ -37,6 +46,9 @@
       "harga": 375000,
       "foto": "/images/produk-gl.jpg",
       "link": "https://tokopedia.com/produk-gl",
+      "tokopedia": "https://tokopedia.com/produk-gl",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "GL"
     },
@@ -47,6 +59,9 @@
       "harga": 380000,
       "foto": "/images/produk-tiger.jpg",
       "link": "https://tokopedia.com/produk-tiger",
+      "tokopedia": "https://tokopedia.com/produk-tiger",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "Tiger"
     },
@@ -57,6 +72,9 @@
       "harga": 400000,
       "foto": "/images/produk-vespa.jpg",
       "link": "https://tokopedia.com/produk-vespa",
+      "tokopedia": "https://tokopedia.com/produk-vespa",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "vespa",
       "jenis": "PX"
     },
@@ -67,6 +85,9 @@
       "harga": 410000,
       "foto": "/images/produk-vespa-excel.jpg",
       "link": "https://tokopedia.com/produk-vespa-excel",
+      "tokopedia": "https://tokopedia.com/produk-vespa-excel",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "vespa",
       "jenis": "Excel"
     },
@@ -77,6 +98,9 @@
       "harga": 420000,
       "foto": "/images/produk-ninja-r.jpg",
       "link": "https://tokopedia.com/produk-ninja-r",
+      "tokopedia": "https://tokopedia.com/produk-ninja-r",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "ninja",
       "jenis": "Ninja R"
     },
@@ -87,6 +111,9 @@
       "harga": 430000,
       "foto": "/images/produk-ninja-rr.jpg",
       "link": "https://tokopedia.com/produk-ninja-rr",
+      "tokopedia": "https://tokopedia.com/produk-ninja-rr",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "ninja",
       "jenis": "Ninja RR"
     },
@@ -97,6 +124,9 @@
       "harga": 440000,
       "foto": "/images/produk-ninja-kis.jpg",
       "link": "https://tokopedia.com/produk-ninja-kis",
+      "tokopedia": "https://tokopedia.com/produk-ninja-kis",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
       "kategori": "ninja",
       "jenis": "Ninja KIS"
     }
