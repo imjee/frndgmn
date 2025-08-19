@@ -99,7 +99,7 @@ async function loadPublicBarangList() {
   const loadingEl = document.getElementById('produk-loading');
   if (loadingEl) loadingEl.style.display = 'block';
   try {
-    const res = await fetch('/data/barang.json');
+    const res = await fetch('/api/barang');
     if (!res.ok) throw new Error('Gagal memuat data produk.');
     const result = await res.json();
     allBarang = result.data || [];
