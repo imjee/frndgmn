@@ -2,19 +2,63 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>DRC Victory Produk</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DRC Victory Racing Exhaust</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css">
+  <!-- Font Bebas Neue & Montserrat from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <img src="/logo-drc.png" alt="DRC Victory" style="height:60px;margin:20px;">
-    <h1>Daftar Produk DRC Victory</h1>
-  </header>
-  <section id="produk">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img src="/logo-drc.png" alt="DRC Victory" height="40"/>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+  </nav>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-kicker">NEW LAUNCH</span>
+      <h1 class="hero-title">DRC VICTORY <span class="highlight">RACING EXHAUST</span></h1>
+      <p class="hero-subtitle">Knalpot racing <b>premium</b> untuk gaya & performa juara!</p>
+      <a href="#produk" class="hero-btn">Lihat Produk</a>
+    </div>
+  </section>
+  <!-- Produk Section -->
+  <section id="produk" class="produk-section">
+    <div class="section-kicker">OUR PRODUCTS</div>
+    <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
     <div id="barang-list" class="produk-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
+  <!-- Tentang Section -->
+  <section id="tentang" class="tentang-section">
+    <div class="section-kicker">ABOUT US</div>
+    <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
+    <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
+      Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
+    </p>
+  </section>
+  <!-- Footer -->
+  <footer id="kontak" class="footer">
+    <div class="footer-logo">
+      <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
+    </div>
+    <div class="footer-socials">
+      <a href="https://wa.me/6281234567890?text=Halo%20Admin%20DRC%20Victory" target="_blank" title="WhatsApp">
+        <svg height="24" width="24" fill="#e63946" viewBox="0 0 24 24"><path d="..."/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <small>© 2025 DRC Victory Racing Exhaust</small>
+  </footer>
+  <!-- Script Produk -->
   <script>
     async function loadPublicBarangList() {
       const loadingEl = document.getElementById('produk-loading');
@@ -30,7 +74,6 @@
         if (loadingEl) loadingEl.style.display = 'none';
       }
     }
-
     function showPublicBarangList(barangList) {
       const list = document.getElementById('barang-list');
       if (!list) return;
@@ -43,11 +86,11 @@
         const el = document.createElement('div');
         el.className = 'produk-card';
         el.innerHTML = `
-          <img src="${barang.foto}" alt="${barang.nama}" style="max-width:100%;border-radius:8px;">
+          <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
           <h3>${barang.nama}</h3>
-          <p>${barang.deskripsi}</p>
-          <p><strong>Rp${barang.harga.toLocaleString('id-ID')}</strong></p>
-          <a href="${barang.link}" target="_blank">Beli Sekarang</a>
+          <p class="produk-desc">${barang.deskripsi}</p>
+          <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
+          <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
         `;
         list.appendChild(el);
       });
