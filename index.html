@@ -5,13 +5,16 @@
   <title>DRC Victory Racing Exhaust</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css">
+  <!-- Font Bebas Neue & Montserrat from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-logo">
-      <img src="/images/logo-drc.png" alt="DRC Victory" height="40"/>
+      <img src="/logo-drc.png" alt="DRC Victory" height="40"/>
     </div>
     <ul class="nav-menu">
       <li><a href="#produk">Produk</a></li>
@@ -19,6 +22,7 @@
       <li><a href="#kontak">Kontak</a></li>
     </ul>
   </nav>
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -28,6 +32,8 @@
       <a href="#produk" class="hero-btn">Lihat Produk</a>
     </div>
   </section>
+
+  <!-- New Launching & Best Seller Row -->
   <section class="produk-highlight-row">
     <div class="produk-highlight-col">
       <div class="section-kicker">NEW LAUNCHING</div>
@@ -40,22 +46,30 @@
       <div id="best-seller-list"></div>
     </div>
   </section>
+
+  <!-- Produk Section -->
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
+    <!-- Category Selector -->
     <div class="produk-series-selector">
       <button class="series-btn active" data-series="matic">Matic Series</button>
       <button class="series-btn" data-series="herex">Herex Series</button>
       <button class="series-btn" data-series="vespa">Vespa Series</button>
       <button class="series-btn" data-series="ninja">Ninja Series</button>
     </div>
+    <!-- Subtype Selector (jenis motor) -->
+    <div id="jenis-selector" class="jenis-selector"></div>
+    <!-- Search Bar -->
     <div class="produk-searchbar">
-      <input type="text" id="search-input" placeholder="Cari produk..." autocomplete="off"/>
+      <input type="text" id="search-input" placeholder="Cari produk, jenis motor..." autocomplete="off"/>
       <button id="search-btn"><i class="fas fa-search"></i></button>
     </div>
+    <!-- Produk Grid -->
     <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
+  <!-- Modal Pembelian -->
   <div id="modal-beli" class="modal-beli-bg" style="display:none;">
     <div class="modal-beli-card">
       <button class="modal-beli-close"><i class="fas fa-times"></i></button>
@@ -68,6 +82,7 @@
       </div>
     </div>
   </div>
+  <!-- Tentang Section -->
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
@@ -75,9 +90,10 @@
       Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
+  <!-- Footer -->
   <footer id="kontak" class="footer">
     <div class="footer-logo">
-      <img src="/images/logo-drc.png" alt="DRC Victory" height="32"/>
+      <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
     </div>
     <div class="footer-contact">
       <span><i class="fas fa-map-marker-alt"></i> Jl. Raya Balap No.88, Surabaya, Jawa Timur</span>
@@ -90,19 +106,28 @@
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
+  <!-- Script Produk Grid Per Kategori dan Modal -->
   <script>
-const seriesList = ['matic', 'herex', 'vespa', 'ninja'];
+const kategoriMotor = {
+  matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
+  herex: { title: 'Herex Series', jenis: ['CB', 'GL', 'Tiger'] },
+  vespa: { title: 'Vespa Series', jenis: ['PX', 'PTS', 'Excel'] },
+  ninja: { title: 'Ninja Series', jenis: ['Ninja R', 'Ninja RR', 'Ninja KIS'] }
+};
 let allBarang = [];
 let currentSeries = 'matic';
+let currentJenis = '';
 let searchTerm = '';
+
 async function loadPublicBarangList() {
   const loadingEl = document.getElementById('produk-loading');
   if (loadingEl) loadingEl.style.display = 'block';
   try {
-    const res = await fetch('/api/barang');
+    const res = await fetch('/data/barang.json');
     if (!res.ok) throw new Error('Gagal memuat data produk.');
     const result = await res.json();
     allBarang = result.data || [];
+    renderJenisSelector();
     showGridBarangList();
     renderLaunchingProducts();
     renderBestSellerProducts();
@@ -112,14 +137,40 @@ async function loadPublicBarangList() {
     if (loadingEl) loadingEl.style.display = 'none';
   }
 }
+
+function renderJenisSelector() {
+  const jenisContainer = document.getElementById('jenis-selector');
+  jenisContainer.innerHTML = '';
+  const jenisArr = kategoriMotor[currentSeries].jenis;
+  jenisArr.forEach(jenis => {
+    const btn = document.createElement('button');
+    btn.className = 'jenis-btn' + (currentJenis === jenis ? ' active' : '');
+    btn.textContent = jenis;
+    btn.onclick = () => {
+      currentJenis = jenis;
+      showGridBarangList();
+      // Highlight active button
+      document.querySelectorAll('.jenis-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    jenisContainer.appendChild(btn);
+  });
+  // Auto-select first jenis on category change
+  if (!jenisArr.includes(currentJenis)) {
+    currentJenis = jenisArr[0];
+    document.querySelectorAll('.jenis-btn')[0]?.classList.add('active');
+  }
+}
+
 function showGridBarangList() {
   const list = document.getElementById('barang-list');
   if (!list) return;
   list.innerHTML = '';
-  let barangList = allBarang.filter(b => b.series === currentSeries);
+  let barangList = allBarang.filter(b => b.kategori === currentSeries && b.jenis === currentJenis);
   if (searchTerm.trim()) {
     barangList = barangList.filter(b =>
-      b.nama.toLowerCase().includes(searchTerm.toLowerCase())
+      b.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.jenis.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
   if (!barangList.length) {
@@ -134,6 +185,7 @@ function showGridBarangList() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -142,13 +194,15 @@ function showGridBarangList() {
   });
   list.appendChild(grid);
 }
+
+// Modal logic
 function openModalBeli(barangRaw) {
   let barang = typeof barangRaw === "string" ? JSON.parse(barangRaw.replace(/'/g,'"')) : barangRaw;
   document.getElementById('modal-beli-title').textContent = barang.nama;
   document.getElementById('modal-beli-desc').textContent = barang.deskripsi;
   document.querySelector('.modal-beli-btn.tokopedia').href = barang.tokopedia || "#";
   document.querySelector('.modal-beli-btn.shopee').href = barang.shopee || "#";
-  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama}`);
+  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis})`);
   let waNumber = barang.whatsapp || "6281234567890";
   document.querySelector('.modal-beli-btn.whatsapp').href = `https://wa.me/${waNumber}?text=${waMsg}`;
   document.getElementById('modal-beli').style.display = 'flex';
@@ -167,6 +221,8 @@ document.getElementById('modal-beli').onclick = function(e) {
     document.querySelector('.modal-beli-close').onclick();
   }
 };
+
+// Produk highlight (New Launching & Best Seller)
 function renderLaunchingProducts() {
   const container = document.getElementById('launching-list');
   container.innerHTML = '';
@@ -181,6 +237,7 @@ function renderLaunchingProducts() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -202,6 +259,7 @@ function renderBestSellerProducts() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -209,6 +267,8 @@ function renderBestSellerProducts() {
     container.appendChild(el);
   });
 }
+
+// Category series selector
 document.addEventListener('DOMContentLoaded', () => {
   loadPublicBarangList();
   document.querySelectorAll('.series-btn').forEach(btn => {
@@ -216,6 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.series-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentSeries = btn.getAttribute('data-series');
+      currentJenis = '';
+      renderJenisSelector();
       showGridBarangList();
     });
   });
