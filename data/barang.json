@@ -10,7 +10,6 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "matic",
-      "jenis": "Vario",
       "newlaunching": true
     },
     {
@@ -23,7 +22,6 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "matic",
-      "jenis": "Mio",
       "bestseller": true
     },
     {
@@ -35,8 +33,7 @@
       "tokopedia": "https://tokopedia.com/produk-cb",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex",
-      "jenis": "CB"
+      "kategori": "herex"
     },
     {
       "_id": "4",
@@ -47,8 +44,7 @@
       "tokopedia": "https://tokopedia.com/produk-gl",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex",
-      "jenis": "GL"
+      "kategori": "herex"
     },
     {
       "_id": "5",
@@ -59,8 +55,7 @@
       "tokopedia": "https://tokopedia.com/produk-tiger",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "herex",
-      "jenis": "Tiger"
+      "kategori": "herex"
     },
     {
       "_id": "6",
@@ -71,8 +66,7 @@
       "tokopedia": "https://tokopedia.com/produk-vespa",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "vespa",
-      "jenis": "PX"
+      "kategori": "vespa"
     },
     {
       "_id": "7",
@@ -83,8 +77,7 @@
       "tokopedia": "https://tokopedia.com/produk-vespa-excel",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "vespa",
-      "jenis": "Excel"
+      "kategori": "vespa"
     },
     {
       "_id": "8",
@@ -95,8 +88,7 @@
       "tokopedia": "https://tokopedia.com/produk-ninja-r",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja",
-      "jenis": "Ninja R"
+      "kategori": "ninja"
     },
     {
       "_id": "9",
@@ -107,8 +99,7 @@
       "tokopedia": "https://tokopedia.com/produk-ninja-rr",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja",
-      "jenis": "Ninja RR"
+      "kategori": "ninja"
     },
     {
       "_id": "10",
@@ -119,8 +110,7 @@
       "tokopedia": "https://tokopedia.com/produk-ninja-kis",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "ninja",
-      "jenis": "Ninja KIS"
+      "kategori": "ninja"
     },{
       "_id": "11",
       "nama": "Knalpot Standar Vario Racing",
