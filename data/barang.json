@@ -121,6 +121,18 @@
       "whatsapp": "6281234567890",
       "kategori": "ninja",
       "jenis": "Ninja KIS"
+    },{
+      "_id": "11",
+      "nama": "Knalpot Standar Vario Racing",
+      "deskripsi": "Knalpot racing mantap untuk Honda Vario.",
+      "harga": 350000,
+      "foto": "/images/produk-vario.jpg",
+      "tokopedia": "https://tokopedia.com/produk-vario",
+      "shopee": "#",
+      "whatsapp": "6281234567890",
+      "kategori": "matic",
+      "jenis": "Vario",
+      "newlaunching": true
     }
   ]
 }
