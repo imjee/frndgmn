@@ -34,7 +34,7 @@
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
-    <div id="barang-list" class="produk-list"></div>
+    <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
   <!-- Tentang Section -->
@@ -52,50 +52,81 @@
     </div>
     <div class="footer-socials">
       <a href="https://wa.me/6281234567890?text=Halo%20Admin%20DRC%20Victory" target="_blank" title="WhatsApp">
-        <svg height="24" width="24" fill="#e63946" viewBox="0 0 24 24"><path d="..."/></svg>
         WhatsApp
       </a>
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
-  <!-- Script Produk -->
+  <!-- Script Produk Grid Per Kategori -->
   <script>
-    async function loadPublicBarangList() {
-      const loadingEl = document.getElementById('produk-loading');
-      if (loadingEl) loadingEl.style.display = 'block';
-      try {
-        const res = await fetch('/data/barang.json');
-        if (!res.ok) throw new Error('Gagal memuat data produk.');
-        const result = await res.json();
-        showPublicBarangList(result.data || []);
-      } catch (err) {
-        document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
-      } finally {
-        if (loadingEl) loadingEl.style.display = 'none';
-      }
-    }
-    function showPublicBarangList(barangList) {
-      const list = document.getElementById('barang-list');
-      if (!list) return;
-      list.innerHTML = '';
-      if (!barangList.length) {
-        list.innerHTML = '<p>Produk tidak ditemukan.</p>';
-        return;
-      }
-      barangList.forEach(barang => {
-        const el = document.createElement('div');
-        el.className = 'produk-card';
-        el.innerHTML = `
-          <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
-          <h3>${barang.nama}</h3>
-          <p class="produk-desc">${barang.deskripsi}</p>
-          <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-          <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
-        `;
-        list.appendChild(el);
-      });
-    }
-    document.addEventListener('DOMContentLoaded', loadPublicBarangList);
+const kategoriMotor = {
+  matic: { title: 'Matic Series', subtitle: 'Vario, Mio, dll', color: '#e63946' },
+  herex: { title: 'Herex Series', subtitle: 'CB, GL, Tiger', color: '#fff' },
+  vespa: { title: 'Vespa Series', subtitle: 'PX, PTS, Excel', color: '#fff' },
+  ninja: { title: 'Ninja Series', subtitle: 'Ninja R, RR, KIS', color: '#fff' }
+};
+async function loadPublicBarangList() {
+  const loadingEl = document.getElementById('produk-loading');
+  if (loadingEl) loadingEl.style.display = 'block';
+  try {
+    const res = await fetch('/data/barang.json');
+    if (!res.ok) throw new Error('Gagal memuat data produk.');
+    const result = await res.json();
+    showGridBarangList(result.data || []);
+  } catch (err) {
+    document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
+  } finally {
+    if (loadingEl) loadingEl.style.display = 'none';
+  }
+}
+
+function showGridBarangList(barangList) {
+  const list = document.getElementById('barang-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (!barangList.length) {
+    list.innerHTML = '<p>Produk tidak ditemukan.</p>';
+    return;
+  }
+
+  // Kelompokkan produk per kategori
+  const grouped = {};
+  barangList.forEach(barang => {
+    if (!grouped[barang.kategori]) grouped[barang.kategori] = [];
+    grouped[barang.kategori].push(barang);
+  });
+
+  Object.entries(kategoriMotor).forEach(([key, info]) => {
+    if (!grouped[key]) return;
+    // Judul kategori
+    const section = document.createElement('div');
+    section.className = 'produk-kategori-section';
+    section.innerHTML = `
+      <h2 class="produk-kategori-title" style="color:${info.color}">${info.title}</h2>
+      <div class="produk-kategori-subtitle">${info.subtitle}</div>
+      <div class="produk-list-grid">
+        <!-- Produk akan di-append di sini -->
+      </div>
+    `;
+    // Produk dalam grid
+    const grid = section.querySelector('.produk-list-grid');
+    grouped[key].forEach(barang => {
+      const el = document.createElement('div');
+      el.className = 'produk-card';
+      el.innerHTML = `
+        <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
+        <h3>${barang.nama}</h3>
+        <div class="produk-jenis">${barang.jenis}</div>
+        <p class="produk-desc">${barang.deskripsi}</p>
+        <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
+        <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
+      `;
+      grid.appendChild(el);
+    });
+    list.appendChild(section);
+  });
+}
+document.addEventListener('DOMContentLoaded', loadPublicBarangList);
   </script>
 </body>
 </html>
