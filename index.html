@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <!-- Font Bebas Neue & Montserrat from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <!-- Navbar -->
@@ -34,6 +36,21 @@
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
+    <!-- Category Selector -->
+    <div class="produk-series-selector">
+      <button class="series-btn active" data-series="matic">Matic Series</button>
+      <button class="series-btn" data-series="herex">Herex Series</button>
+      <button class="series-btn" data-series="vespa">Vespa Series</button>
+      <button class="series-btn" data-series="ninja">Ninja Series</button>
+    </div>
+    <!-- Subtype Selector (jenis motor) -->
+    <div id="jenis-selector" class="jenis-selector"></div>
+    <!-- Search Bar -->
+    <div class="produk-searchbar">
+      <input type="text" id="search-input" placeholder="Cari produk, jenis motor..." autocomplete="off"/>
+      <button id="search-btn"><i class="fas fa-search"></i></button>
+    </div>
+    <!-- Produk Grid -->
     <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
@@ -50,21 +67,30 @@
     <div class="footer-logo">
       <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
     </div>
+    <div class="footer-contact">
+      <span><i class="fas fa-map-marker-alt"></i> Jl. Raya Balap No.88, Surabaya, Jawa Timur</span>
+    </div>
     <div class="footer-socials">
-      <a href="https://wa.me/6281234567890?text=Halo%20Admin%20DRC%20Victory" target="_blank" title="WhatsApp">
-        WhatsApp
-      </a>
+      <a href="https://www.tiktok.com/@drcvictory" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/drcvictory" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/drcvictory" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://wa.me/6281234567890?text=Halo%20Admin%20DRC%20Victory" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
-  <!-- Script Produk Grid Per Kategori -->
+  <!-- Script Produk Grid Per Kategori dan Search -->
   <script>
 const kategoriMotor = {
-  matic: { title: 'Matic Series', subtitle: 'Vario, Mio, dll', color: '#e63946' },
-  herex: { title: 'Herex Series', subtitle: 'CB, GL, Tiger', color: '#fff' },
-  vespa: { title: 'Vespa Series', subtitle: 'PX, PTS, Excel', color: '#fff' },
-  ninja: { title: 'Ninja Series', subtitle: 'Ninja R, RR, KIS', color: '#fff' }
+  matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
+  herex: { title: 'Herex Series', jenis: ['CB', 'GL', 'Tiger'] },
+  vespa: { title: 'Vespa Series', jenis: ['PX', 'PTS', 'Excel'] },
+  ninja: { title: 'Ninja Series', jenis: ['Ninja R', 'Ninja RR', 'Ninja KIS'] }
 };
+let allBarang = [];
+let currentSeries = 'matic';
+let currentJenis = '';
+let searchTerm = '';
+
 async function loadPublicBarangList() {
   const loadingEl = document.getElementById('produk-loading');
   if (loadingEl) loadingEl.style.display = 'block';
@@ -72,7 +98,9 @@ async function loadPublicBarangList() {
     const res = await fetch('/data/barang.json');
     if (!res.ok) throw new Error('Gagal memuat data produk.');
     const result = await res.json();
-    showGridBarangList(result.data || []);
+    allBarang = result.data || [];
+    renderJenisSelector();
+    showGridBarangList();
   } catch (err) {
     document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
   } finally {
@@ -80,53 +108,86 @@ async function loadPublicBarangList() {
   }
 }
 
-function showGridBarangList(barangList) {
+function renderJenisSelector() {
+  const jenisContainer = document.getElementById('jenis-selector');
+  jenisContainer.innerHTML = '';
+  const jenisArr = kategoriMotor[currentSeries].jenis;
+  jenisArr.forEach(jenis => {
+    const btn = document.createElement('button');
+    btn.className = 'jenis-btn' + (currentJenis === jenis ? ' active' : '');
+    btn.textContent = jenis;
+    btn.onclick = () => {
+      currentJenis = jenis;
+      showGridBarangList();
+      // Highlight active button
+      document.querySelectorAll('.jenis-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    jenisContainer.appendChild(btn);
+  });
+  // Auto-select first jenis on category change
+  if (!jenisArr.includes(currentJenis)) {
+    currentJenis = jenisArr[0];
+    document.querySelectorAll('.jenis-btn')[0]?.classList.add('active');
+  }
+}
+
+function showGridBarangList() {
   const list = document.getElementById('barang-list');
   if (!list) return;
   list.innerHTML = '';
+  let barangList = allBarang.filter(b => b.kategori === currentSeries && b.jenis === currentJenis);
+  if (searchTerm.trim()) {
+    barangList = barangList.filter(b =>
+      b.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.jenis.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
   if (!barangList.length) {
     list.innerHTML = '<p>Produk tidak ditemukan.</p>';
     return;
   }
-
-  // Kelompokkan produk per kategori
-  const grouped = {};
+  const grid = document.createElement('div');
+  grid.className = 'produk-list-grid';
   barangList.forEach(barang => {
-    if (!grouped[barang.kategori]) grouped[barang.kategori] = [];
-    grouped[barang.kategori].push(barang);
-  });
-
-  Object.entries(kategoriMotor).forEach(([key, info]) => {
-    if (!grouped[key]) return;
-    // Judul kategori
-    const section = document.createElement('div');
-    section.className = 'produk-kategori-section';
-    section.innerHTML = `
-      <h2 class="produk-kategori-title" style="color:${info.color}">${info.title}</h2>
-      <div class="produk-kategori-subtitle">${info.subtitle}</div>
-      <div class="produk-list-grid">
-        <!-- Produk akan di-append di sini -->
-      </div>
+    const el = document.createElement('div');
+    el.className = 'produk-card';
+    el.innerHTML = `
+      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
+      <h3>${barang.nama}</h3>
+      <div class="produk-jenis">${barang.jenis}</div>
+      <p class="produk-desc">${barang.deskripsi}</p>
+      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
+      <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
     `;
-    // Produk dalam grid
-    const grid = section.querySelector('.produk-list-grid');
-    grouped[key].forEach(barang => {
-      const el = document.createElement('div');
-      el.className = 'produk-card';
-      el.innerHTML = `
-        <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
-        <h3>${barang.nama}</h3>
-        <div class="produk-jenis">${barang.jenis}</div>
-        <p class="produk-desc">${barang.deskripsi}</p>
-        <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-        <a href="${barang.link}" target="_blank" class="produk-btn">Beli Sekarang</a>
-      `;
-      grid.appendChild(el);
-    });
-    list.appendChild(section);
+    grid.appendChild(el);
   });
+  list.appendChild(grid);
 }
-document.addEventListener('DOMContentLoaded', loadPublicBarangList);
+
+// Category series selector
+document.addEventListener('DOMContentLoaded', () => {
+  loadPublicBarangList();
+  document.querySelectorAll('.series-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.series-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSeries = btn.getAttribute('data-series');
+      currentJenis = '';
+      renderJenisSelector();
+      showGridBarangList();
+    });
+  });
+  // Search bar events
+  document.getElementById('search-input').addEventListener('input', function(e) {
+    searchTerm = e.target.value;
+    showGridBarangList();
+  });
+  document.getElementById('search-btn').addEventListener('click', function() {
+    searchTerm = document.getElementById('search-input').value;
+    showGridBarangList();
+  });
+});
   </script>
 </body>
 </html>
