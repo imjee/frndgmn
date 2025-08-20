@@ -36,7 +36,7 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
-      "jenis": "CB"
+      "jenis": "CB",
       "bestseller": true
     },
     {
@@ -49,7 +49,7 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
-      "jenis": "GL"
+      "jenis": "GL",
       "bestseller": true
     },
     {
@@ -62,7 +62,7 @@
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
-      "jenis": "Tiger"
+      "jenis": "Tiger",
       "bestseller": true
     },
     {
@@ -70,12 +70,13 @@
       "nama": "Knalpot Vespa PX",
       "deskripsi": "Knalpot classic Vespa PX.",
       "harga": 400000,
-      "foto": "/images/produk-vespa.jpg",
+      "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tokopedia.com/produk-vespa",
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "vespa",
-      "jenis": "PX"
+      "jenis": "PX",
+      "bestseller": true
     },
     {
       "_id": "7",
