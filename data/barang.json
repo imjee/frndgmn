@@ -37,7 +37,8 @@
       "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "CB",
-      "bestseller": true
+      "bestseller": true,
+      "newlaunching": true
     },
     {
       "_id": "4",
@@ -63,7 +64,8 @@
       "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "Tiger",
-      "bestseller": true
+      "bestseller": true,
+      "newlaunching": true
     },
     {
       "_id": "6",
@@ -76,7 +78,8 @@
       "whatsapp": "6281234567890",
       "kategori": "vespa",
       "jenis": "PX",
-      "bestseller": true
+      "bestseller": true,
+      "newlaunching": true
     },
     {
       "_id": "7",
