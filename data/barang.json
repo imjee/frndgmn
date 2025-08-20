@@ -2,15 +2,15 @@
   "data": [
     {
       "_id": "1",
-      "nama": "Knalpot Vario Racing",
-      "deskripsi": "Knalpot racing mantap untuk Honda Vario.",
+      "nama": "Vespa Small Frame ( Carbon )",
+      "deskripsi": "Knalpot racing mantap untuk Vespa Small Frame.",
       "harga": 350000,
       "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tokopedia.com/produk-vario",
       "shopee": "#",
       "whatsapp": "6281234567890",
-      "kategori": "matic",
-      "jenis": "Vario",
+      "kategori": "vespa",
+      "jenis": "PX",
       "newlaunching": true
     },
     {
