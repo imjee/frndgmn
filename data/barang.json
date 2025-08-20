@@ -22,7 +22,7 @@
       "tokopedia": "https://tk.tokopedia.com/ZSAYt9nU3/",
       "shopee": "https://shopee.co.id/Knalpot-Vespa-Buang-Kiri-Replika-JL-SS-i.144252929.10666289611?sp_atk=3e2570c1-a6ca-40db-9b47-6ea17c66dbaa&xptdk=3e2570c1-a6ca-40db-9b47-6ea17c66dbaa",
       "whatsapp": "62895363383732",
-      "kategori": "VESPA",
+      "kategori": "vespa",
       "jenis": "PX",
       "bestseller": true
     },
@@ -31,36 +31,39 @@
       "nama": "Knalpot CB Herex",
       "deskripsi": "Knalpot balap untuk CB, suara ngebas.",
       "harga": 370000,
-      "foto": "/images/produk-cb.jpg",
+      "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tokopedia.com/produk-cb",
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "CB"
+      "bestseller": true
     },
     {
       "_id": "4",
       "nama": "Knalpot GL Herex",
       "deskripsi": "Knalpot herex untuk GL, suara gahar.",
       "harga": 375000,
-      "foto": "/images/produk-gl.jpg",
+      "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tokopedia.com/produk-gl",
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "GL"
+      "bestseller": true
     },
     {
       "_id": "5",
       "nama": "Knalpot Tiger Herex",
       "deskripsi": "Knalpot khusus Tiger Herex.",
       "harga": 380000,
-      "foto": "/images/produk-tiger.jpg",
+      "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tokopedia.com/produk-tiger",
       "shopee": "#",
       "whatsapp": "6281234567890",
       "kategori": "herex",
       "jenis": "Tiger"
+      "bestseller": true
     },
     {
       "_id": "6",
