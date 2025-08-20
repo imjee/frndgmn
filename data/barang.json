@@ -2,7 +2,7 @@
   "data": [
     {
       "_id": "1",
-      "nama": "DRC Lumaca SS ( Carbon )",
+      "nama": "DRC Lumaca SS ( CARBON )",
       "deskripsi": "Knalpot racing mantap untuk Vespa Small Frame.",
       "harga": 1978000,
       "foto": "/images/produk-vario.jpg",
@@ -42,7 +42,7 @@
     },
     {
       "_id": "4",
-      "nama": "Kiri Khusus SS ( Carbon )",
+      "nama": "Kiri Khusus SS ( CARBON )",
       "deskripsi": "Knalpot khusus 177 - 200cc Vespa PX",
       "harga": 1850000,
       "foto": "/images/pxkiri177-200.jpg",
@@ -55,15 +55,15 @@
     },
     {
       "_id": "5",
-      "nama": "Knalpot Tiger Herex",
-      "deskripsi": "Knalpot khusus Tiger Herex.",
+      "nama": "DRC Big Box Double Silincer ( RED )",
+      "deskripsi": "Knalpot Big Box Dengan Double Silincer",
       "harga": 380000,
-      "foto": "/images/produk-vario.jpg",
-      "tokopedia": "https://tokopedia.com/produk-tiger",
-      "shopee": "#",
-      "whatsapp": "6281234567890",
-      "kategori": "herex",
-      "jenis": "Tiger",
+      "foto": "/images/bbds-red.jpg",
+      "tokopedia": "https://tk.tokopedia.com/ZSAYwYNgf/",
+      "shopee": "https://shopee.co.id/Knalpot-Vespa-Standar-Racing-Double-Silincer-i.144252929.10736517058?sp_atk=70ab4afb-540d-4b6d-b5ce-d6e0612d0c78&xptdk=70ab4afb-540d-4b6d-b5ce-d6e0612d0c78",
+      "whatsapp": "62895363383732",
+      "kategori": "vespa",
+      "jenis": "PX",
       "bestseller": true,
       "newlaunching": true
     },
