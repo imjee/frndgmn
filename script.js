@@ -10,14 +10,14 @@ const detailBank = {
     BRI: { norek: "0987654321", an: "DRC RACING EXHAUST" },
     BNI: { norek: "1122334455", an: "DRC RACING EXHAUST" },
     Mandiri: { norek: "5566778899", an: "DRC RACING EXHAUST" },
-    QRIS: { img: "/images/qris-placeholder.png" }
+    QRIS: { img: "/images/qris-placeholder.png" } // Ganti dengan path gambar QRIS Anda
 };
 
 let allBarang = [];
 let keranjang = []; // Variabel untuk keranjang belanja
 let dataPesananFinal = {};
 
-// === FUNGSI UTAMA UNTUK MENGAMBIL DATA PRODUK === (Tidak Berubah)
+// === FUNGSI UTAMA UNTUK MENGAMBIL DATA PRODUK ===
 async function fetchProducts() {
     try {
         const res = await fetch('./data/barang.json');
@@ -25,34 +25,41 @@ async function fetchProducts() {
         const result = await res.json();
         allBarang = result.data || [];
         return allBarang;
-    } catch (err) { console.error("Gagal memuat produk:", err); return []; }
+    } catch (err) {
+        console.error("Gagal memuat produk:", err);
+        return [];
+    }
 }
 
-// === LOGIKA HALAMAN UTAMA === (Tombol diubah)
+// === LOGIKA HALAMAN UTAMA ===
 async function initIndexPage() {
-    // ... (fungsi renderFilteredProducts, renderJenisButtons, dan event listener lainnya tetap sama) ...
-    // ... (Pastikan Anda menyalin fungsi-fungsi ini dari kode lama Anda jika belum ada) ...
-    let currentSeries = 'vespa'; let currentJenis = 'ALL'; let searchTerm = '';
+    let currentSeries = 'vespa';
+    let currentJenis = 'ALL';
+    let searchTerm = '';
     const seriesContainer = document.querySelector('.produk-series-selector');
     const jenisContainer = document.getElementById('jenis-selector');
     const searchInput = document.getElementById('search-input');
     const listContainer = document.getElementById('barang-list');
     const loadingIndicator = document.getElementById('loading-indicator');
     
-    loadingIndicator.style.display = 'flex'; await fetchProducts(); loadingIndicator.style.display = 'none';
+    // ===== KODE YANG HILANG DIMASUKKAN KEMBALI DI SINI =====
+    const highlightTabBtns = document.querySelectorAll('.highlight-tab-btn');
 
-    function renderFilteredProducts() { /* ... (kode sama seperti sebelumnya) ... */ }
-    seriesContainer.addEventListener('click', e => { /* ... (kode sama seperti sebelumnya) ... */ });
-    jenisContainer.addEventListener('click', e => { /* ... (kode sama seperti sebelumnya) ... */ });
-    searchInput.addEventListener('input', () => { /* ... (kode sama seperti sebelumnya) ... */ });
+    loadingIndicator.style.display = 'flex';
+    await fetchProducts();
+    loadingIndicator.style.display = 'none';
 
-    // === PERUBAHAN PENTING PADA RENDER KARTU PRODUK ===
     function renderProductCards(container, productList) {
-        if (!container) return; container.innerHTML = '';
-        if (!productList || productList.length === 0) { container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Produk tidak ditemukan.</p>'; return; }
+        if (!container) return;
+        container.innerHTML = '';
+        if (!productList || productList.length === 0) {
+            container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Produk tidak ditemukan.</p>';
+            return;
+        }
         productList.forEach((barang, index) => {
             const el = document.createElement('div');
-            el.className = 'produk-card'; el.style.animationDelay = `${index * 50}ms`;
+            el.className = 'produk-card';
+            el.style.animationDelay = `${index * 50}ms`;
             const pesanWhatsapp = encodeURIComponent(`Halo DRC Racing, saya mau tanya spesifikasi lebih lanjut tentang produk ${barang.nama}`);
             const linkWhatsapp = `https://wa.me/${barang.whatsapp}?text=${pesanWhatsapp}`;
             el.innerHTML = `
@@ -75,12 +82,25 @@ async function initIndexPage() {
         });
     }
 
-    renderProductCards(listContainer, allBarang); // Tampilkan semua produk awal
+    // ===== KODE YANG HILANG DIMASUKKAN KEMBALI DI SINI =====
+    highlightTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelector('.highlight-tab-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            document.querySelectorAll('.highlight-tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(btn.dataset.tab).style.display = 'block';
+        })
+    });
+    // ===== AKHIR DARI BAGIAN YANG DIPERBAIKI =====
+
+    renderProductCards(listContainer, allBarang);
     renderProductCards(document.getElementById('launching-list'), allBarang.filter(b => b.newlaunching));
     renderProductCards(document.getElementById('best-seller-list'), allBarang.filter(b => b.bestseller));
 }
 
-// === LOGIKA KERANJANG BELANJA (BARU) ===
+// === LOGIKA KERANJANG BELANJA ===
 
 function muatKeranjang() {
     const keranjangDariStorage = localStorage.getItem('keranjangBelanjaDRC');
@@ -104,11 +124,9 @@ window.bukaModalPilihJenis = function(idProduk) {
     if (!produk) return;
 
     if (!produk.jenis || produk.jenis.length <= 1) {
-        // Jika hanya 1 jenis atau tidak ada, langsung tambahkan
         const jenis = produk.jenis && produk.jenis.length > 0 ? produk.jenis[0] : 'Standar';
         tambahKeKeranjang(idProduk, jenis);
     } else {
-        // Jika banyak jenis, tampilkan modal pilihan
         document.getElementById('nama-produk-pilihan').innerText = produk.nama;
         const containerOpsi = document.getElementById('container-opsi-jenis');
         containerOpsi.innerHTML = '';
@@ -127,7 +145,9 @@ window.bukaModalPilihJenis = function(idProduk) {
         modalPilihJenis.style.display = 'flex';
     }
 }
-window.tutupModalPilihJenis = function() { modalPilihJenis.style.display = 'none'; }
+window.tutupModalPilihJenis = function() {
+    modalPilihJenis.style.display = 'none';
+}
 
 function tambahKeKeranjang(idProduk, jenis, kuantitas = 1) {
     const produk = allBarang.find(p => p._id === idProduk);
@@ -153,7 +173,7 @@ function tambahKeKeranjang(idProduk, jenis, kuantitas = 1) {
     showToast(`"${produk.nama} (${jenis})" ditambahkan ke keranjang!`);
 }
 
-// === FUNGSI MODAL & TAMPILAN KERANJANG (BARU & MODIFIKASI) ===
+// === FUNGSI MODAL & TAMPILAN KERANJANG ===
 
 const modalKeranjang = document.getElementById('modal-keranjang');
 window.tampilkanKeranjang = function() {
@@ -206,7 +226,7 @@ window.ubahKuantitasDiKeranjang = function(idItem, jumlah) {
             hapusDariKeranjang(idItem);
         } else {
             simpanKeranjang();
-            tampilkanKeranjang(); // Refresh tampilan keranjang
+            tampilkanKeranjang();
         }
     }
 }
@@ -214,10 +234,10 @@ window.ubahKuantitasDiKeranjang = function(idItem, jumlah) {
 window.hapusDariKeranjang = function(idItem) {
     keranjang = keranjang.filter(i => i.idItem !== idItem);
     simpanKeranjang();
-    tampilkanKeranjang(); // Refresh tampilan keranjang
+    tampilkanKeranjang();
 }
 
-// === LOGIKA CHECKOUT & PEMBAYARAN (DIMODIFIKASI) ===
+// === LOGIKA CHECKOUT & PEMBAYARAN ===
 
 const modalHalamanPembayaran = document.getElementById('modal-halaman-pembayaran');
 const waErrorEl = document.getElementById('wa-error');
@@ -228,9 +248,17 @@ window.lanjutKePembayaran = function(event) {
         alert("Keranjang Anda kosong!");
         return;
     }
-    // ... (Validasi nomor WA sama seperti sebelumnya) ...
     
-    // Kumpulkan data
+    const teleponInput = document.getElementById('telepon-pelanggan');
+    const telepon = teleponInput.value.trim();
+    if (!/^08[0-9]{8,11}$/.test(telepon)) {
+        waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789';
+        waErrorEl.style.display = 'block';
+        teleponInput.focus();
+        return;
+    }
+    waErrorEl.style.display = 'none';
+
     let totalBayar = 0;
     keranjang.forEach(item => { totalBayar += item.harga * item.kuantitas; });
 
@@ -238,12 +266,16 @@ window.lanjutKePembayaran = function(event) {
         items: keranjang,
         totalBayar: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(totalBayar),
         namaPelanggan: document.getElementById('nama-pelanggan').value,
-        // ... (data pelanggan lainnya sama)
+        alamatLengkap: document.getElementById('alamat-lengkap').value,
+        kota: document.getElementById('kota-kabupaten').value,
+        provinsi: document.getElementById('provinsi').value,
+        kodePos: document.getElementById('kode-pos').value,
+        telepon: telepon,
+        catatan: document.getElementById('notes-tambahan').value,
         metodeBayar: document.querySelector('input[name="pembayaran"]:checked').value,
-        nomorWhatsappTujuan: "62895363383732" // Ambil dari produk pertama atau set default
+        nomorWhatsappTujuan: "62895363383732"
     };
 
-    // Tampilkan data di halaman pembayaran
     const ringkasanProdukEl = document.getElementById('final-ringkasan-produk');
     ringkasanProdukEl.innerHTML = '';
     dataPesananFinal.items.forEach(item => {
@@ -251,46 +283,68 @@ window.lanjutKePembayaran = function(event) {
     });
     document.getElementById('final-total-tagihan').textContent = dataPesananFinal.totalBayar;
     
-    // ... (Logika menampilkan instruksi bank sama seperti sebelumnya) ...
+    const instruksiContainer = document.getElementById('final-instruksi-pembayaran');
+    const metode = dataPesananFinal.metodeBayar;
+    if (metode === 'QRIS') {
+        instruksiContainer.innerHTML = `<h4>Scan QRIS di bawah ini:</h4><img src="${detailBank.QRIS.img}" alt="QRIS Code" style="max-width: 180px; border-radius: 8px;">`;
+    } else {
+        instruksiContainer.innerHTML = `
+            <h4>Transfer ke ${metode}:</h4>
+            <p class="rekening-info">
+                Nomor Rekening: <strong id="final-rek-${metode.toLowerCase()}">${detailBank[metode].norek}</strong>
+                <button type="button" class="btn-salin" onclick="salinRekening('final-rek-${metode.toLowerCase()}', '${metode}')">Salin</button>
+            </p>
+            <p>a.n. <strong>${detailBank[metode].an}</strong></p>
+        `;
+    }
 
     modalKeranjang.style.display = 'none';
     modalHalamanPembayaran.style.display = 'flex';
 }
 
+window.salinRekening = function(elementId, bank) {
+    const rekening = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(rekening).then(() => {
+        showToast(`Nomor rekening ${bank} berhasil disalin!`);
+    });
+}
+
 window.konfirmasiViaWhatsapp = function() {
-    // Bangun pesan dari data yang sudah disimpan
     let daftarProdukText = '';
     dataPesananFinal.items.forEach((item, index) => {
         daftarProdukText += `${index + 1}. ${item.nama}\n   - Jenis: ${item.jenis}\n   - Jumlah: ${item.kuantitas} pcs\n`;
     });
+    
+    let alamatFormatted = `${dataPesananFinal.alamatLengkap}\n${dataPesananFinal.kota}, ${dataPesananFinal.provinsi}\nKode Pos: ${dataPesananFinal.kodePos}`;
+    if (dataPesananFinal.catatan.trim() !== "") {
+        alamatFormatted += `\n\n*Catatan:* ${dataPesananFinal.catatan}`;
+    }
 
-    let pesan = `Halo DRC Racing, saya ingin konfirmasi pesanan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:*\n${daftarProdukText}\n*Total:* ${dataPesananFinal.totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${dataPesananFinal.namaPelanggan}\n... (lanjutkan format pesan seperti sebelumnya) ...`;
+    let pesan = `Halo DRC Racing, saya ingin konfirmasi pesanan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:*\n${daftarProdukText}\n*Total:* ${dataPesananFinal.totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${dataPesananFinal.namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${dataPesananFinal.telepon}\n\n*METODE PEMBAYARAN:*\n${dataPesananFinal.metodeBayar}\n-------------------------\n\nSaya akan segera mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
 
     const linkWhatsapp = `https://wa.me/${dataPesananFinal.nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
     
     window.open(linkWhatsapp, '_blank');
-    keranjang = []; // Kosongkan keranjang setelah checkout
+    keranjang = [];
     simpanKeranjang();
     tutupSemuaModal();
 }
 
 window.tutupSemuaModal = function() {
-    modalKeranjang.style.display = 'none';
-    modalHalamanPembayaran.style.display = 'none';
-    modalPilihJenis.style.display = 'none';
+    document.getElementById('modal-keranjang').style.display = 'none';
+    document.getElementById('modal-halaman-pembayaran').style.display = 'none';
+    document.getElementById('modal-pilih-jenis').style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
 function showToast(message) {
     const toast = document.getElementById("toast-notification");
-    toast.textContent = message; toast.className = "toast show";
+    toast.textContent = message;
+    toast.className = "toast show";
     setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
 }
 
-
-// Event Listener untuk memuat keranjang saat halaman dibuka
 document.addEventListener('DOMContentLoaded', () => {
     initIndexPage();
     muatKeranjang();
-    // ... (event listener lainnya sama seperti sebelumnya) ...
 });
