@@ -118,42 +118,19 @@ body {
 .produk-highlight-col {
   flex: 1 1 45%;
   max-width: 600px;
-  overflow: hidden;
-  /* === REVISI: Membuat judul bisa diklik === */
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 15px;
-  transition: background-color 0.3s ease;
+  overflow: hidden; 
 }
-.produk-highlight-col:hover {
-    background-color: #1c1c1c;
-}
-/* ======================================= */
 
 #launching-list, #best-seller-list {
   display: flex;
   flex-direction: row;   
   overflow-x: auto;      
   gap: 20px;
+  padding: 10px 5px 20px 5px;  
   -webkit-overflow-scrolling: touch; 
   scrollbar-width: thin; 
-  scrollbar-color: #e63946 #111;
-  /* === REVISI: Menyembunyikan produk dengan transisi === */
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.7s ease-in-out, opacity 0.5s ease-in-out, padding 0.7s ease-in-out;
-  padding: 0 5px;
-  /* ================================================= */
+  scrollbar-color: #e63946 #111; 
 }
-
-/* === REVISI: Style untuk menampilkan produk === */
-#launching-list.visible, #best-seller-list.visible {
-  max-height: 600px; /* Tinggi maksimal saat terbuka */
-  opacity: 1;
-  padding: 20px 5px; /* Mengembalikan padding saat terbuka */
-}
-/* ============================================ */
 
 #launching-list::-webkit-scrollbar,
 #best-seller-list::-webkit-scrollbar {
@@ -283,7 +260,9 @@ body {
   margin-bottom: 14px;
   background: #fff;
   border: 2px solid #e63946;
-  align-self: center;
+  /* === REVISI FOTO DI TENGAH START === */
+  align-self: center; /* Membuat gambar berada di tengah secara horizontal */
+  /* === REVISI FOTO DI TENGAH END === */
 }
 .produk-card h3 {
   font-family: 'Bebas Neue', cursive;
