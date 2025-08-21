@@ -137,12 +137,45 @@ window.bukaModalMarketplace = function() {
     document.body.style.overflow = 'hidden';
 }
 window.tutupModalMarketplace = function() { modalMarketplace.style.display = 'none'; document.body.style.overflow = 'auto'; produkTerpilih = null; }
+
+// --- MODIFIKASI DIMULAI: FUNGSI Buka Form Pembelian ---
 window.bukaFormPembelian = function() {
     if (!produkTerpilih) return;
-    formNamaProduk.value = produkTerpilih.nama; formHargaProduk.value = produkTerpilih.harga;
-    inputKuantitas.value = 1; hitungTotal(); modalForm.style.display = 'flex';
+    
+    // Mengisi data produk dasar
+    formNamaProduk.value = produkTerpilih.nama; 
+    formHargaProduk.value = produkTerpilih.harga;
+    inputKuantitas.value = 1; 
+    hitungTotal(); 
+
+    // Mengambil elemen HTML untuk pilihan jenis
+    const formGroupJenis = document.getElementById('form-group-jenis');
+    const jenisOptionsContainer = document.getElementById('jenis-options-container');
+    jenisOptionsContainer.innerHTML = ''; // Kosongkan pilihan sebelumnya
+
+    // Logika untuk menampilkan atau menyembunyikan pilihan jenis
+    if (produkTerpilih.jenis && produkTerpilih.jenis.length > 1) {
+        // Jika ada lebih dari 1 jenis, buatkan radio button
+        produkTerpilih.jenis.forEach((item, index) => {
+            const isChecked = index === 0 ? 'checked' : ''; // Pilih yg pertama secara default
+            const radioHTML = `
+                <label>
+                    <input type="radio" name="pilihan_jenis" value="${item}" ${isChecked}> ${item}
+                </label>
+            `;
+            jenisOptionsContainer.innerHTML += radioHTML;
+        });
+        formGroupJenis.style.display = 'block'; // Tampilkan blok pilihan
+    } else {
+        // Jika hanya 1 atau tidak ada jenis, sembunyikan
+        formGroupJenis.style.display = 'none';
+    }
+
+    modalForm.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
+// --- MODIFIKASI SELESAI ---
+
 window.tutupFormPembelian = function() {
     modalForm.style.display = 'none'; document.getElementById('instruksi-pembayaran').style.display = 'none';
     document.getElementById('form-beli').reset(); document.body.style.overflow = 'auto';
@@ -162,11 +195,14 @@ function showToast(message) {
     setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
 }
 
+// --- MODIFIKASI DIMULAI: FUNGSI Kirim ke WhatsApp ---
 window.kirimKeWhatsapp = function(event) {
     event.preventDefault();
     if (!produkTerpilih) { alert("Terjadi kesalahan, silakan coba lagi."); return; }
+    
     const teleponInput = document.getElementById('telepon-pelanggan'); const telepon = teleponInput.value.trim();
     if (!/^08[0-9]{8,11}$/.test(telepon)) { waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789'; waErrorEl.style.display = 'block'; teleponInput.focus(); return; }
+    
     waErrorEl.style.display = 'none';
     const nomorWhatsappTujuan = produkTerpilih.whatsapp || "62895363383732";
     const namaProduk = formNamaProduk.value; const kuantitas = inputKuantitas.value;
@@ -176,13 +212,29 @@ window.kirimKeWhatsapp = function(event) {
     const alamatLengkap = document.getElementById('alamat-lengkap').value;
     const kota = document.getElementById('kota-kabupaten').value; const provinsi = document.getElementById('provinsi').value;
     const kodePos = document.getElementById('kode-pos').value; const catatan = document.getElementById('notes-tambahan').value;
+    
+    // Ambil nilai jenis yang dipilih
+    let jenisProduk = '';
+    const radioJenisTerpilih = document.querySelector('input[name="pilihan_jenis"]:checked');
+    if (radioJenisTerpilih) {
+        jenisProduk = radioJenisTerpilih.value;
+    }
+
     let alamatFormatted = `${alamatLengkap}\n${kota}, ${provinsi}\nKode Pos: ${kodePos}`;
     if (catatan.trim() !== "") { alamatFormatted += `\n\n*Catatan:* ${catatan}`; }
-    const pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
+    
+    // Bangun pesan dengan menyertakan jenis (jika ada)
+    let pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n`;
+    if (jenisProduk) {
+        pesan += `*Jenis:* ${jenisProduk}\n`;
+    }
+    pesan += `*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
+    
     const linkWhatsapp = `https://wa.me/${nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
     window.open(linkWhatsapp, '_blank');
     tutupFormPembelian();
 }
+// --- MODIFIKASI SELESAI ---
 
 document.addEventListener('DOMContentLoaded', () => {
     initIndexPage();
