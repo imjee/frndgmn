@@ -1,3 +1,4 @@
+// === KONFIGURASI & VARIABEL GLOBAL ===
 const kategoriMotor = {
     vespa: { title: 'Vespa Series', jenis: ['ALL', 'PX', 'PTS', 'Excel', 'SUPER'] },
     matic: { title: 'Matic Series', jenis: ['ALL', 'Vario', 'Mio'] },
@@ -5,8 +6,9 @@ const kategoriMotor = {
     ninja: { title: 'Ninja Series', jenis: ['ALL', 'Ninja R', 'Ninja RR', 'Ninja KIS'] }
 };
 let allBarang = [];
-let produkTerpilih = null; // Menyimpan produk yang sedang dipilih
+let produkTerpilih = null; // Menyimpan produk yang sedang dipilih untuk proses pembelian
 
+// === FUNGSI UTAMA UNTUK MENGAMBIL DATA PRODUK ===
 async function fetchProducts() {
     try {
         const res = await fetch('./data/barang.json');
@@ -24,6 +26,7 @@ async function fetchProducts() {
     }
 }
 
+// === LOGIKA UNTUK HALAMAN UTAMA (INDEX.HTML) ===
 async function initIndexPage() {
     let currentSeries = 'vespa';
     let currentJenis = 'ALL';
@@ -113,37 +116,38 @@ async function initIndexPage() {
     renderProductCards(document.getElementById('best-seller-list'), allBarang.filter(b => b.bestseller));
 }
 
+// === KUMPULAN FUNGSI MODAL & ALUR PEMBELIAN ===
+
+// Mengambil elemen-elemen Modal dari HTML
 const modalPilihan = document.getElementById('modal-pilihan-beli');
 const modalMarketplace = document.getElementById('modal-marketplace-links');
 const modalForm = document.getElementById('modal-pembelian');
+
+// Elemen-elemen di dalam Form Pembelian
 const formNamaProduk = document.getElementById('form-nama-produk');
 const formHargaProduk = document.getElementById('form-harga-produk');
 const inputKuantitas = document.getElementById('kuantitas');
 const totalHargaSpan = document.getElementById('total-harga');
 const waErrorEl = document.getElementById('wa-error');
 
+// MODAL 1: Fungsi untuk membuka modal Pilihan Pembelian
 window.bukaModalPilihan = function(idProduk) {
     produkTerpilih = allBarang.find(p => p.id === idProduk);
-    if (!produkTerpilih) return;
+    if (!produkTerpilih) return; // Jika produk tidak ditemukan, hentikan
+    
     document.getElementById('modal-pilihan-produk').textContent = produkTerpilih.nama;
     modalPilihan.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
+
+// Fungsi ini untuk menutup modal pilihan jika dibatalkan (klik 'X' atau area luar)
 window.tutupModalPilihan = function() {
     modalPilihan.style.display = 'none';
     document.body.style.overflow = 'auto';
-    produkTerpilih = null;
+    produkTerpilih = null; // Hapus info produk jika proses dibatalkan
 }
-window.pilihBeliLangsung = function() {
-    if (!produkTerpilih) return;
-    tutupModalPilihan();
-    bukaFormPembelian(produkTerpilih.nama, produkTerpilih.harga);
-}
-window.pilihBeliMarketplace = function() {
-    if (!produkTerpilih) return;
-    tutupModalPilihan();
-    bukaModalMarketplace();
-}
+
+// MODAL 2: Fungsi untuk membuka modal Link Marketplace
 window.bukaModalMarketplace = function() {
     if (!produkTerpilih) return;
     const buttonsContainer = document.getElementById('modal-marketplace-buttons');
@@ -154,71 +158,112 @@ window.bukaModalMarketplace = function() {
     modalMarketplace.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
+
+// Fungsi untuk menutup modal marketplace
 window.tutupModalMarketplace = function() {
     modalMarketplace.style.display = 'none';
     document.body.style.overflow = 'auto';
-    produkTerpilih = null;
-}
-window.bukaFormPembelian = function(namaProduk, hargaProduk) {
-  formNamaProduk.value = namaProduk; formHargaProduk.value = hargaProduk; inputKuantitas.value = 1;
-  hitungTotal(); modalForm.style.display = 'flex'; document.body.style.overflow = 'hidden';
-}
-window.tutupFormPembelian = function() {
-  modalForm.style.display = 'none'; document.getElementById('instruksi-pembayaran').style.display = 'none';
-  document.getElementById('form-beli').reset(); document.body.style.overflow = 'auto'; waErrorEl.style.display = 'none';
-}
-window.ubahKuantitas = function(jumlah) {
-  let kuantitasSaatIni = parseInt(inputKuantitas.value); kuantitasSaatIni += jumlah;
-  if (kuantitasSaatIni < 1) { kuantitasSaatIni = 1; }
-  inputKuantitas.value = kuantitasSaatIni; hitungTotal();
-}
-window.hitungTotal = function() {
-  const harga = parseFloat(formHargaProduk.value); const kuantitas = parseInt(inputKuantitas.value);
-  const total = harga * kuantitas;
-  totalHargaSpan.innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(total);
-}
-window.tampilkanInstruksi = function(metode) {
-  hitungTotal(); const areaInstruksi = document.getElementById('instruksi-pembayaran');
-  const semuaDetail = document.querySelectorAll('.detail-instruksi');
-  semuaDetail.forEach(detail => detail.style.display = 'none');
-  const detailPilihan = document.getElementById(`detail-${metode}`);
-  if (detailPilihan) { detailPilihan.style.display = 'block'; }
-  areaInstruksi.style.display = 'block';
-}
-window.salinRekening = function(elementId, button) {
-  const rekening = document.getElementById(elementId).innerText;
-  navigator.clipboard.writeText(rekening).then(() => {
-    const originalText = button.innerText;
-    button.innerText = 'Disalin!';
-    setTimeout(() => { button.innerText = originalText; }, 2000);
-  });
-}
-window.kirimKeWhatsapp = function(event) {
-  event.preventDefault();
-  const teleponInput = document.getElementById('telepon-pelanggan');
-  const telepon = teleponInput.value.trim();
-  if (!/^08[0-9]{8,11}$/.test(telepon)) {
-    waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789';
-    waErrorEl.style.display = 'block';
-    teleponInput.focus();
-    return;
-  }
-  waErrorEl.style.display = 'none';
-  const nomorWhatsappTujuan = "6281234567890"; 
-  const namaProduk = formNamaProduk.value; const kuantitas = inputKuantitas.value;
-  const namaPelanggan = document.getElementById('nama-pelanggan').value;
-  const alamat = document.getElementById('alamat-pelanggan').value;
-  const metodeBayar = document.querySelector('input[name="pembayaran"]:checked').value;
-  const totalBayar = totalHargaSpan.innerText;
-  const pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat:* ${alamat}\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
-  const linkWhatsapp = `https://wa.me/${nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
-  window.open(linkWhatsapp, '_blank');
-  tutupFormPembelian();
+    produkTerpilih = null; // Hapus info produk setelah selesai
 }
 
+// MODAL 3: Fungsi untuk membuka modal Form Pembelian
+window.bukaFormPembelian = function() {
+    if (!produkTerpilih) return; // Cek lagi untuk memastikan
+    formNamaProduk.value = produkTerpilih.nama;
+    formHargaProduk.value = produkTerpilih.harga;
+    inputKuantitas.value = 1; // Selalu reset kuantitas ke 1
+    hitungTotal();
+    modalForm.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// Fungsi untuk menutup form pembelian
+window.tutupFormPembelian = function() {
+    modalForm.style.display = 'none';
+    document.getElementById('instruksi-pembayaran').style.display = 'none';
+    document.getElementById('form-beli').reset(); // Reset isi form
+    document.body.style.overflow = 'auto';
+    waErrorEl.style.display = 'none';
+    produkTerpilih = null; // Hapus info produk setelah selesai atau dibatalkan
+}
+
+// === FUNGSI-FUNGSI PEMBANTU ===
+
+// Fungsi yang dipanggil saat tombol di Modal Pilihan diklik
+window.pilihBeliLangsung = function() {
+    modalPilihan.style.display = 'none'; // Hanya sembunyikan modal pilihan
+    bukaFormPembelian(); // Buka form, produkTerpilih masih ada
+}
+
+window.pilihBeliMarketplace = function() {
+    modalPilihan.style.display = 'none'; // Hanya sembunyikan modal pilihan
+    bukaModalMarketplace(); // Buka modal marketplace, produkTerpilih masih ada
+}
+
+// Fungsi-fungsi untuk interaksi di dalam Form
+window.ubahKuantitas = function(jumlah) {
+    let kuantitasSaatIni = parseInt(inputKuantitas.value);
+    kuantitasSaatIni += jumlah;
+    if (kuantitasSaatIni < 1) { kuantitasSaatIni = 1; }
+    inputKuantitas.value = kuantitasSaatIni;
+    hitungTotal();
+}
+
+window.hitungTotal = function() {
+    const harga = parseFloat(formHargaProduk.value);
+    const kuantitas = parseInt(inputKuantitas.value);
+    const total = harga * kuantitas;
+    totalHargaSpan.innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(total);
+}
+
+window.tampilkanInstruksi = function(metode) {
+    hitungTotal();
+    const areaInstruksi = document.getElementById('instruksi-pembayaran');
+    const semuaDetail = document.querySelectorAll('.detail-instruksi');
+    semuaDetail.forEach(detail => detail.style.display = 'none');
+    const detailPilihan = document.getElementById(`detail-${metode}`);
+    if (detailPilihan) { detailPilihan.style.display = 'block'; }
+    areaInstruksi.style.display = 'block';
+}
+
+window.salinRekening = function(elementId, button) {
+    const rekening = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(rekening).then(() => {
+        const originalText = button.innerText;
+        button.innerText = 'Disalin!';
+        setTimeout(() => { button.innerText = originalText; }, 2000);
+    });
+}
+
+// Fungsi Final untuk mengirim pesanan ke WhatsApp
+window.kirimKeWhatsapp = function(event) {
+    event.preventDefault();
+    const teleponInput = document.getElementById('telepon-pelanggan');
+    const telepon = teleponInput.value.trim();
+    if (!/^08[0-9]{8,11}$/.test(telepon)) {
+        waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789';
+        waErrorEl.style.display = 'block';
+        teleponInput.focus();
+        return;
+    }
+    waErrorEl.style.display = 'none';
+    const nomorWhatsappTujuan = "6281234567890"; 
+    const namaProduk = formNamaProduk.value; const kuantitas = inputKuantitas.value;
+    const namaPelanggan = document.getElementById('nama-pelanggan').value;
+    const alamat = document.getElementById('alamat-pelanggan').value;
+    const metodeBayar = document.querySelector('input[name="pembayaran"]:checked').value;
+    const totalBayar = totalHargaSpan.innerText;
+    const pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat:* ${alamat}\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
+    const linkWhatsapp = `https://wa.me/${nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
+    window.open(linkWhatsapp, '_blank');
+    tutupFormPembelian();
+}
+
+// === INISIALISASI SCRIPT SAAT HALAMAN DIBUKA ===
 document.addEventListener('DOMContentLoaded', () => {
     initIndexPage();
     window.addEventListener('click', e => {
+        // Hanya tutup modal jika user klik di area luar modal
         if (e.target == modalPilihan) tutupModalPilihan();
         if (e.target == modalMarketplace) tutupModalMarketplace();
         if (e.target == modalForm) tutupFormPembelian();
