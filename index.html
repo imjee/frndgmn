@@ -30,18 +30,25 @@
   </section>
 
   <section class="produk-highlight-row">
-    <div class="produk-highlight-col">
-      <div class="section-kicker">NEW LAUNCHING</div>
-      <h2 class="section-title">Terbaru</h2>
-      <div id="launching-list"></div>
+    <div class="highlight-tabs">
+        <button class="highlight-tab-btn active" onclick="openHighlightTab(event, 'NewLaunch')">
+            <span class="section-kicker">NEW LAUNCHING</span>
+            <h2 class="section-title">Terbaru</h2>
+        </button>
+        <button class="highlight-tab-btn" onclick="openHighlightTab(event, 'BestSeller')">
+            <span class="section-kicker">BEST SELLER</span>
+            <h2 class="section-title">Terlaris</h2>
+        </button>
     </div>
-    <div class="produk-highlight-col">
-      <div class="section-kicker">BEST SELLER</div>
-      <h2 class="section-title">Terlaris</h2>
-      <div id="best-seller-list"></div>
+
+    <div id="NewLaunch" class="highlight-tab-content">
+        <div id="launching-list" class="highlight-list"></div>
+    </div>
+
+    <div id="BestSeller" class="highlight-tab-content" style="display: none;">
+        <div id="best-seller-list" class="highlight-list"></div>
     </div>
   </section>
-
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
@@ -75,7 +82,7 @@
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
     <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
-      Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
+       Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
   <footer id="kontak" class="footer">
@@ -93,200 +100,7 @@
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
-  <script>
-const kategoriMotor = {
-  matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
-  herex: { title: 'Herex Series', jenis: ['CB', 'GL', 'Tiger'] },
-  vespa: { title: 'Vespa Series', jenis: ['PX', 'PTS', 'Excel', 'SUPER'] },
-  ninja: { title: 'Ninja Series', jenis: ['Ninja R', 'Ninja RR', 'Ninja KIS'] }
-};
-let allBarang = [];
-let currentSeries = 'matic';
-let currentJenis = '';
-let searchTerm = '';
 
-async function loadPublicBarangList() {
-  const loadingEl = document.getElementById('produk-loading');
-  if (loadingEl) loadingEl.style.display = 'block';
-  try {
-    const res = await fetch('/data/barang.json');
-    if (!res.ok) throw new Error('Gagal memuat data produk.');
-    const result = await res.json();
-    allBarang = result.data || [];
-    renderJenisSelector();
-    showGridBarangList();
-    renderLaunchingProducts();
-    renderBestSellerProducts();
-  } catch (err) {
-    console.error(err); // For debugging
-    document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat. Cek konsol untuk error.</p>';
-  } finally {
-    if (loadingEl) loadingEl.style.display = 'none';
-  }
-}
-
-function renderJenisSelector() {
-  const jenisContainer = document.getElementById('jenis-selector');
-  jenisContainer.innerHTML = '';
-  const jenisArr = kategoriMotor[currentSeries].jenis;
-  
-  // Auto-select first jenis on category change
-  if (!jenisArr.includes(currentJenis)) {
-    currentJenis = jenisArr[0];
-  }
-
-  jenisArr.forEach(jenis => {
-    const btn = document.createElement('button');
-    btn.className = 'jenis-btn' + (currentJenis === jenis ? ' active' : '');
-    btn.textContent = jenis;
-    btn.onclick = () => {
-      currentJenis = jenis;
-      showGridBarangList();
-      // Highlight active button
-      document.querySelectorAll('.jenis-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    };
-    jenisContainer.appendChild(btn);
-  });
-}
-
-function showGridBarangList() {
-  const list = document.getElementById('barang-list');
-  if (!list) return;
-  list.innerHTML = '';
-
-  // 1. Filter by category and sub-category (jenis)
-  let barangList = allBarang.filter(b => 
-    b.kategori === currentSeries && b.jenis.includes(currentJenis)
-  );
-
-  // 2. Filter by search term
-  if (searchTerm.trim()) {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    barangList = barangList.filter(b =>
-      b.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
-      b.jenis.some(j => j.toLowerCase().includes(lowerCaseSearchTerm)) // Check if any 'jenis' in the array matches
-    );
-  }
-
-  if (!barangList.length) {
-    list.innerHTML = '<p>Produk tidak ditemukan.</p>';
-    return;
-  }
-  
-  const grid = document.createElement('div');
-  grid.className = 'produk-list-grid';
-  barangList.forEach(barang => {
-    const el = document.createElement('div');
-    el.className = 'produk-card';
-    el.innerHTML = `
-      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
-      <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
-      <p class="produk-desc">${barang.deskripsi}</p>
-      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
-    `;
-    grid.appendChild(el);
-  });
-  list.appendChild(grid);
-}
-
-// Modal logic
-function openModalBeli(barangRaw) {
-  let barang = typeof barangRaw === "string" ? JSON.parse(barangRaw.replace(/'/g,'"')) : barangRaw;
-  document.getElementById('modal-beli-title').textContent = barang.nama;
-  document.getElementById('modal-beli-desc').textContent = barang.deskripsi;
-  document.querySelector('.modal-beli-btn.tokopedia').href = barang.tokopedia || "#";
-  document.querySelector('.modal-beli-btn.shopee').href = barang.shopee || "#";
-  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis.join(', ')})`);
-  let waNumber = barang.whatsapp || "62895363383732";
-  document.querySelector('.modal-beli-btn.whatsapp').href = `https://wa.me/${waNumber}?text=${waMsg}`;
-  document.getElementById('modal-beli').style.display = 'flex';
-  setTimeout(() => {
-    document.getElementById('modal-beli').classList.add('show');
-  }, 10);
-}
-document.querySelector('.modal-beli-close').onclick = function() {
-  document.getElementById('modal-beli').classList.remove('show');
-  setTimeout(() => {
-    document.getElementById('modal-beli').style.display = 'none';
-  }, 200);
-};
-document.getElementById('modal-beli').onclick = function(e) {
-  if (e.target === this) {
-    document.querySelector('.modal-beli-close').onclick();
-  }
-};
-
-// Produk highlight (New Launching & Best Seller)
-function renderLaunchingProducts() {
-  const container = document.getElementById('launching-list');
-  container.innerHTML = '';
-  const launchingProducts = allBarang.filter(b => b.newlaunching);
-  if (!launchingProducts.length) {
-    container.innerHTML = '<p>Belum ada produk launching.</p>';
-    return;
-  }
-  launchingProducts.forEach(barang => {
-    const el = document.createElement('div');
-    el.className = 'produk-card highlight';
-    el.innerHTML = `
-      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
-      <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
-      <p class="produk-desc">${barang.deskripsi}</p>
-      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
-    `;
-    container.appendChild(el);
-  });
-}
-function renderBestSellerProducts() {
-  const container = document.getElementById('best-seller-list');
-  container.innerHTML = '';
-  const bestSellerProducts = allBarang.filter(b => b.bestseller);
-  if (!bestSellerProducts.length) {
-    container.innerHTML = '<p>Belum ada produk best seller.</p>';
-    return;
-  }
-  bestSellerProducts.forEach(barang => {
-    const el = document.createElement('div');
-    el.className = 'produk-card highlight';
-    el.innerHTML = `
-      <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
-      <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
-      <p class="produk-desc">${barang.deskripsi}</p>
-      <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
-      <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
-    `;
-    container.appendChild(el);
-  });
-}
-
-// Category series selector
-document.addEventListener('DOMContentLoaded', () => {
-  loadPublicBarangList();
-  document.querySelectorAll('.series-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.series-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentSeries = btn.getAttribute('data-series');
-      currentJenis = ''; // Reset jenis so it can be auto-selected
-      renderJenisSelector();
-      showGridBarangList();
-    });
-  });
-  document.getElementById('search-input').addEventListener('input', function(e) {
-    searchTerm = e.target.value;
-    showGridBarangList();
-  });
-  document.getElementById('search-btn').addEventListener('click', function() {
-    searchTerm = document.getElementById('search-input').value;
-    showGridBarangList();
-  });
-});
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
