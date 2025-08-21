@@ -46,7 +46,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
 .produk-searchbar { display: flex; justify-content: center; align-items: center; margin: 30px auto; max-width: 400px; }
 .produk-searchbar input { font-size: 16px; padding: 12px 18px; border-radius: 20px; border: 1px solid #555; outline: none; width: 100%; background: #222; color: #fff; }
 .produk-list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1200px; margin: 20px auto 0 auto; min-height: 400px; }
-.produk-card { background: #1a1a1a; border-radius: 14px; padding: 22px; text-align: center; border: 1px solid #333; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+.produk-card { background: #1a1a1a; border-radius: 14px; padding: 22px; text-align: center; border: 1px solid #333; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
 .produk-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.5); border-color: #e63946; }
 .produk-img { width: 100%; max-width: 200px; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; background: #fff; align-self: center; }
 .produk-card h3 { font-family: 'Bebas Neue', cursive; font-size: 22px; color: #e63946; margin: 10px 0; min-height: 45px; }
@@ -130,26 +130,6 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
 .toast.show { visibility: visible; animation: toast-in 0.5s, toast-out 0.5s 2.5s; }
 .back-to-top-btn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 998; background-color: #e63946; color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; opacity: 0.8; transition: opacity 0.3s, transform 0.3s; }
 .back-to-top-btn:hover { opacity: 1; transform: scale(1.1); }
-
-/* === GAYA HALAMAN PEMBAYARAN === */
-.payment-page { padding: 40px 20px; animation: fadeIn 0.5s ease; }
-.payment-container { max-width: 700px; margin: 0 auto; background-color: #1a1a1a; border-radius: 10px; border-top: 4px solid #e63946; padding: 30px; box-shadow: 0 5px 25px rgba(0,0,0,0.3); }
-.payment-header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 20px; }
-.payment-header .fa-check-circle { font-size: 50px; color: #25D366; margin-bottom: 10px; }
-.payment-header h1 { font-family: 'Bebas Neue', cursive; margin: 0; font-size: 36px; }
-.payment-summary { margin-bottom: 30px; background-color: #222; padding: 20px; border-radius: 8px; }
-.payment-instructions { margin-bottom: 30px; }
-.payment-summary h2, .payment-instructions h2 { font-family: 'Bebas Neue', cursive; font-size: 24px; border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 15px; }
-.summary-item { display: flex; justify-content: space-between; font-size: 16px; padding: 8px 0; }
-.summary-item.total { font-size: 20px; font-weight: bold; color: #e63946; border-top: 1px solid #333; margin-top: 10px; padding-top: 10px; }
-.payment-summary h3 { font-family: 'Bebas Neue', cursive; font-size: 18px; margin-top: 20px; }
-.payment-summary p { line-height: 1.6; margin: 5px 0; color: #ccc; }
-.instr-detail { background-color: #222; padding: 15px; border-radius: 5px; margin-bottom: 10px; }
-.instr-detail p { margin: 0; }
-.payment-actions { text-align: center; margin-top: 20px; }
-.link-kembali { display: block; margin-top: 15px; color: #888; text-decoration: none; transition: color 0.2s; }
-.link-kembali:hover { color: #fff; }
-
 
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
