@@ -27,17 +27,17 @@ async function fetchProducts() {
     if (allBarang.length > 0) return allBarang;
     try {
         const res = await fetch('/data/barang.json');
-        if (!res.ok) throw new Error('Data produk tidak ditemukan');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const result = await res.json();
         allBarang = result.data || [];
         return allBarang;
     } catch (err) {
-        console.error("Gagal memuat produk:", err);
+        console.error("Gagal total memuat produk:", err);
         return [];
     }
 }
 
-// Dibuat global (ditempel ke window) agar bisa diakses dari onclick HTML
+// Dibuat global agar bisa diakses dari onclick HTML
 window.addToCart = function(barangId) {
     if (!barangId) return;
     const existingItem = cart.find(item => item.id === barangId);
@@ -50,7 +50,8 @@ window.addToCart = function(barangId) {
     alert('Produk berhasil ditambahkan ke keranjang!');
 }
 
-window.openMarketplaceModal = function(barang) {
+window.openMarketplaceModal = function(barangString) {
+    const barang = JSON.parse(barangString.replace(/&apos;/g, "'"));
     const modal = document.getElementById('modal-marketplace');
     if(!modal) return;
     document.getElementById('modal-marketplace-title').textContent = barang.nama;
@@ -63,41 +64,30 @@ window.openMarketplaceModal = function(barang) {
 
 // === LOGIKA UNTUK HALAMAN INDEX.HTML ===
 async function initIndexPage() {
-    await fetchProducts();
-    
+    // 1. Definisikan semua elemen & variabel yang dibutuhkan
     let currentSeries = 'vespa';
     let currentJenis = 'ALL';
     let searchTerm = '';
-
     const seriesContainer = document.querySelector('.produk-series-selector');
     const jenisContainer = document.getElementById('jenis-selector');
     const searchInput = document.getElementById('search-input');
     const listContainer = document.getElementById('barang-list');
+    const launchingListContainer = document.getElementById('launching-list');
+    const bestSellerListContainer = document.getElementById('best-seller-list');
 
-    function renderFilteredProducts() {
-        let filtered = allBarang;
-        if (currentSeries) {
-            filtered = filtered.filter(p => p.kategori === currentSeries);
-        }
-        if (currentJenis && currentJenis !== 'ALL') {
-            filtered = filtered.filter(p => p.jenis.includes(currentJenis));
-        }
-        if (searchTerm) {
-            filtered = filtered.filter(p => p.nama.toLowerCase().includes(searchTerm));
-        }
-        renderProductCards(listContainer, filtered);
-    }
-
-    function renderProductCards(container, productList) {
+    // 2. Fungsi terpusat untuk membuat kartu produk
+    function renderProductCards(container, productList, isHighlight = false) {
         if (!container) return;
         container.innerHTML = '';
         if (!productList || productList.length === 0) {
-            container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Produk tidak ditemukan.</p>';
+            if (!isHighlight) {
+                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 20px;">Produk tidak ditemukan.</p>';
+            }
             return;
         }
         productList.forEach(barang => {
             const el = document.createElement('div');
-            el.className = 'produk-card';
+            el.className = isHighlight ? 'produk-card highlight' : 'produk-card';
             const barangString = JSON.stringify(barang).replace(/'/g, "&apos;");
             el.innerHTML = `
                 <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
@@ -106,13 +96,26 @@ async function initIndexPage() {
                 <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
                 <div class="produk-actions">
                     <button class="produk-btn" onclick="window.addToCart('${barang.id}')">Tambah ke Keranjang</button>
-                    <button class="btn-marketplace" onclick='window.openMarketplaceModal(${barangString})'>Beli di Marketplace</button>
+                    <button class="btn-marketplace" onclick="window.openMarketplaceModal('${barangString}')">Beli di Marketplace</button>
                 </div>
             `;
             container.appendChild(el);
         });
     }
+    
+    // 3. Fungsi utama untuk memfilter dan me-render produk
+    function displayProducts() {
+        let filtered = allBarang.filter(p => p.kategori === currentSeries);
+        if (currentJenis !== 'ALL') {
+            filtered = filtered.filter(p => p.jenis.includes(currentJenis));
+        }
+        if (searchTerm) {
+            filtered = filtered.filter(p => p.nama.toLowerCase().includes(searchTerm));
+        }
+        renderProductCards(listContainer, filtered);
+    }
 
+    // 4. Fungsi untuk membuat tombol "Jenis"
     function renderJenisButtons() {
         jenisContainer.innerHTML = '';
         kategoriMotor[currentSeries].jenis.forEach(jenis => {
@@ -124,6 +127,7 @@ async function initIndexPage() {
         });
     }
     
+    // 5. Setup Event Listeners
     seriesContainer.addEventListener('click', (e) => {
         if (e.target.matches('.series-btn')) {
             seriesContainer.querySelector('.active').classList.remove('active');
@@ -131,7 +135,7 @@ async function initIndexPage() {
             currentSeries = e.target.dataset.series;
             currentJenis = 'ALL';
             renderJenisButtons();
-            renderFilteredProducts();
+            displayProducts();
         }
     });
 
@@ -140,28 +144,30 @@ async function initIndexPage() {
             jenisContainer.querySelector('.active')?.classList.remove('active');
             e.target.classList.add('active');
             currentJenis = e.target.dataset.jenis;
-            renderFilteredProducts();
+            displayProducts();
         }
     });
 
     searchInput.addEventListener('input', () => {
         searchTerm = searchInput.value.toLowerCase();
-        renderFilteredProducts();
+        displayProducts();
     });
 
     document.getElementById('modal-marketplace')?.querySelector('.modal-marketplace-close').onclick = () => {
         document.getElementById('modal-marketplace').style.display = 'none';
     };
-    
+
+    // 6. Inisialisasi Tampilan Awal
+    await fetchProducts(); // Tunggu produk dimuat
+    renderProductCards(launchingListContainer, allBarang.filter(b => b.newlaunching), true);
+    renderProductCards(bestSellerListContainer, allBarang.filter(b => b.bestseller), true);
     renderJenisButtons();
-    renderFilteredProducts();
-    renderProductCards(document.getElementById('launching-list'), allBarang.filter(b => b.newlaunching));
-    renderProductCards(document.getElementById('best-seller-list'), allBarang.filter(b => b.bestseller));
+    displayProducts();
 }
 
 // === LOGIKA UNTUK HALAMAN KERANJANG.HTML ===
 async function initCartPage() {
-    await fetchProducts(); // **PERBAIKAN KUNCI**: Tunggu data produk selesai dimuat
+    await fetchProducts(); // Wajib tunggu
     const container = document.getElementById('cart-items-container');
     const summaryEl = document.getElementById('cart-summary');
     
@@ -202,30 +208,26 @@ window.updateQuantity = function(id, qty) {
     const item = cart.find(i => i.id === id);
     if(item) {
         item.quantity = parseInt(qty, 10);
-        if(item.quantity <= 0) {
-            window.removeFromCart(id);
-        } else {
-            saveCart();
-            initCartPage(); // Re-render halaman keranjang
-        }
+        if(item.quantity <= 0) window.removeFromCart(id);
+        else { saveCart(); initCartPage(); }
     }
 }
 
 window.removeFromCart = function(id) {
     cart = cart.filter(i => i.id !== id);
     saveCart();
-    initCartPage(); // Re-render halaman keranjang
+    initCartPage();
 }
 
 // === LOGIKA UNTUK HALAMAN CHECKOUT.HTML ===
 async function initCheckoutPage() {
-    await fetchProducts(); // **PERBAIKAN KUNCI**: Tunggu data produk selesai dimuat
+    await fetchProducts(); // Wajib tunggu
     const summaryContainer = document.getElementById('checkout-summary-items');
     const totalEl = document.getElementById('checkout-total-harga');
     let totalPrice = 0;
 
     if (!cart || cart.length === 0) {
-        window.location.href = '/keranjang.html'; // Redirect jika keranjang kosong
+        window.location.href = '/keranjang.html';
         return;
     }
 
@@ -253,13 +255,12 @@ async function initCheckoutPage() {
         });
         pesan += `\n*Total Belanja: Rp${totalPrice.toLocaleString('id-ID')}*\n\n`;
         pesan += `Pesanan ini menunggu konfirmasi pembayaran. Terima kasih.`;
-
         const nomorAdmin = "62895363383732";
         const linkWhatsApp = `https://api.whatsapp.com/send?phone=${nomorAdmin}&text=${encodeURIComponent(pesan)}`;
         
         window.open(linkWhatsApp, '_blank');
         
-        alert('Pesanan Anda sedang dialihkan ke WhatsApp Admin. Mohon selesaikan proses pengiriman pesan untuk konfirmasi.');
+        alert('Pesanan Anda sedang dialihkan ke WhatsApp Admin.');
         this.reset();
         cart = [];
         saveCart();
