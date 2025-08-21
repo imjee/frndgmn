@@ -33,6 +33,7 @@
       <a href="#produk" class="hero-btn">Jelajahi Koleksi Juara</a>
     </div>
   </section>
+  
   <section class="produk-highlight-row">
     <div class="highlight-tabs">
         <button class="highlight-tab-btn active" data-tab="NewLaunch"><span class="section-kicker">NEW LAUNCHING</span><h2 class="section-title">Terbaru</h2></button>
@@ -41,6 +42,7 @@
     <div id="NewLaunch" class="highlight-tab-content"><div id="launching-list" class="highlight-list"></div></div>
     <div id="BestSeller" class="highlight-tab-content" style="display: none;"><div id="best-seller-list" class="highlight-list"></div></div>
   </section>
+
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
@@ -56,6 +58,7 @@
         <div id="loading-indicator" class="loading-indicator" style="display: none;"><div class="spinner"></div><span>Memuat Produk...</span></div>
     </div>
   </section>
+
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">TENTANG KAMI</div>
     <h2 class="tentang-title">Lahir dari Gairah, Ditempa untuk Juara</h2>
@@ -63,6 +66,7 @@
         Berawal dari jantung industri knalpot Indonesia di Purbalingga, DRC Racing Exhaust didirikan atas dasar kecintaan pada kecepatan dan presisi. Kami adalah spesialis knalpot premium yang memadukan riset mendalam, material stainless steel terbaik, dan keahlian tangan para profesional untuk menghasilkan performa, suara, dan estetika yang tak tertandingi. Setiap produk DRC adalah janji kami untuk performa juara, baik di lintasan balap maupun di jalanan.
     </p>
   </section>
+
   <footer id="kontak" class="footer">
     <div class="footer-content-wrapper">
       <div class="footer-info"><img src="/logo-drc.png" alt="DRC Victory" class="footer-logo-img"/><p class="footer-address"><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</p></div>
@@ -73,10 +77,19 @@
 
   <div id="modal-pilih-jenis" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <span class="modal-close" onclick="tutupModalPilihJenis()">&times;</span>
+        <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
         <h2>Pilih Jenis untuk <strong id="nama-produk-pilihan"></strong></h2>
         <div id="container-opsi-jenis" class="payment-options"></div>
         <button id="btn-tambah-keranjang-final" class="btn-submit">Tambah ke Keranjang</button>
+    </div>
+  </div>
+
+  <div id="modal-marketplace-links" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
+        <h2>Pilih Marketplace</h2>
+        <p>Anda akan diarahkan untuk membeli:<br><strong id="nama-produk-marketplace"></strong></p>
+        <div id="modal-marketplace-buttons" class="marketplace-buttons"></div>
     </div>
   </div>
 
@@ -84,13 +97,11 @@
     <div class="modal-content">
       <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
       <h2>Keranjang Belanja Anda</h2>
-      <div id="keranjang-list-container">
-        </div>
+      <div id="keranjang-list-container"></div>
       <div id="keranjang-kosong" style="display: none; text-align: center; padding: 20px;">
         <p>Keranjang Anda masih kosong.</p>
         <button onclick="tutupSemuaModal()" class="hero-btn">Lanjut Belanja</button>
       </div>
-
       <div id="checkout-form-container">
         <div class="ringkasan-total">
             <strong>Total Belanja:</strong>
@@ -117,8 +128,7 @@
         <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
         <h2>Selesaikan Pembayaran</h2>
         <p>Mohon selesaikan pembayaran untuk pesanan berikut:</p>
-        <div class="ringkasan-pesanan" id="final-ringkasan-produk">
-            </div>
+        <div class="ringkasan-pesanan" id="final-ringkasan-produk"></div>
         <strong>Total Tagihan:</strong>
         <h3 id="final-total-tagihan" class="harga-final"></h3>
         <div id="final-instruksi-pembayaran" class="instruksi"></div>
