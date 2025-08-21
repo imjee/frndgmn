@@ -94,14 +94,7 @@
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
   <script>
-    // Inisialisasi Supabase (Ganti dengan URL dan Key Anda)
-    const SUPABASE_URL = '%VITE_SUPABASE_URL%';
-    const SUPABASE_ANON_KEY = '%VITE_SUPABASE_ANON_KEY%';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
     const kategoriMotor = {
       matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
       herex: { title: 'Herex Series', jenis: ['CB', 'GL', 'Tiger'] },
@@ -113,25 +106,26 @@
     let currentJenis = '';
     let searchTerm = '';
 
+    // === REVISI: Mengembalikan fungsi untuk membaca file barang.json ===
     async function loadPublicBarangList() {
       const loadingEl = document.getElementById('produk-loading');
       if (loadingEl) loadingEl.style.display = 'block';
       try {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .order('id', { ascending: true });
-
-        if (error) throw error;
-
-        allBarang = data || [];
+        // Mengambil data dari file lokal 'barang.json'
+        const res = await fetch('barang.json'); 
+        if (!res.ok) throw new Error('Gagal memuat data produk.');
+        
+        const result = await res.json();
+        allBarang = result.data || [];
+        
         renderJenisSelector();
         showGridBarangList();
         renderLaunchingProducts();
         renderBestSellerProducts();
+
       } catch (err) {
         console.error(err);
-        document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
+        document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat. Pastikan file barang.json ada.</p>';
       } finally {
         if (loadingEl) loadingEl.style.display = 'none';
       }
@@ -150,7 +144,7 @@
         const btn = document.createElement('button');
         btn.className = 'jenis-btn' + (currentJenis === jenis ? ' active' : '');
         btn.textContent = jenis;
-        btn.onclick = () => {
+        btn.onclick = (). => {
           currentJenis = jenis;
           showGridBarangList();
           document.querySelectorAll('.jenis-btn').forEach(b => b.classList.remove('active'));
@@ -230,13 +224,10 @@
       const container = document.getElementById('launching-list');
       container.innerHTML = '';
       const launchingProducts = allBarang.filter(b => b.newlaunching);
-      // === REVISI: Hapus baris yang menyembunyikan kolom ===
       if (!launchingProducts.length) {
-        // Biarkan kolom tetap terlihat, tampilkan pesan di dalam list
         container.innerHTML = '<p style="text-align: center; width: 100%;">Belum ada produk launching.</p>';
         return;
       }
-      // ======================================================
       launchingProducts.forEach(barang => {
         const el = document.createElement('div');
         el.className = 'produk-card highlight';
@@ -256,13 +247,10 @@
       const container = document.getElementById('best-seller-list');
       container.innerHTML = '';
       const bestSellerProducts = allBarang.filter(b => b.bestseller);
-      // === REVISI: Hapus baris yang menyembunyikan kolom ===
       if (!bestSellerProducts.length) {
-        // Biarkan kolom tetap terlihat, tampilkan pesan di dalam list
         container.innerHTML = '<p style="text-align: center; width: 100%;">Belum ada produk best seller.</p>';
         return;
       }
-      // ======================================================
       bestSellerProducts.forEach(barang => {
         const el = document.createElement('div');
         el.className = 'produk-card highlight';
