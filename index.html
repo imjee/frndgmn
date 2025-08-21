@@ -59,51 +59,38 @@
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
     <div class="produk-series-selector">
-      <button class="series-btn active" data-series="matic">Matic Series</button>
+      <button class="series-btn active" data-series="vespa">Vespa Series</button>
+      <button class="series-btn" data-series="matic">Matic Series</button>
       <button class="series-btn" data-series="herex">Herex Series</button>
-      <button class="series-btn" data-series="vespa">Vespa Series</button>
       <button class="series-btn" data-series="ninja">Ninja Series</button>
     </div>
-    <div id="jenis-selector" class="jenis-selector"></div>
+    <div id="jenis-selector" class="jenis-selector">
+        </div>
     <div class="produk-searchbar">
-      <input type="text" id="search-input" placeholder="Cari produk, jenis motor..." autocomplete="off"/>
+      <input type="text" id="search-input" placeholder="Cari produk dalam seri ini..." autocomplete="off"/>
       <button id="search-btn"><i class="fas fa-search"></i></button>
     </div>
-    <div id="barang-list"></div>
+    <div id="barang-list" class="produk-list-grid"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
   
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
-    <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
-    <p>DRC Victory Racing Exhaust: spesialis knhalpot racing stainless premium.<br>
+    <h2 class="tentang-title">Kualitas Juara Indonesia</h2>
+    <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
        Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
 
   <footer id="kontak" class="footer">
-    <div class="footer-logo">
-      <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
-    </div>
-    <div class="footer-contact">
-      <span><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</span>
-    </div>
-    <div class="footer-socials">
-      <a href="https://www.tiktok.com/@drcracingexhaust" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.instagram.com/drcracing_exhaust" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://wa.me/62895363383732?text=Halo%20Admin%20DRC%20Victory" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <small>© 2025 DRC Victory Racing Exhaust</small>
-  </footer>
+      </footer>
 
   <div id="modal-marketplace" class="modal-beli-bg" style="display:none;">
       <div class="modal-beli-card">
           <button class="modal-marketplace-close"><i class="fas fa-times"></i></button>
           <h3 id="modal-marketplace-title"></h3>
           <p>Silakan pilih marketplace tujuan Anda:</p>
-          <div id="modal-marketplace-actions" class="modal-beli-actions">
-              </div>
+          <div id="modal-marketplace-actions" class="modal-beli-actions"></div>
       </div>
   </div>
 
