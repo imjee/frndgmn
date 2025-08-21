@@ -11,7 +11,7 @@ let allBarang = [];
 async function fetchProducts() {
     if (allBarang.length > 0) return allBarang;
     try {
-        const res = await fetch('/barang.json'); // Pastikan path ke barang.json Anda benar
+        const res = await fetch('data/barang.json'); // Pastikan path ke barang.json Anda benar
         if (!res.ok) throw new Error('Data produk tidak ditemukan');
         const result = await res.json();
         allBarang = result.data || [];
