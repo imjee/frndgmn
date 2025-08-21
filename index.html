@@ -230,10 +230,13 @@
       const container = document.getElementById('launching-list');
       container.innerHTML = '';
       const launchingProducts = allBarang.filter(b => b.newlaunching);
+      // === REVISI: Hapus baris yang menyembunyikan kolom ===
       if (!launchingProducts.length) {
-        container.parentElement.style.display = 'none'; // Sembunyikan jika tidak ada produk
+        // Biarkan kolom tetap terlihat, tampilkan pesan di dalam list
+        container.innerHTML = '<p style="text-align: center; width: 100%;">Belum ada produk launching.</p>';
         return;
       }
+      // ======================================================
       launchingProducts.forEach(barang => {
         const el = document.createElement('div');
         el.className = 'produk-card highlight';
@@ -253,10 +256,13 @@
       const container = document.getElementById('best-seller-list');
       container.innerHTML = '';
       const bestSellerProducts = allBarang.filter(b => b.bestseller);
+      // === REVISI: Hapus baris yang menyembunyikan kolom ===
       if (!bestSellerProducts.length) {
-        container.parentElement.style.display = 'none'; // Sembunyikan jika tidak ada produk
+        // Biarkan kolom tetap terlihat, tampilkan pesan di dalam list
+        container.innerHTML = '<p style="text-align: center; width: 100%;">Belum ada produk best seller.</p>';
         return;
       }
+      // ======================================================
       bestSellerProducts.forEach(barang => {
         const el = document.createElement('div');
         el.className = 'produk-card highlight';
@@ -296,7 +302,6 @@
         showGridBarangList();
       });
 
-      // === REVISI: Logika untuk membuka/menutup produk highlight ===
       const launchingCol = document.getElementById('launching-list').parentElement;
       const bestSellerCol = document.getElementById('best-seller-list').parentElement;
       const launchingList = document.getElementById('launching-list');
@@ -304,14 +309,13 @@
 
       launchingCol.addEventListener('click', () => {
           launchingList.classList.toggle('visible');
-          bestSellerList.classList.remove('visible'); // Otomatis tutup yang lain
+          bestSellerList.classList.remove('visible'); 
       });
 
       bestSellerCol.addEventListener('click', () => {
           bestSellerList.classList.toggle('visible');
-          launchingList.classList.remove('visible'); // Otomatis tutup yang lain
+          launchingList.classList.remove('visible'); 
       });
-      // ==========================================================
     });
   </script>
 </body>
