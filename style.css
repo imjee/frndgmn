@@ -260,8 +260,7 @@ body {
   margin-bottom: 14px;
   background: #fff;
   border: 2px solid #e63946;
-  height: 180px;
-  object-fit: cover;
+  /* Properti height dan object-fit dihapus untuk menggunakan ukuran foto asli */
 }
 .produk-card h3 {
   font-family: 'Bebas Neue', cursive;
@@ -280,6 +279,9 @@ body {
   font-size: 15px;
   color: #fff;
   margin-bottom: 12px;
+  /* === REVISI SIMETRI FINAL START === */
+  flex-grow: 1; /* Membuat deskripsi mengisi ruang kosong */
+  /* === REVISI SIMETRI FINAL END === */
 }
 .produk-harga {
   font-family: 'Montserrat', Arial, sans-serif;
@@ -287,9 +289,7 @@ body {
   color: #fff;
   margin-bottom: 18px;
   font-weight: bold;
-  /* === REVISI SIMETRI FINAL START === */
-  margin-top: auto;
-  /* === REVISI SIMETRI FINAL END === */
+  /* margin-top: auto; Dihapus dari sini */
 }
 .produk-btn {
   background: #e63946;
@@ -304,7 +304,6 @@ body {
   cursor: pointer;
   transition: background .2s, color .2s, transform .1s;
   font-weight: bold;
-  /* 'margin-top: auto' dihapus dari sini */
 }
 .produk-btn:hover { background: #fff; color: #e63946; border: 2px solid #fff; transform: scale(1.05);}
 .tentang-section {
