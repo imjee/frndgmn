@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>DRC Racing Exhaust</title>
+  <title>DRC Racing Exhaust - Produk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar">
     <div class="nav-logo">
-      <img src="/logo-drc.png" alt="DRC Victory" height="40"/>
+      <a href="index.html"><img src="/logo-drc.png" alt="DRC Victory" height="40"/></a>
     </div>
     <ul class="nav-menu">
       <li><a href="#produk">Produk</a></li>
@@ -19,10 +19,10 @@
       <li><a href="#kontak">Kontak</a></li>
     </ul>
     <div class="nav-cart">
-        <button id="cart-btn" class="cart-button">
+        <a href="keranjang.html" class="cart-button">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count" class="cart-count-badge">0</span>
-        </button>
+        </a>
     </div>
   </nav>
 
@@ -38,11 +38,11 @@
 
   <section class="produk-highlight-row">
     <div class="highlight-tabs">
-        <button class="highlight-tab-btn active" onclick="openHighlightTab(event, 'NewLaunch')">
+        <button class="highlight-tab-btn active" data-tab="NewLaunch">
             <span class="section-kicker">NEW LAUNCHING</span>
             <h2 class="section-title">Terbaru</h2>
         </button>
-        <button class="highlight-tab-btn" onclick="openHighlightTab(event, 'BestSeller')">
+        <button class="highlight-tab-btn" data-tab="BestSeller">
             <span class="section-kicker">BEST SELLER</span>
             <h2 class="section-title">Terlaris</h2>
         </button>
@@ -73,81 +73,6 @@
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
   
-  <div id="modal-beli" class="modal-beli-bg" style="display:none;">
-    <div class="modal-beli-card">
-      <button class="modal-beli-close"><i class="fas fa-times"></i></button>
-      <h3 id="modal-beli-title"></h3>
-      <div class="modal-beli-desc" id="modal-beli-desc"></div>
-      <div class="modal-beli-actions">
-        <a href="#" target="_blank" class="modal-beli-btn tokopedia"><i class="fab fa-shopify"></i> Tokopedia</a>
-        <a href="#" target="_blank" class="modal-beli-btn shopee"><i class="fas fa-store"></i> Shopee</a>
-        <a href="#" target="_blank" class="modal-beli-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      </div>
-    </div>
-  </div>
-
-  <div id="modal-pilihan" class="modal-beli-bg" style="display:none;">
-    <div class="modal-beli-card">
-        <button class="modal-pilihan-close"><i class="fas fa-times"></i></button>
-        <h3 id="modal-pilihan-title">Pilih Metode Pembelian</h3>
-        <p>Anda ingin membeli produk ini melalui?</p>
-        <div class="modal-pilihan-actions">
-            <button id="btn-pilihan-marketplace" class="modal-pilihan-btn">
-                <i class="fas fa-store"></i> Beli di Marketplace
-            </button>
-            <button id="btn-pilihan-langsung" class="modal-pilihan-btn">
-                <i class="fas fa-shopping-basket"></i> Beli Langsung (via Website)
-            </button>
-        </div>
-    </div>
-  </div>
-
-  <div id="modal-keranjang" class="modal-beli-bg" style="display:none;">
-    <div class="modal-beli-card">
-        <button class="modal-keranjang-close"><i class="fas fa-times"></i></button>
-        <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
-        <div id="keranjang-list-items"></div>
-        <div id="keranjang-footer" style="display:none;">
-            <div class="keranjang-total">
-                <span>Total Harga:</span>
-                <strong id="keranjang-total-harga">Rp0</strong>
-            </div>
-            <button class="hero-btn checkout-btn-trigger">Lanjutkan ke Pembelian</button>
-        </div>
-    </div>
-  </div>
-
-  <div id="modal-checkout" class="modal-beli-bg" style="display:none;">
-    <div class="modal-beli-card">
-        <button class="modal-checkout-close"><i class="fas fa-times"></i></button>
-        <h3><i class="fas fa-clipboard-list"></i> Form Pembelian</h3>
-        <form id="checkout-form">
-            <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" required>
-            </div>
-            <div class="form-group">
-                <label for="whatsapp">Nomor WhatsApp</label>
-                <input type="tel" id="whatsapp" name="whatsapp" placeholder="Contoh: 081234567890" required>
-            </div>
-            <div class="form-group">
-                <label for="alamat">Alamat Lengkap</label>
-                <textarea id="alamat" name="alamat" rows="3" required></textarea>
-            </div>
-            <div class="form-summary">
-                <h4>Ringkasan Pesanan</h4>
-                <div id="checkout-summary-items"></div>
-                <div class="keranjang-total">
-                    <span>Total:</span>
-                    <strong id="checkout-total-harga"></strong>
-                </div>
-            </div>
-            <button type="submit" class="hero-btn checkout-btn">
-                <i class="fab fa-whatsapp"></i> Kirim Pesanan ke Admin
-            </button>
-        </form>
-    </div>
-  </div>
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
