@@ -32,7 +32,7 @@ async function fetchProducts() {
         allBarang = result.data || [];
         return allBarang;
     } catch (err) {
-        console.error("Gagal total memuat produk:", err);
+        console.error("Gagal memuat produk:", err);
         return [];
     }
 }
@@ -41,11 +41,8 @@ async function fetchProducts() {
 window.addToCart = function(barangId) {
     if (!barangId) return;
     const existingItem = cart.find(item => item.id === barangId);
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({ id: barangId, quantity: 1 });
-    }
+    if (existingItem) existingItem.quantity++;
+    else cart.push({ id: barangId, quantity: 1 });
     saveCart();
     alert('Produk berhasil ditambahkan ke keranjang!');
 }
@@ -57,32 +54,30 @@ window.openMarketplaceModal = function(barangString) {
     document.getElementById('modal-marketplace-title').textContent = barang.nama;
     document.getElementById('modal-marketplace-actions').innerHTML = `
         <a href="${barang.tokopedia}" target="_blank" class="modal-beli-btn tokopedia">Tokopedia</a>
-        <a href="${barang.shopee}" target="_blank" class="modal-beli-btn shopee">Shopee</a>
-    `;
+        <a href="${barang.shopee}" target="_blank" class="modal-beli-btn shopee">Shopee</a>`;
     modal.style.display = 'flex';
 }
 
 // === LOGIKA UNTUK HALAMAN INDEX.HTML ===
 async function initIndexPage() {
-    // 1. Definisikan semua elemen & variabel yang dibutuhkan
-    let currentSeries = 'vespa';
-    let currentJenis = 'ALL';
-    let searchTerm = '';
     const seriesContainer = document.querySelector('.produk-series-selector');
     const jenisContainer = document.getElementById('jenis-selector');
     const searchInput = document.getElementById('search-input');
     const listContainer = document.getElementById('barang-list');
     const launchingListContainer = document.getElementById('launching-list');
     const bestSellerListContainer = document.getElementById('best-seller-list');
+    
+    if (!seriesContainer) return; // Keluar jika bukan di halaman index
 
-    // 2. Fungsi terpusat untuk membuat kartu produk
-    function renderProductCards(container, productList, isHighlight = false) {
+    let currentSeries = 'vespa';
+    let currentJenis = 'ALL';
+    let searchTerm = '';
+
+    const renderProductCards = (container, productList, isHighlight = false) => {
         if (!container) return;
         container.innerHTML = '';
         if (!productList || productList.length === 0) {
-            if (!isHighlight) {
-                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 20px;">Produk tidak ditemukan.</p>';
-            }
+            if (!isHighlight) container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Produk tidak ditemukan.</p>';
             return;
         }
         productList.forEach(barang => {
@@ -97,26 +92,19 @@ async function initIndexPage() {
                 <div class="produk-actions">
                     <button class="produk-btn" onclick="window.addToCart('${barang.id}')">Tambah ke Keranjang</button>
                     <button class="btn-marketplace" onclick="window.openMarketplaceModal('${barangString}')">Beli di Marketplace</button>
-                </div>
-            `;
+                </div>`;
             container.appendChild(el);
         });
-    }
+    };
     
-    // 3. Fungsi utama untuk memfilter dan me-render produk
-    function displayProducts() {
+    const displayProducts = () => {
         let filtered = allBarang.filter(p => p.kategori === currentSeries);
-        if (currentJenis !== 'ALL') {
-            filtered = filtered.filter(p => p.jenis.includes(currentJenis));
-        }
-        if (searchTerm) {
-            filtered = filtered.filter(p => p.nama.toLowerCase().includes(searchTerm));
-        }
+        if (currentJenis !== 'ALL') filtered = filtered.filter(p => p.jenis.includes(currentJenis));
+        if (searchTerm) filtered = filtered.filter(p => p.nama.toLowerCase().includes(searchTerm));
         renderProductCards(listContainer, filtered);
-    }
+    };
 
-    // 4. Fungsi untuk membuat tombol "Jenis"
-    function renderJenisButtons() {
+    const renderJenisButtons = () => {
         jenisContainer.innerHTML = '';
         kategoriMotor[currentSeries].jenis.forEach(jenis => {
             const btn = document.createElement('button');
@@ -125,9 +113,8 @@ async function initIndexPage() {
             btn.dataset.jenis = jenis;
             jenisContainer.appendChild(btn);
         });
-    }
+    };
     
-    // 5. Setup Event Listeners
     seriesContainer.addEventListener('click', (e) => {
         if (e.target.matches('.series-btn')) {
             seriesContainer.querySelector('.active').classList.remove('active');
@@ -156,9 +143,8 @@ async function initIndexPage() {
     document.getElementById('modal-marketplace')?.querySelector('.modal-marketplace-close').onclick = () => {
         document.getElementById('modal-marketplace').style.display = 'none';
     };
-
-    // 6. Inisialisasi Tampilan Awal
-    await fetchProducts(); // Tunggu produk dimuat
+    
+    await fetchProducts();
     renderProductCards(launchingListContainer, allBarang.filter(b => b.newlaunching), true);
     renderProductCards(bestSellerListContainer, allBarang.filter(b => b.bestseller), true);
     renderJenisButtons();
@@ -167,9 +153,10 @@ async function initIndexPage() {
 
 // === LOGIKA UNTUK HALAMAN KERANJANG.HTML ===
 async function initCartPage() {
-    await fetchProducts(); // Wajib tunggu
+    await fetchProducts();
     const container = document.getElementById('cart-items-container');
     const summaryEl = document.getElementById('cart-summary');
+    if (!container) return;
     
     if (!cart || cart.length === 0) {
         container.innerHTML = '<p style="text-align:center; padding: 20px;">Keranjang Anda kosong.</p>';
@@ -194,8 +181,7 @@ async function initCartPage() {
                 <div class="keranjang-item-actions">
                     <input type="number" value="${item.quantity}" min="1" onchange="window.updateQuantity('${item.id}', this.value)">
                     <button onclick="window.removeFromCart('${item.id}')" title="Hapus"><i class="fas fa-trash"></i></button>
-                </div>
-            `;
+                </div>`;
             container.appendChild(itemEl);
         }
     });
@@ -204,7 +190,7 @@ async function initCartPage() {
     summaryEl.style.display = 'block';
 }
 
-window.updateQuantity = function(id, qty) {
+window.updateQuantity = (id, qty) => {
     const item = cart.find(i => i.id === id);
     if(item) {
         item.quantity = parseInt(qty, 10);
@@ -213,7 +199,7 @@ window.updateQuantity = function(id, qty) {
     }
 }
 
-window.removeFromCart = function(id) {
+window.removeFromCart = (id) => {
     cart = cart.filter(i => i.id !== id);
     saveCart();
     initCartPage();
@@ -221,11 +207,13 @@ window.removeFromCart = function(id) {
 
 // === LOGIKA UNTUK HALAMAN CHECKOUT.HTML ===
 async function initCheckoutPage() {
-    await fetchProducts(); // Wajib tunggu
+    await fetchProducts();
     const summaryContainer = document.getElementById('checkout-summary-items');
     const totalEl = document.getElementById('checkout-total-harga');
+    const formEl = document.getElementById('checkout-form');
+    if (!formEl) return;
+    
     let totalPrice = 0;
-
     if (!cart || cart.length === 0) {
         window.location.href = '/keranjang.html';
         return;
@@ -241,27 +229,22 @@ async function initCheckoutPage() {
 
     totalEl.textContent = `Rp${totalPrice.toLocaleString('id-ID')}`;
 
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    formEl.addEventListener('submit', (e) => {
         e.preventDefault();
         const nama = document.getElementById('nama').value;
         const no_wa = document.getElementById('whatsapp').value;
         const alamat = document.getElementById('alamat').value;
-        let pesan = `*Pesanan Baru Masuk - Website*\n\n`;
-        pesan += `*Nama:* ${nama}\n*No. WhatsApp:* ${no_wa}\n*Alamat:* ${alamat}\n\n`;
-        pesan += `*Detail Pesanan:*\n`;
+        let pesan = `*Pesanan Baru Masuk - Website*\n\n*Nama:* ${nama}\n*No. WhatsApp:* ${no_wa}\n*Alamat:* ${alamat}\n\n*Detail Pesanan:*\n`;
         cart.forEach(item => {
             const product = allBarang.find(p => p.id === item.id);
             if (product) pesan += `- ${product.nama} (x${item.quantity})\n`;
         });
-        pesan += `\n*Total Belanja: Rp${totalPrice.toLocaleString('id-ID')}*\n\n`;
-        pesan += `Pesanan ini menunggu konfirmasi pembayaran. Terima kasih.`;
+        pesan += `\n*Total Belanja: Rp${totalPrice.toLocaleString('id-ID')}*\n\nTerima kasih.`;
         const nomorAdmin = "62895363383732";
         const linkWhatsApp = `https://api.whatsapp.com/send?phone=${nomorAdmin}&text=${encodeURIComponent(pesan)}`;
-        
         window.open(linkWhatsApp, '_blank');
-        
-        alert('Pesanan Anda sedang dialihkan ke WhatsApp Admin.');
-        this.reset();
+        alert('Pesanan dialihkan ke WhatsApp Admin.');
+        e.target.reset();
         cart = [];
         saveCart();
         window.location.href = '/index.html';
@@ -272,12 +255,7 @@ async function initCheckoutPage() {
 document.addEventListener('DOMContentLoaded', () => {
     updateCartIcon();
     const path = window.location.pathname;
-
-    if (path.includes('keranjang.html')) {
-        initCartPage();
-    } else if (path.includes('checkout.html')) {
-        initCheckoutPage();
-    } else {
-        initIndexPage();
-    }
+    if (path.includes('keranjang.html')) initCartPage();
+    else if (path.includes('checkout.html')) initCheckoutPage();
+    else initIndexPage();
 });
