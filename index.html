@@ -5,13 +5,10 @@
   <title>DRC Racing Exhaust</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css">
-  <!-- Font Bebas Neue & Montserrat from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-logo">
       <img src="/logo-drc.png" alt="DRC Victory" height="40"/>
@@ -22,7 +19,6 @@
       <li><a href="#kontak">Kontak</a></li>
     </ul>
   </nav>
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -33,7 +29,6 @@
     </div>
   </section>
 
-  <!-- New Launching & Best Seller Row -->
   <section class="produk-highlight-row">
     <div class="produk-highlight-col">
       <div class="section-kicker">NEW LAUNCHING</div>
@@ -47,29 +42,23 @@
     </div>
   </section>
 
-  <!-- Produk Section -->
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
-    <!-- Category Selector -->
     <div class="produk-series-selector">
       <button class="series-btn active" data-series="matic">Matic Series</button>
       <button class="series-btn" data-series="herex">Herex Series</button>
       <button class="series-btn" data-series="vespa">Vespa Series</button>
       <button class="series-btn" data-series="ninja">Ninja Series</button>
     </div>
-    <!-- Subtype Selector (jenis motor) -->
     <div id="jenis-selector" class="jenis-selector"></div>
-    <!-- Search Bar -->
     <div class="produk-searchbar">
       <input type="text" id="search-input" placeholder="Cari produk, jenis motor..." autocomplete="off"/>
       <button id="search-btn"><i class="fas fa-search"></i></button>
     </div>
-    <!-- Produk Grid -->
     <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
-  <!-- Modal Pembelian -->
   <div id="modal-beli" class="modal-beli-bg" style="display:none;">
     <div class="modal-beli-card">
       <button class="modal-beli-close"><i class="fas fa-times"></i></button>
@@ -82,7 +71,6 @@
       </div>
     </div>
   </div>
-  <!-- Tentang Section -->
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
@@ -90,7 +78,6 @@
       Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
-  <!-- Footer -->
   <footer id="kontak" class="footer">
     <div class="footer-logo">
       <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
@@ -106,7 +93,6 @@
     </div>
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
-  <!-- Script Produk Grid Per Kategori dan Modal -->
   <script>
 const kategoriMotor = {
   matic: { title: 'Matic Series', jenis: ['Vario', 'Mio'] },
@@ -132,7 +118,8 @@ async function loadPublicBarangList() {
     renderLaunchingProducts();
     renderBestSellerProducts();
   } catch (err) {
-    document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat.</p>';
+    console.error(err); // For debugging
+    document.getElementById('barang-list').innerHTML = '<p>Produk tidak dapat dimuat. Cek konsol untuk error.</p>';
   } finally {
     if (loadingEl) loadingEl.style.display = 'none';
   }
@@ -142,6 +129,12 @@ function renderJenisSelector() {
   const jenisContainer = document.getElementById('jenis-selector');
   jenisContainer.innerHTML = '';
   const jenisArr = kategoriMotor[currentSeries].jenis;
+  
+  // Auto-select first jenis on category change
+  if (!jenisArr.includes(currentJenis)) {
+    currentJenis = jenisArr[0];
+  }
+
   jenisArr.forEach(jenis => {
     const btn = document.createElement('button');
     btn.className = 'jenis-btn' + (currentJenis === jenis ? ' active' : '');
@@ -155,28 +148,32 @@ function renderJenisSelector() {
     };
     jenisContainer.appendChild(btn);
   });
-  // Auto-select first jenis on category change
-  if (!jenisArr.includes(currentJenis)) {
-    currentJenis = jenisArr[0];
-    document.querySelectorAll('.jenis-btn')[0]?.classList.add('active');
-  }
 }
 
 function showGridBarangList() {
   const list = document.getElementById('barang-list');
   if (!list) return;
   list.innerHTML = '';
-  let barangList = allBarang.filter(b => b.kategori === currentSeries && b.jenis === currentJenis);
+
+  // 1. Filter by category and sub-category (jenis)
+  let barangList = allBarang.filter(b => 
+    b.kategori === currentSeries && b.jenis.includes(currentJenis)
+  );
+
+  // 2. Filter by search term
   if (searchTerm.trim()) {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
     barangList = barangList.filter(b =>
-      b.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      b.jenis.toLowerCase().includes(searchTerm.toLowerCase())
+      b.nama.toLowerCase().includes(lowerCaseSearchTerm) ||
+      b.jenis.some(j => j.toLowerCase().includes(lowerCaseSearchTerm)) // Check if any 'jenis' in the array matches
     );
   }
+
   if (!barangList.length) {
     list.innerHTML = '<p>Produk tidak ditemukan.</p>';
     return;
   }
+  
   const grid = document.createElement('div');
   grid.className = 'produk-list-grid';
   barangList.forEach(barang => {
@@ -185,7 +182,7 @@ function showGridBarangList() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis}</div>
+      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -202,8 +199,8 @@ function openModalBeli(barangRaw) {
   document.getElementById('modal-beli-desc').textContent = barang.deskripsi;
   document.querySelector('.modal-beli-btn.tokopedia').href = barang.tokopedia || "#";
   document.querySelector('.modal-beli-btn.shopee').href = barang.shopee || "#";
-  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis})`);
-  let waNumber = barang.whatsapp || "6281234567890";
+  let waMsg = encodeURIComponent(`Halo, saya ingin beli ${barang.nama} (${barang.jenis.join(', ')})`);
+  let waNumber = barang.whatsapp || "62895363383732";
   document.querySelector('.modal-beli-btn.whatsapp').href = `https://wa.me/${waNumber}?text=${waMsg}`;
   document.getElementById('modal-beli').style.display = 'flex';
   setTimeout(() => {
@@ -237,7 +234,7 @@ function renderLaunchingProducts() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis}</div>
+      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -259,7 +256,7 @@ function renderBestSellerProducts() {
     el.innerHTML = `
       <img src="${barang.foto}" alt="${barang.nama}" class="produk-img"/>
       <h3>${barang.nama}</h3>
-      <div class="produk-jenis">${barang.jenis}</div>
+      <div class="produk-jenis">${barang.jenis.join(' / ')}</div>
       <p class="produk-desc">${barang.deskripsi}</p>
       <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
       <button class="produk-btn" onclick='openModalBeli(${JSON.stringify(barang).replace(/'/g,"\\'")})'>Beli Sekarang</button>
@@ -276,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.series-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentSeries = btn.getAttribute('data-series');
-      currentJenis = '';
+      currentJenis = ''; // Reset jenis so it can be auto-selected
       renderJenisSelector();
       showGridBarangList();
     });
