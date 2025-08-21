@@ -5,7 +5,7 @@
   <title>DRC Racing Exhaust - Produk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.comcom/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -19,14 +19,22 @@
       <li><a href="#kontak">Kontak</a></li>
     </ul>
     <div class="nav-cart">
-        <a href="#" id="cart-icon" class="cart-button">
+        <a href="/keranjang.html" class="cart-button">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count" class="cart-count-badge">0</span>
         </a>
     </div>
   </nav>
 
-  <section class="hero"></section>
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-kicker">NEW LAUNCH</span>
+      <h1 class="hero-title">DRC RACING <span class="highlight">EXHAUST</span></h1>
+      <p class="hero-subtitle">Knalpot racing <b>premium</b> untuk gaya & performa juara!</p>
+      <a href="#produk" class="hero-btn">Lihat Produk</a>
+    </div>
+  </section>
 
   <section class="produk-highlight-row">
     <div class="highlight-tabs">
@@ -39,11 +47,16 @@
             <h2 class="section-title">Terlaris</h2>
         </button>
     </div>
-    <div id="NewLaunch" class="highlight-tab-content"><div id="launching-list" class="highlight-list"></div></div>
-    <div id="BestSeller" class="highlight-tab-content" style="display: none;"><div id="best-seller-list" class="highlight-list"></div></div>
+    <div id="NewLaunch" class="highlight-tab-content">
+        <div id="launching-list" class="highlight-list"></div>
+    </div>
+    <div id="BestSeller" class="highlight-tab-content" style="display: none;">
+        <div id="best-seller-list" class="highlight-list"></div>
+    </div>
   </section>
 
   <section id="produk" class="produk-section">
+    <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
     <div class="produk-series-selector">
       <button class="series-btn active" data-series="vespa">Vespa Series</button>
@@ -52,28 +65,37 @@
       <button class="series-btn" data-series="ninja">Ninja Series</button>
     </div>
     <div id="jenis-selector" class="jenis-selector"></div>
+    <div class="produk-searchbar">
+      <input type="text" id="search-input" placeholder="Cari produk dalam seri ini..." autocomplete="off"/>
+    </div>
     <div id="barang-list" class="produk-list-grid"></div>
   </section>
   
-  <section id="tentang" class="tentang-section"></section>
-  <footer id="kontak" class="footer"></footer>
+  <section id="tentang" class="tentang-section">
+    <div class="section-kicker">ABOUT US</div>
+    <h2 class="tentang-title">Kualitas Juara Indonesia</h2>
+    <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
+       Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
+    </p>
+  </section>
+
+  <footer id="kontak" class="footer">
+      <div class="footer-logo">
+        <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
+      </div>
+      <div class="footer-contact">
+        <span><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</span>
+      </div>
+      <small>© 2025 DRC Victory Racing Exhaust</small>
+  </footer>
 
   <div id="modal-marketplace" class="modal-beli-bg" style="display:none;">
       <div class="modal-beli-card">
-          <button class="modal-close-btn"><i class="fas fa-times"></i></button>
+          <button class="modal-marketplace-close"><i class="fas fa-times"></i></button>
           <h3 id="modal-marketplace-title"></h3>
-          <p>Beli melalui marketplace:</p>
+          <p>Silakan pilih marketplace tujuan Anda:</p>
           <div id="modal-marketplace-actions" class="modal-beli-actions"></div>
       </div>
-  </div>
-
-  <div id="modal-keranjang" class="modal-beli-bg" style="display:none;">
-    <div class="modal-beli-card">
-        <button class="modal-close-btn"><i class="fas fa-times"></i></button>
-        <h3>Keranjang Belanja</h3>
-        <div id="cart-items-container"></div>
-        <div id="cart-summary" style="display:none;"></div>
-    </div>
   </div>
 
   <script src="/script.js"></script>
