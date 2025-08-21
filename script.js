@@ -5,10 +5,21 @@ const kategoriMotor = {
     herex: { title: 'Herex Series', jenis: ['ALL', 'CB', 'GL', 'Tiger'] },
     ninja: { title: 'Ninja Series', jenis: ['ALL', 'Ninja R', 'Ninja RR', 'Ninja KIS'] }
 };
+// === TAMBAHKAN DETAIL REKENING DI SINI ===
+const detailBank = {
+    BCA: { norek: "1234567890", an: "DRC RACING EXHAUST" },
+    BRI: { norek: "0987654321", an: "DRC RACING EXHAUST" },
+    BNI: { norek: "1122334455", an: "DRC RACING EXHAUST" },
+    Mandiri: { norek: "5566778899", an: "DRC RACING EXHAUST" },
+    QRIS: { img: "/images/qris-placeholder.png" } // Ganti dengan path gambar QRIS Anda
+};
+
 let allBarang = [];
 let produkTerpilih = null;
+let dataPesananFinal = {}; // Variabel baru untuk menyimpan data pesanan
 
-// === FUNGSI UTAMA UNTUK MENGAMBIL DATA PRODUK ===
+
+// === FUNGSI UTAMA UNTUK MENGAMBIL DATA PRODUK === (Tidak Berubah)
 async function fetchProducts() {
     try {
         const res = await fetch('./data/barang.json');
@@ -25,8 +36,7 @@ async function fetchProducts() {
         return [];
     }
 }
-
-// === LOGIKA UNTUK HALAMAN UTAMA (INDEX.HTML) ===
+// === LOGIKA HALAMAN UTAMA === (Tidak Berubah)
 async function initIndexPage() {
     let currentSeries = 'vespa'; let currentJenis = 'ALL'; let searchTerm = '';
     const seriesContainer = document.querySelector('.produk-series-selector');
@@ -106,13 +116,14 @@ async function initIndexPage() {
     renderProductCards(document.getElementById('best-seller-list'), allBarang.filter(b => b.bestseller));
 }
 
+// === PENGATURAN MODAL ===
 const modalPilihan = document.getElementById('modal-pilihan-beli');
 const modalMarketplace = document.getElementById('modal-marketplace-links');
 const modalForm = document.getElementById('modal-pembelian');
+const modalHalamanPembayaran = document.getElementById('modal-halaman-pembayaran'); // Modal baru
 const formNamaProduk = document.getElementById('form-nama-produk');
 const formHargaProduk = document.getElementById('form-harga-produk');
 const inputKuantitas = document.getElementById('kuantitas');
-const totalHargaSpan = document.getElementById('total-harga');
 const waErrorEl = document.getElementById('wa-error');
 
 window.bukaModalPilihan = function(idProduk) {
@@ -123,125 +134,166 @@ window.bukaModalPilihan = function(idProduk) {
     document.body.style.overflow = 'hidden';
 }
 
-window.tutupModalPilihan = function() { modalPilihan.style.display = 'none'; document.body.style.overflow = 'auto'; produkTerpilih = null; }
 window.pilihBeliLangsung = function() { if (!produkTerpilih) return; modalPilihan.style.display = 'none'; bukaFormPembelian(); }
 window.pilihBeliMarketplace = function() { if (!produkTerpilih) return; modalPilihan.style.display = 'none'; bukaModalMarketplace(); }
+
 window.bukaModalMarketplace = function() {
     if (!produkTerpilih) return;
     const buttonsContainer = document.getElementById('modal-marketplace-buttons');
-    buttonsContainer.innerHTML = `
-        <a href="${produkTerpilih.tokopedia}" target="_blank" class="btn-marketplace btn-tokopedia"><i class="fas fa-store"></i> Tokopedia</a>
-        <a href="${produkTerpilih.shopee}" target="_blank" class="btn-marketplace btn-shopee"><i class="fas fa-shopping-bag"></i> Shopee</a>
-    `;
+    buttonsContainer.innerHTML = `<a href="${produkTerpilih.tokopedia}" target="_blank" class="btn-marketplace btn-tokopedia"><i class="fas fa-store"></i> Tokopedia</a> <a href="${produkTerpilih.shopee}" target="_blank" class="btn-marketplace btn-shopee"><i class="fas fa-shopping-bag"></i> Shopee</a>`;
     modalMarketplace.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
-window.tutupModalMarketplace = function() { modalMarketplace.style.display = 'none'; document.body.style.overflow = 'auto'; produkTerpilih = null; }
 
-// --- MODIFIKASI DIMULAI: FUNGSI Buka Form Pembelian ---
 window.bukaFormPembelian = function() {
     if (!produkTerpilih) return;
-    
-    // Mengisi data produk dasar
     formNamaProduk.value = produkTerpilih.nama; 
     formHargaProduk.value = produkTerpilih.harga;
     inputKuantitas.value = 1; 
-    hitungTotal(); 
 
-    // Mengambil elemen HTML untuk pilihan jenis
     const formGroupJenis = document.getElementById('form-group-jenis');
     const jenisOptionsContainer = document.getElementById('jenis-options-container');
-    jenisOptionsContainer.innerHTML = ''; // Kosongkan pilihan sebelumnya
+    jenisOptionsContainer.innerHTML = ''; 
 
-    // Logika untuk menampilkan atau menyembunyikan pilihan jenis
     if (produkTerpilih.jenis && produkTerpilih.jenis.length > 1) {
-        // Jika ada lebih dari 1 jenis, buatkan radio button
         produkTerpilih.jenis.forEach((item, index) => {
-            const isChecked = index === 0 ? 'checked' : ''; // Pilih yg pertama secara default
-            const radioHTML = `
-                <label>
-                    <input type="radio" name="pilihan_jenis" value="${item}" ${isChecked}> ${item}
-                </label>
-            `;
-            jenisOptionsContainer.innerHTML += radioHTML;
+            const isChecked = index === 0 ? 'checked' : '';
+            jenisOptionsContainer.innerHTML += `<label><input type="radio" name="pilihan_jenis" value="${item}" ${isChecked}> ${item}</label>`;
         });
-        formGroupJenis.style.display = 'block'; // Tampilkan blok pilihan
+        formGroupJenis.style.display = 'block';
     } else {
-        // Jika hanya 1 atau tidak ada jenis, sembunyikan
         formGroupJenis.style.display = 'none';
     }
-
     modalForm.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
-// --- MODIFIKASI SELESAI ---
 
-window.tutupFormPembelian = function() {
-    modalForm.style.display = 'none'; document.getElementById('instruksi-pembayaran').style.display = 'none';
-    document.getElementById('form-beli').reset(); document.body.style.overflow = 'auto';
-    waErrorEl.style.display = 'none'; produkTerpilih = null;
+// === MODIFIKASI: Fungsi untuk menutup SEMUA modal dan reset state ===
+window.tutupSemuaModal = function() {
+    modalPilihan.style.display = 'none';
+    modalMarketplace.style.display = 'none';
+    modalForm.style.display = 'none';
+    modalHalamanPembayaran.style.display = 'none'; // tutup modal baru juga
+    document.getElementById('form-beli').reset();
+    document.body.style.overflow = 'auto';
+    waErrorEl.style.display = 'none';
+    produkTerpilih = null;
+    dataPesananFinal = {}; // reset data pesanan
 }
-window.ubahKuantitas = function(jumlah) { let kuantitasSaatIni = parseInt(inputKuantitas.value); kuantitasSaatIni += jumlah; if (kuantitasSaatIni < 1) { kuantitasSaatIni = 1; } inputKuantitas.value = kuantitasSaatIni; hitungTotal(); }
-window.hitungTotal = function() { const harga = parseFloat(formHargaProduk.value); const kuantitas = parseInt(inputKuantitas.value); const total = harga * kuantitas; totalHargaSpan.innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(total); }
-window.tampilkanInstruksi = function(metode) { hitungTotal(); const areaInstruksi = document.getElementById('instruksi-pembayaran'); const semuaDetail = document.querySelectorAll('.detail-instruksi'); semuaDetail.forEach(detail => detail.style.display = 'none'); const detailPilihan = document.getElementById(`detail-${metode}`); if (detailPilihan) { detailPilihan.style.display = 'block'; } areaInstruksi.style.display = 'block'; }
 
-window.salinRekening = function(elementId) {
-    const rekening = document.getElementById(elementId).innerText;
-    navigator.clipboard.writeText(rekening).then(() => { showToast(`Nomor rekening ${rekening} berhasil disalin!`); });
-}
+window.ubahKuantitas = function(jumlah) { let kuantitasSaatIni = parseInt(inputKuantitas.value); kuantitasSaatIni += jumlah; if (kuantitasSaatIni < 1) { kuantitasSaatIni = 1; } inputKuantitas.value = kuantitasSaatIni; }
+
 function showToast(message) {
     const toast = document.getElementById("toast-notification");
     toast.textContent = message; toast.className = "toast show";
     setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
 }
 
-// --- MODIFIKASI DIMULAI: FUNGSI Kirim ke WhatsApp ---
-window.kirimKeWhatsapp = function(event) {
+// --- MODIFIKASI BESAR DIMULAI DI SINI ---
+
+// === LANGKAH 1: Dari Form ke Halaman Pembayaran ===
+window.lanjutKePembayaran = function(event) {
     event.preventDefault();
     if (!produkTerpilih) { alert("Terjadi kesalahan, silakan coba lagi."); return; }
     
-    const teleponInput = document.getElementById('telepon-pelanggan'); const telepon = teleponInput.value.trim();
-    if (!/^08[0-9]{8,11}$/.test(telepon)) { waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789'; waErrorEl.style.display = 'block'; teleponInput.focus(); return; }
-    
+    // Validasi Nomor WA
+    const teleponInput = document.getElementById('telepon-pelanggan');
+    const telepon = teleponInput.value.trim();
+    if (!/^08[0-9]{8,11}$/.test(telepon)) {
+        waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789';
+        waErrorEl.style.display = 'block';
+        teleponInput.focus();
+        return;
+    }
     waErrorEl.style.display = 'none';
-    const nomorWhatsappTujuan = produkTerpilih.whatsapp || "62895363383732";
-    const namaProduk = formNamaProduk.value; const kuantitas = inputKuantitas.value;
-    const namaPelanggan = document.getElementById('nama-pelanggan').value;
-    const metodeBayar = document.querySelector('input[name="pembayaran"]:checked').value;
-    const totalBayar = totalHargaSpan.innerText;
-    const alamatLengkap = document.getElementById('alamat-lengkap').value;
-    const kota = document.getElementById('kota-kabupaten').value; const provinsi = document.getElementById('provinsi').value;
-    const kodePos = document.getElementById('kode-pos').value; const catatan = document.getElementById('notes-tambahan').value;
-    
-    // Ambil nilai jenis yang dipilih
+
+    // Kumpulkan semua data dari form ke variabel global
+    const harga = parseFloat(formHargaProduk.value);
+    const kuantitas = parseInt(inputKuantitas.value);
+    const total = harga * kuantitas;
+
     let jenisProduk = '';
     const radioJenisTerpilih = document.querySelector('input[name="pilihan_jenis"]:checked');
-    if (radioJenisTerpilih) {
-        jenisProduk = radioJenisTerpilih.value;
+    if (radioJenisTerpilih) jenisProduk = radioJenisTerpilih.value;
+
+    dataPesananFinal = {
+        namaProduk: formNamaProduk.value,
+        kuantitas: kuantitas,
+        jenisProduk: jenisProduk,
+        totalBayar: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(total),
+        namaPelanggan: document.getElementById('nama-pelanggan').value,
+        alamatLengkap: document.getElementById('alamat-lengkap').value,
+        kota: document.getElementById('kota-kabupaten').value,
+        provinsi: document.getElementById('provinsi').value,
+        kodePos: document.getElementById('kode-pos').value,
+        telepon: telepon,
+        catatan: document.getElementById('notes-tambahan').value,
+        metodeBayar: document.querySelector('input[name="pembayaran"]:checked').value,
+        nomorWhatsappTujuan: produkTerpilih.whatsapp || "62895363383732"
+    };
+
+    // Tampilkan data di halaman pembayaran
+    document.getElementById('final-nama-produk').textContent = `${dataPesananFinal.namaProduk} (${dataPesananFinal.kuantitas} pcs)`;
+    document.getElementById('final-total-tagihan').textContent = dataPesananFinal.totalBayar;
+
+    // Tampilkan instruksi bank yang dipilih
+    const instruksiContainer = document.getElementById('final-instruksi-pembayaran');
+    const metode = dataPesananFinal.metodeBayar;
+    if (metode === 'QRIS') {
+        instruksiContainer.innerHTML = `<h4>Scan QRIS di bawah ini:</h4><img src="${detailBank.QRIS.img}" alt="QRIS Code" style="max-width: 180px; border-radius: 8px;">`;
+    } else {
+        instruksiContainer.innerHTML = `
+            <h4>Transfer ke ${metode}:</h4>
+            <p class="rekening-info">
+                Nomor Rekening: <strong id="final-rek-${metode.toLowerCase()}">${detailBank[metode].norek}</strong>
+                <button type="button" class="btn-salin" onclick="salinRekening('final-rek-${metode.toLowerCase()}', '${metode}')">Salin</button>
+            </p>
+            <p>a.n. <strong>${detailBank[metode].an}</strong></p>
+        `;
     }
 
-    let alamatFormatted = `${alamatLengkap}\n${kota}, ${provinsi}\nKode Pos: ${kodePos}`;
-    if (catatan.trim() !== "") { alamatFormatted += `\n\n*Catatan:* ${catatan}`; }
-    
-    // Bangun pesan dengan menyertakan jenis (jika ada)
-    let pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n`;
-    if (jenisProduk) {
-        pesan += `*Jenis:* ${jenisProduk}\n`;
-    }
-    pesan += `*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
-    
-    const linkWhatsapp = `https://wa.me/${nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
-    window.open(linkWhatsapp, '_blank');
-    tutupFormPembelian();
+    // Pindah dari modal form ke modal pembayaran
+    modalForm.style.display = 'none';
+    modalHalamanPembayaran.style.display = 'flex';
 }
-// --- MODIFIKASI SELESAI ---
+
+// Fungsi salin rekening baru
+window.salinRekening = function(elementId, bank) {
+    const rekening = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(rekening).then(() => { 
+        showToast(`Nomor rekening ${bank} berhasil disalin!`); 
+    });
+}
+
+// === LANGKAH 2: Dari Halaman Pembayaran ke WhatsApp ===
+window.konfirmasiViaWhatsapp = function() {
+    // Bangun pesan dari data yang sudah disimpan
+    let alamatFormatted = `${dataPesananFinal.alamatLengkap}\n${dataPesananFinal.kota}, ${dataPesananFinal.provinsi}\nKode Pos: ${dataPesananFinal.kodePos}`;
+    if (dataPesananFinal.catatan.trim() !== "") {
+        alamatFormatted += `\n\n*Catatan:* ${dataPesananFinal.catatan}`;
+    }
+
+    let pesan = `Halo DRC Racing, saya ingin konfirmasi pesanan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${dataPesananFinal.namaProduk}\n`;
+    if (dataPesananFinal.jenisProduk) {
+        pesan += `*Jenis:* ${dataPesananFinal.jenisProduk}\n`;
+    }
+    pesan += `*Jumlah:* ${dataPesananFinal.kuantitas} pcs\n*Total:* ${dataPesananFinal.totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${dataPesananFinal.namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${dataPesananFinal.telepon}\n\n*METODE PEMBAYARAN:*\n${dataPesananFinal.metodeBayar}\n-------------------------\n\nSaya akan segera mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
+
+    const linkWhatsapp = `https://wa.me/${dataPesananFinal.nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
+    
+    // Buka WhatsApp lalu tutup semua modal
+    window.open(linkWhatsapp, '_blank');
+    tutupSemuaModal();
+}
+
+// --- MODIFIKASI BESAR SELESAI ---
 
 document.addEventListener('DOMContentLoaded', () => {
     initIndexPage();
     window.addEventListener('click', e => {
-        if (e.target == modalPilihan) tutupModalPilihan();
-        if (e.target == modalMarketplace) tutupModalMarketplace();
-        if (e.target == modalForm) tutupFormPembelian();
+        if (e.target == modalPilihan || e.target == modalMarketplace || e.target == modalForm || e.target == modalHalamanPembayaran) {
+            tutupSemuaModal();
+        }
     });
     const backToTopBtn = document.getElementById('back-to-top');
     window.onscroll = function() {
