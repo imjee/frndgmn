@@ -168,33 +168,43 @@ window.kirimKeWhatsapp = function(event) {
     const teleponInput = document.getElementById('telepon-pelanggan'); const telepon = teleponInput.value.trim();
     if (!/^08[0-9]{8,11}$/.test(telepon)) { waErrorEl.textContent = 'Format nomor salah. Contoh: 08123456789'; waErrorEl.style.display = 'block'; teleponInput.focus(); return; }
     waErrorEl.style.display = 'none';
-    const nomorWhatsappTujuan = produkTerpilih.whatsapp || "62895363383732";
-    const namaProduk = formNamaProduk.value; const kuantitas = inputKuantitas.value;
-    const namaPelanggan = document.getElementById('nama-pelanggan').value;
-    const metodeBayar = document.querySelector('input[name="pembayaran"]:checked').value;
-    const totalBayar = totalHargaSpan.innerText;
-    const alamatLengkap = document.getElementById('alamat-lengkap').value;
-    const kota = document.getElementById('kota-kabupaten').value; const provinsi = document.getElementById('provinsi').value;
-    const kodePos = document.getElementById('kode-pos').value; const catatan = document.getElementById('notes-tambahan').value;
-    let alamatFormatted = `${alamatLengkap}\n${kota}, ${provinsi}\nKode Pos: ${kodePos}`;
-    if (catatan.trim() !== "") { alamatFormatted += `\n\n*Catatan:* ${catatan}`; }
-    const pesan = `Halo DRC Racing, saya mau pesan:\n\n*PESANAN BARU*\n-------------------------\n*Produk:* ${namaProduk}\n*Jumlah:* ${kuantitas} pcs\n*Total:* ${totalBayar}\n-------------------------\n\n*DATA PENERIMA*\n*Nama:* ${namaPelanggan}\n*Alamat Lengkap:*\n${alamatFormatted}\n\n*No. HP:* ${telepon}\n\n*METODE PEMBAYARAN:*\n${metodeBayar}\n-------------------------\n\nSaya akan segera melakukan pembayaran dan mengirimkan bukti transfer. Mohon diproses, terima kasih!`;
-    const linkWhatsapp = `https://wa.me/${nomorWhatsappTujuan}?text=${encodeURIComponent(pesan.trim())}`;
-    window.open(linkWhatsapp, '_blank');
-    tutupFormPembelian();
+    const detailPesanan = {
+        nomorWhatsappTujuan: produkTerpilih.whatsapp || "62895363383732",
+        namaProduk: formNamaProduk.value,
+        kuantitas: inputKuantitas.value,
+        totalBayar: totalHargaSpan.innerText,
+        namaPelanggan: document.getElementById('nama-pelanggan').value,
+        telepon: telepon,
+        metodeBayar: document.querySelector('input[name="pembayaran"]:checked').value,
+        alamatLengkap: document.getElementById('alamat-lengkap').value,
+        kota: document.getElementById('kota-kabupaten').value,
+        provinsi: document.getElementById('provinsi').value,
+        kodePos: document.getElementById('kode-pos').value,
+        catatan: document.getElementById('notes-tambahan').value
+    };
+    let alamatFormatted = `${detailPesanan.alamatLengkap}\n${detailPesanan.kota}, ${detailPesanan.provinsi}\nKode Pos: ${detailPesanan.kodePos}`;
+    if (detailPesanan.catatan.trim() !== "") { alamatFormatted += `\n(Catatan: ${detailPesanan.catatan})`; }
+    detailPesanan.alamatFormatted = alamatFormatted;
+    localStorage.setItem('detailPesanan', JSON.stringify(detailPesanan));
+    window.location.href = '/pembayaran.html';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initIndexPage();
+    // Cek apakah script ini berjalan di halaman utama atau halaman pembayaran
+    if (document.querySelector('#produk-section')) {
+        initIndexPage();
+    }
     window.addEventListener('click', e => {
         if (e.target == modalPilihan) tutupModalPilihan();
         if (e.target == modalMarketplace) tutupModalMarketplace();
         if (e.target == modalForm) tutupFormPembelian();
     });
     const backToTopBtn = document.getElementById('back-to-top');
-    window.onscroll = function() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) { backToTopBtn.style.display = "block"; } 
-        else { backToTopBtn.style.display = "none"; }
-    };
-    backToTopBtn.addEventListener('click', () => { window.scrollTo({top: 0, behavior: 'smooth'}); });
+    if (backToTopBtn) {
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) { backToTopBtn.style.display = "block"; } 
+            else { backToTopBtn.style.display = "none"; }
+        };
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({top: 0, behavior: 'smooth'}); });
+    }
 });
