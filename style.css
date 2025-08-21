@@ -70,12 +70,13 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
 .tentang-section { text-align: center; padding: 80px 40px; }
 .tentang-section p { max-width: 800px; margin: 0 auto; line-height: 1.7; color: #ccc; }
 .footer { border-top: 2px solid #e63946; padding: 30px 20px; background-color: #1a1a1a; }
-.footer-content-wrapper { max-width: 1200px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-.footer-info { text-align: left; }
+.footer-content-wrapper { max-width: 1200px; margin: 0 auto 20px auto; display: flex; flex-direction: column; align-items: center; flex-wrap: wrap; gap: 30px; }
+.footer-info { text-align: center; }
+.footer-social { text-align: center; }
 .footer-logo-img { height: 32px; margin-bottom: 10px; }
 .footer-address { color: #ccc; font-size: 14px; }
 .footer-social h4 { font-family: 'Bebas Neue', cursive; color: #fff; font-size: 18px; margin-bottom: 10px; }
-.social-icons a { color: #fff; font-size: 24px; margin-left: 15px; transition: color 0.3s ease; }
+.social-icons a { color: #fff; font-size: 24px; margin: 0 10px; transition: color 0.3s ease; }
 .social-icons a:hover { color: #e63946; }
 .footer-copyright { display: block; text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #333; color: #888; font-size: 12px; }
 
@@ -127,8 +128,8 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
 /* === ELEMEN TAMBAHAN (TOAST & SCROLL) === */
 .toast { visibility: hidden; min-width: 250px; background-color: #25D366; color: #fff; text-align: center; border-radius: 5px; padding: 16px; position: fixed; z-index: 1001; left: 50%; transform: translateX(-50%); bottom: 30px; font-size: 17px; }
 .toast.show { visibility: visible; animation: toast-in 0.5s, toast-out 0.5s 2.5s; }
-.back-to-top-btn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 998; background-color: #e63946; color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; opacity: 0.8; transition: opacity 0.3s; }
-.back-to-top-btn:hover { opacity: 1; }
+.back-to-top-btn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 998; background-color: #e63946; color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; opacity: 0.8; transition: opacity 0.3s, transform 0.3s; }
+.back-to-top-btn:hover { opacity: 1; transform: scale(1.1); }
 
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
@@ -137,8 +138,7 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
     .hero-title { font-size: 48px; }
     .hero-subtitle { font-size: 18px; }
     .produk-list-grid { grid-template-columns: 1fr; }
-    .footer-content-wrapper { flex-direction: column; text-align: center; }
-    .footer-social { margin-top: 20px; }
+    .footer-content-wrapper { text-align: center; }
     .social-icons a { margin: 0 10px; }
 }
 @media (max-width: 500px) {
