@@ -54,7 +54,7 @@
         <div id="loading-indicator" class="loading-indicator" style="display: none;"><div class="spinner"></div><span>Memuat Produk...</span></div>
     </div>
   </section>
-  
+ 
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">TENTANG KAMI</div>
     <h2 class="tentang-title">Lahir dari Gairah, Ditempa untuk Juara</h2>
@@ -82,6 +82,12 @@
       <form id="form-beli" onsubmit="kirimKeWhatsapp(event)">
         <div class="form-group"><label>Produk:</label><input type="text" id="form-nama-produk" readonly><input type="hidden" id="form-harga-produk"></div>
         <div class="form-group"><label for="kuantitas">Kuantitas:</label><div class="quantity-selector"><button type="button" onclick="ubahKuantitas(-1)">-</button><input type="number" id="kuantitas" value="1" min="1" onchange="hitungTotal()"><button type="button" onclick="ubahKuantitas(1)">+</button></div></div>
+        
+        <div class="form-group" id="form-group-jenis" style="display: none;">
+            <label>Pilih Jenis:</label>
+            <div class="payment-options" id="jenis-options-container">
+                </div>
+        </div>
         <div class="form-group"><label for="nama-pelanggan">Nama Lengkap:</label><input type="text" id="nama-pelanggan" required></div>
         <div class="form-group"><label for="alamat-lengkap">Alamat Lengkap / Patokan:</label><textarea id="alamat-lengkap" rows="3" placeholder="Contoh: Jl. Merdeka No. 12, RT 01/RW 02, seberang masjid" required></textarea></div>
         <div class="address-grid"><div class="form-group"><label for="kota-kabupaten">Kota/Kabupaten:</label><input type="text" id="kota-kabupaten" placeholder="Contoh: Purwokerto" required></div><div class="form-group"><label for="provinsi">Provinsi:</label><input type="text" id="provinsi" placeholder="Contoh: Jawa Tengah" required></div></div>
