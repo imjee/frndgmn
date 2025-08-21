@@ -86,22 +86,68 @@
     </div>
   </div>
 
+  <div id="modal-pilihan" class="modal-beli-bg" style="display:none;">
+    <div class="modal-beli-card">
+        <button class="modal-pilihan-close"><i class="fas fa-times"></i></button>
+        <h3 id="modal-pilihan-title">Pilih Metode Pembelian</h3>
+        <p>Anda ingin membeli produk ini melalui?</p>
+        <div class="modal-pilihan-actions">
+            <button id="btn-pilihan-marketplace" class="modal-pilihan-btn">
+                <i class="fas fa-store"></i> Beli di Marketplace
+            </button>
+            <button id="btn-pilihan-langsung" class="modal-pilihan-btn">
+                <i class="fas fa-shopping-basket"></i> Beli Langsung (via Website)
+            </button>
+        </div>
+    </div>
+  </div>
+
   <div id="modal-keranjang" class="modal-beli-bg" style="display:none;">
     <div class="modal-beli-card">
         <button class="modal-keranjang-close"><i class="fas fa-times"></i></button>
         <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
-        <div id="keranjang-list-items">
-            </div>
+        <div id="keranjang-list-items"></div>
         <div id="keranjang-footer" style="display:none;">
             <div class="keranjang-total">
                 <span>Total Harga:</span>
                 <strong id="keranjang-total-harga">Rp0</strong>
             </div>
-            <a href="#" class="hero-btn checkout-btn">Lanjutkan ke Pembayaran</a>
+            <button class="hero-btn checkout-btn-trigger">Lanjutkan ke Pembelian</button>
         </div>
     </div>
   </div>
 
+  <div id="modal-checkout" class="modal-beli-bg" style="display:none;">
+    <div class="modal-beli-card">
+        <button class="modal-checkout-close"><i class="fas fa-times"></i></button>
+        <h3><i class="fas fa-clipboard-list"></i> Form Pembelian</h3>
+        <form id="checkout-form">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="whatsapp">Nomor WhatsApp</label>
+                <input type="tel" id="whatsapp" name="whatsapp" placeholder="Contoh: 081234567890" required>
+            </div>
+            <div class="form-group">
+                <label for="alamat">Alamat Lengkap</label>
+                <textarea id="alamat" name="alamat" rows="3" required></textarea>
+            </div>
+            <div class="form-summary">
+                <h4>Ringkasan Pesanan</h4>
+                <div id="checkout-summary-items"></div>
+                <div class="keranjang-total">
+                    <span>Total:</span>
+                    <strong id="checkout-total-harga"></strong>
+                </div>
+            </div>
+            <button type="submit" class="hero-btn checkout-btn">
+                <i class="fab fa-whatsapp"></i> Kirim Pesanan ke Admin
+            </button>
+        </form>
+    </div>
+  </div>
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
