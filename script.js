@@ -37,7 +37,7 @@ async function fetchProducts() {
     }
 }
 
-// Dibuat global agar bisa diakses dari onclick HTML
+// Dibuat global (ditempel ke window) agar bisa diakses dari onclick HTML
 window.addToCart = function(barangId) {
     if (!barangId) return;
     const existingItem = cart.find(item => item.id === barangId);
@@ -55,8 +55,8 @@ window.openMarketplaceModal = function(barang) {
     if(!modal) return;
     document.getElementById('modal-marketplace-title').textContent = barang.nama;
     document.getElementById('modal-marketplace-actions').innerHTML = `
-        <a href="${barang.tokopedia}" target="_blank" class="modal-beli-btn tokopedia"><i class="fab fa-shopify"></i> Tokopedia</a>
-        <a href="${barang.shopee}" target="_blank" class="modal-beli-btn shopee"><i class="fas fa-store"></i> Shopee</a>
+        <a href="${barang.tokopedia}" target="_blank" class="modal-beli-btn tokopedia">Tokopedia</a>
+        <a href="${barang.shopee}" target="_blank" class="modal-beli-btn shopee">Shopee</a>
     `;
     modal.style.display = 'flex';
 }
@@ -75,8 +75,11 @@ async function initIndexPage() {
     const listContainer = document.getElementById('barang-list');
 
     function renderFilteredProducts() {
-        let filtered = allBarang.filter(p => p.kategori === currentSeries);
-        if (currentJenis !== 'ALL') {
+        let filtered = allBarang;
+        if (currentSeries) {
+            filtered = filtered.filter(p => p.kategori === currentSeries);
+        }
+        if (currentJenis && currentJenis !== 'ALL') {
             filtered = filtered.filter(p => p.jenis.includes(currentJenis));
         }
         if (searchTerm) {
@@ -102,8 +105,8 @@ async function initIndexPage() {
                 <p class="produk-desc">${barang.deskripsi}</p>
                 <p class="produk-harga">Rp${barang.harga.toLocaleString('id-ID')}</p>
                 <div class="produk-actions">
-                    <button class="produk-btn" onclick="addToCart('${barang.id}')">Tambah ke Keranjang</button>
-                    <button class="btn-marketplace" onclick='openMarketplaceModal(${barangString})'>Beli di Marketplace</button>
+                    <button class="produk-btn" onclick="window.addToCart('${barang.id}')">Tambah ke Keranjang</button>
+                    <button class="btn-marketplace" onclick='window.openMarketplaceModal(${barangString})'>Beli di Marketplace</button>
                 </div>
             `;
             container.appendChild(el);
@@ -146,12 +149,9 @@ async function initIndexPage() {
         renderFilteredProducts();
     });
 
-    const marketplaceModal = document.getElementById('modal-marketplace');
-    if (marketplaceModal) {
-        marketplaceModal.querySelector('.modal-marketplace-close').onclick = () => {
-            marketplaceModal.style.display = 'none';
-        };
-    }
+    document.getElementById('modal-marketplace')?.querySelector('.modal-marketplace-close').onclick = () => {
+        document.getElementById('modal-marketplace').style.display = 'none';
+    };
     
     renderJenisButtons();
     renderFilteredProducts();
@@ -161,11 +161,11 @@ async function initIndexPage() {
 
 // === LOGIKA UNTUK HALAMAN KERANJANG.HTML ===
 async function initCartPage() {
-    await fetchProducts();
+    await fetchProducts(); // **PERBAIKAN KUNCI**: Tunggu data produk selesai dimuat
     const container = document.getElementById('cart-items-container');
     const summaryEl = document.getElementById('cart-summary');
     
-    if (cart.length === 0) {
+    if (!cart || cart.length === 0) {
         container.innerHTML = '<p style="text-align:center; padding: 20px;">Keranjang Anda kosong.</p>';
         return;
     }
@@ -186,8 +186,8 @@ async function initCartPage() {
                     <p>Rp${product.harga.toLocaleString('id-ID')}</p>
                 </div>
                 <div class="keranjang-item-actions">
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id}', this.value)">
-                    <button onclick="removeFromCart('${item.id}')" title="Hapus"><i class="fas fa-trash"></i></button>
+                    <input type="number" value="${item.quantity}" min="1" onchange="window.updateQuantity('${item.id}', this.value)">
+                    <button onclick="window.removeFromCart('${item.id}')" title="Hapus"><i class="fas fa-trash"></i></button>
                 </div>
             `;
             container.appendChild(itemEl);
@@ -203,10 +203,10 @@ window.updateQuantity = function(id, qty) {
     if(item) {
         item.quantity = parseInt(qty, 10);
         if(item.quantity <= 0) {
-            removeFromCart(id);
+            window.removeFromCart(id);
         } else {
             saveCart();
-            initCartPage();
+            initCartPage(); // Re-render halaman keranjang
         }
     }
 }
@@ -214,19 +214,18 @@ window.updateQuantity = function(id, qty) {
 window.removeFromCart = function(id) {
     cart = cart.filter(i => i.id !== id);
     saveCart();
-    initCartPage();
+    initCartPage(); // Re-render halaman keranjang
 }
 
 // === LOGIKA UNTUK HALAMAN CHECKOUT.HTML ===
 async function initCheckoutPage() {
-    await fetchProducts();
+    await fetchProducts(); // **PERBAIKAN KUNCI**: Tunggu data produk selesai dimuat
     const summaryContainer = document.getElementById('checkout-summary-items');
     const totalEl = document.getElementById('checkout-total-harga');
     let totalPrice = 0;
 
-    if (cart.length === 0) {
-        summaryContainer.innerHTML = "<p>Keranjang kosong.</p>"
-        document.getElementById('checkout-form').style.display = 'none';
+    if (!cart || cart.length === 0) {
+        window.location.href = '/keranjang.html'; // Redirect jika keranjang kosong
         return;
     }
 
