@@ -18,7 +18,14 @@
       <li><a href="#tentang">Tentang</a></li>
       <li><a href="#kontak">Kontak</a></li>
     </ul>
+    <div class="nav-cart">
+        <button id="cart-btn" class="cart-button">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count" class="cart-count-badge">0</span>
+        </button>
+    </div>
   </nav>
+
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -40,15 +47,14 @@
             <h2 class="section-title">Terlaris</h2>
         </button>
     </div>
-
     <div id="NewLaunch" class="highlight-tab-content">
         <div id="launching-list" class="highlight-list"></div>
     </div>
-
     <div id="BestSeller" class="highlight-tab-content" style="display: none;">
         <div id="best-seller-list" class="highlight-list"></div>
     </div>
   </section>
+
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
@@ -66,6 +72,7 @@
     <div id="barang-list"></div>
     <div id="produk-loading" style="display:none;">Loading...</div>
   </section>
+  
   <div id="modal-beli" class="modal-beli-bg" style="display:none;">
     <div class="modal-beli-card">
       <button class="modal-beli-close"><i class="fas fa-times"></i></button>
@@ -78,6 +85,23 @@
       </div>
     </div>
   </div>
+
+  <div id="modal-keranjang" class="modal-beli-bg" style="display:none;">
+    <div class="modal-beli-card">
+        <button class="modal-keranjang-close"><i class="fas fa-times"></i></button>
+        <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
+        <div id="keranjang-list-items">
+            </div>
+        <div id="keranjang-footer" style="display:none;">
+            <div class="keranjang-total">
+                <span>Total Harga:</span>
+                <strong id="keranjang-total-harga">Rp0</strong>
+            </div>
+            <a href="#" class="hero-btn checkout-btn">Lanjutkan ke Pembayaran</a>
+        </div>
+    </div>
+  </div>
+
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
@@ -85,6 +109,7 @@
        Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
+
   <footer id="kontak" class="footer">
     <div class="footer-logo">
       <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
