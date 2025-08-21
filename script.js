@@ -52,6 +52,7 @@ window.addToCart = function(barangId) {
 
 window.openMarketplaceModal = function(barang) {
     const modal = document.getElementById('modal-marketplace');
+    if(!modal) return;
     document.getElementById('modal-marketplace-title').textContent = barang.nama;
     document.getElementById('modal-marketplace-actions').innerHTML = `
         <a href="${barang.tokopedia}" target="_blank" class="modal-beli-btn tokopedia"><i class="fab fa-shopify"></i> Tokopedia</a>
@@ -145,9 +146,12 @@ async function initIndexPage() {
         renderFilteredProducts();
     });
 
-    document.getElementById('modal-marketplace')?.querySelector('.modal-marketplace-close').onclick = () => {
-        document.getElementById('modal-marketplace').style.display = 'none';
-    };
+    const marketplaceModal = document.getElementById('modal-marketplace');
+    if (marketplaceModal) {
+        marketplaceModal.querySelector('.modal-marketplace-close').onclick = () => {
+            marketplaceModal.style.display = 'none';
+        };
+    }
     
     renderJenisButtons();
     renderFilteredProducts();
@@ -158,13 +162,110 @@ async function initIndexPage() {
 // === LOGIKA UNTUK HALAMAN KERANJANG.HTML ===
 async function initCartPage() {
     await fetchProducts();
-    // ... (kode lengkap dari revisi sebelumnya)
+    const container = document.getElementById('cart-items-container');
+    const summaryEl = document.getElementById('cart-summary');
+    
+    if (cart.length === 0) {
+        container.innerHTML = '<p style="text-align:center; padding: 20px;">Keranjang Anda kosong.</p>';
+        return;
+    }
+    
+    container.innerHTML = '';
+    let totalPrice = 0;
+    
+    cart.forEach(item => {
+        const product = allBarang.find(p => p.id === item.id);
+        if (product) {
+            totalPrice += product.harga * item.quantity;
+            const itemEl = document.createElement('div');
+            itemEl.className = 'keranjang-item';
+            itemEl.innerHTML = `
+                <img src="${product.foto}" alt="${product.nama}">
+                <div class="keranjang-item-info">
+                    <h4>${product.nama}</h4>
+                    <p>Rp${product.harga.toLocaleString('id-ID')}</p>
+                </div>
+                <div class="keranjang-item-actions">
+                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id}', this.value)">
+                    <button onclick="removeFromCart('${item.id}')" title="Hapus"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            container.appendChild(itemEl);
+        }
+    });
+
+    document.getElementById('cart-total-price').textContent = `Rp${totalPrice.toLocaleString('id-ID')}`;
+    summaryEl.style.display = 'block';
+}
+
+window.updateQuantity = function(id, qty) {
+    const item = cart.find(i => i.id === id);
+    if(item) {
+        item.quantity = parseInt(qty, 10);
+        if(item.quantity <= 0) {
+            removeFromCart(id);
+        } else {
+            saveCart();
+            initCartPage();
+        }
+    }
+}
+
+window.removeFromCart = function(id) {
+    cart = cart.filter(i => i.id !== id);
+    saveCart();
+    initCartPage();
 }
 
 // === LOGIKA UNTUK HALAMAN CHECKOUT.HTML ===
 async function initCheckoutPage() {
     await fetchProducts();
-    // ... (kode lengkap dari revisi sebelumnya)
+    const summaryContainer = document.getElementById('checkout-summary-items');
+    const totalEl = document.getElementById('checkout-total-harga');
+    let totalPrice = 0;
+
+    if (cart.length === 0) {
+        summaryContainer.innerHTML = "<p>Keranjang kosong.</p>"
+        document.getElementById('checkout-form').style.display = 'none';
+        return;
+    }
+
+    cart.forEach(item => {
+        const product = allBarang.find(p => p.id === item.id);
+        if (product) {
+            totalPrice += product.harga * item.quantity;
+            summaryContainer.innerHTML += `<p>${product.nama} (x${item.quantity})</p>`;
+        }
+    });
+
+    totalEl.textContent = `Rp${totalPrice.toLocaleString('id-ID')}`;
+
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nama = document.getElementById('nama').value;
+        const no_wa = document.getElementById('whatsapp').value;
+        const alamat = document.getElementById('alamat').value;
+        let pesan = `*Pesanan Baru Masuk - Website*\n\n`;
+        pesan += `*Nama:* ${nama}\n*No. WhatsApp:* ${no_wa}\n*Alamat:* ${alamat}\n\n`;
+        pesan += `*Detail Pesanan:*\n`;
+        cart.forEach(item => {
+            const product = allBarang.find(p => p.id === item.id);
+            if (product) pesan += `- ${product.nama} (x${item.quantity})\n`;
+        });
+        pesan += `\n*Total Belanja: Rp${totalPrice.toLocaleString('id-ID')}*\n\n`;
+        pesan += `Pesanan ini menunggu konfirmasi pembayaran. Terima kasih.`;
+
+        const nomorAdmin = "62895363383732";
+        const linkWhatsApp = `https://api.whatsapp.com/send?phone=${nomorAdmin}&text=${encodeURIComponent(pesan)}`;
+        
+        window.open(linkWhatsApp, '_blank');
+        
+        alert('Pesanan Anda sedang dialihkan ke WhatsApp Admin. Mohon selesaikan proses pengiriman pesan untuk konfirmasi.');
+        this.reset();
+        cart = [];
+        saveCart();
+        window.location.href = '/index.html';
+    });
 }
 
 // === ROUTER SEDERHANA & INISIALISASI ===
