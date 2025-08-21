@@ -5,7 +5,7 @@
   <title>DRC Racing Exhaust - Produk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="/style.css">
-  <link href="https://fonts.googleapis.comcom/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
@@ -18,12 +18,6 @@
       <li><a href="#tentang">Tentang</a></li>
       <li><a href="#kontak">Kontak</a></li>
     </ul>
-    <div class="nav-cart">
-        <a href="/keranjang.html" class="cart-button">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count" class="cart-count-badge">0</span>
-        </a>
-    </div>
   </nav>
 
   <section class="hero">
@@ -75,27 +69,83 @@
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas Juara Indonesia</h2>
     <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
-       Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
+        Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
 
   <footer id="kontak" class="footer">
-      <div class="footer-logo">
-        <img src="/logo-drc.png" alt="DRC Victory" height="32"/>
+    <div class="footer-content-wrapper">
+      <div class="footer-info">
+        <img src="/logo-drc.png" alt="DRC Victory" class="footer-logo-img"/>
+        <p class="footer-address"><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</p>
       </div>
-      <div class="footer-contact">
-        <span><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</span>
+      <div class="footer-social">
+        <h4>IKUTI KAMI</h4>
+        <div class="social-icons">
+          <a href="https://tiktok.com/@username_anda" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://instagram.com/username_anda" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/6281234567890?text=Halo%20DRC%20Racing,%20saya%20tertarik%20dengan%20produk%20Anda." target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
       </div>
-      <small>© 2025 DRC Victory Racing Exhaust</small>
+    </div>
+    <small class="footer-copyright">© 2025 DRC Victory Racing Exhaust. All Rights Reserved.</small>
   </footer>
 
-  <div id="modal-marketplace" class="modal-beli-bg" style="display:none;">
-      <div class="modal-beli-card">
-          <button class="modal-marketplace-close"><i class="fas fa-times"></i></button>
-          <h3 id="modal-marketplace-title"></h3>
-          <p>Silakan pilih marketplace tujuan Anda:</p>
-          <div id="modal-marketplace-actions" class="modal-beli-actions"></div>
-      </div>
+  <div id="modal-pembelian" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+      <span class="modal-close" onclick="tutupFormPembelian()">&times;</span>
+      <h2>Form Pembelian Langsung</h2>
+      <form id="form-beli" onsubmit="kirimKeWhatsapp(event)">
+        <div class="form-group">
+          <label>Produk:</label>
+          <input type="text" id="form-nama-produk" readonly>
+          <input type="hidden" id="form-harga-produk">
+        </div>
+        <div class="form-group">
+          <label for="kuantitas">Kuantitas:</label>
+          <div class="quantity-selector">
+            <button type="button" onclick="ubahKuantitas(-1)">-</button>
+            <input type="number" id="kuantitas" value="1" min="1" onchange="hitungTotal()">
+            <button type="button" onclick="ubahKuantitas(1)">+</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nama-pelanggan">Nama Lengkap:</label>
+          <input type="text" id="nama-pelanggan" required>
+        </div>
+        <div class="form-group">
+          <label for="alamat-pelanggan">Alamat Lengkap:</label>
+          <textarea id="alamat-pelanggan" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="telepon-pelanggan">Nomor WhatsApp:</label>
+          <input type="tel" id="telepon-pelanggan" placeholder="Contoh: 08123456789" required>
+        </div>
+        <div class="form-group">
+          <label>Metode Pembayaran:</label>
+          <div class="payment-options">
+            <label><input type="radio" name="pembayaran" value="BCA" required onchange="tampilkanInstruksi(this.value)"> BCA</label>
+            <label><input type="radio" name="pembayaran" value="BRI" onchange="tampilkanInstruksi(this.value)"> BRI</label>
+            <label><input type="radio" name="pembayaran" value="BNI" onchange="tampilkanInstruksi(this.value)"> BNI</label>
+            <label><input type="radio" name="pembayaran" value="Mandiri" onchange="tampilkanInstruksi(this.value)"> Mandiri</label>
+            <label><input type="radio" name="pembayaran" value="QRIS" onchange="tampilkanInstruksi(this.value)"> QRIS</label>
+          </div>
+        </div>
+        <div id="instruksi-pembayaran" class="instruksi" style="display:none;">
+            <h4>Total Pembayaran: <span id="total-harga"></span></h4>
+            <div id="detail-BCA" class="detail-instruksi"><p>Transfer ke BCA: <strong>1234567890</strong> a.n. Nama Anda</p></div>
+            <div id="detail-BRI" class="detail-instruksi"><p>Transfer ke BRI: <strong>0987654321</strong> a.n. Nama Anda</p></div>
+            <div id="detail-BNI" class="detail-instruksi"><p>Transfer ke BNI: <strong>1122334455</strong> a.n. Nama Anda</p></div>
+            <div id="detail-Mandiri" class="detail-instruksi"><p>Transfer ke Mandiri: <strong>5566778899</strong> a.n. Nama Anda</p></div>
+            <div id="detail-QRIS" class="detail-instruksi">
+                <p>Scan kode QRIS di bawah ini:</p>
+                <img src="/images/qris-placeholder.png" alt="QRIS" style="max-width: 180px; border-radius: 8px;">
+            </div>
+            <p class="warning"><strong>PENTING:</strong> Simpan bukti transfer Anda. Setelah menekan tombol di bawah, mohon kirimkan bukti transfer di chat WhatsApp.</p>
+        </div>
+        <button type="submit" class="btn-submit">Kirim Pesanan via WhatsApp</button>
+      </form>
+    </div>
   </div>
 
   <script src="/script.js"></script>
