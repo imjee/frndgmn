@@ -18,6 +18,10 @@
       <li><a href="#tentang">Tentang</a></li>
       <li><a href="#kontak">Kontak</a></li>
     </ul>
+    <div class="nav-cart" onclick="tampilkanKeranjang()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count" class="cart-count">0</span>
+    </div>
   </nav>
 
   <section class="hero">
@@ -29,7 +33,6 @@
       <a href="#produk" class="hero-btn">Jelajahi Koleksi Juara</a>
     </div>
   </section>
-
   <section class="produk-highlight-row">
     <div class="highlight-tabs">
         <button class="highlight-tab-btn active" data-tab="NewLaunch"><span class="section-kicker">NEW LAUNCHING</span><h2 class="section-title">Terbaru</h2></button>
@@ -38,7 +41,6 @@
     <div id="NewLaunch" class="highlight-tab-content"><div id="launching-list" class="highlight-list"></div></div>
     <div id="BestSeller" class="highlight-tab-content" style="display: none;"><div id="best-seller-list" class="highlight-list"></div></div>
   </section>
-
   <section id="produk" class="produk-section">
     <div class="section-kicker">OUR PRODUCTS</div>
     <h2 class="section-title">Temukan Koleksi DRC Victory</h2>
@@ -54,7 +56,6 @@
         <div id="loading-indicator" class="loading-indicator" style="display: none;"><div class="spinner"></div><span>Memuat Produk...</span></div>
     </div>
   </section>
- 
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">TENTANG KAMI</div>
     <h2 class="tentang-title">Lahir dari Gairah, Ditempa untuk Juara</h2>
@@ -62,7 +63,6 @@
         Berawal dari jantung industri knalpot Indonesia di Purbalingga, DRC Racing Exhaust didirikan atas dasar kecintaan pada kecepatan dan presisi. Kami adalah spesialis knalpot premium yang memadukan riset mendalam, material stainless steel terbaik, dan keahlian tangan para profesional untuk menghasilkan performa, suara, dan estetika yang tak tertandingi. Setiap produk DRC adalah janji kami untuk performa juara, baik di lintasan balap maupun di jalanan.
     </p>
   </section>
-
   <footer id="kontak" class="footer">
     <div class="footer-content-wrapper">
       <div class="footer-info"><img src="/logo-drc.png" alt="DRC Victory" class="footer-logo-img"/><p class="footer-address"><i class="fas fa-map-marker-alt"></i> Jl. AW SUMARNO No.19, Purbalingga, Jawa Tengah</p></div>
@@ -70,32 +70,45 @@
     </div>
     <small class="footer-copyright">© 2025 DRC Victory Racing Exhaust. All Rights Reserved.</small>
   </footer>
-  <div id="modal-pilihan-beli" class="modal-overlay" style="display:none;"><div class="modal-content"><span class="modal-close" onclick="tutupSemuaModal()">&times;</span><h2>Pilih Metode Pembelian</h2><p>Anda akan membeli: <strong id="modal-pilihan-produk">Nama Produk</strong></p><div class="pilihan-actions"><button class="btn-pilihan" onclick="pilihBeliLangsung()"><i class="fas fa-globe"></i><span>Beli Langsung (Website)</span><small>Isi form, transfer, & konfirmasi via WhatsApp.</small></button><button class="btn-pilihan" onclick="pilihBeliMarketplace()"><i class="fas fa-store"></i><span>Beli via Marketplace</span><small>Pilih Tokopedia atau Shopee.</small></button></div></div></div>
 
-  <div id="modal-marketplace-links" class="modal-overlay" style="display:none;"><div class="modal-content"><span class="modal-close" onclick="tutupSemuaModal()">&times;</span><h2>Pilih Marketplace</h2><p>Silakan pilih marketplace tujuan Anda:</p><div id="modal-marketplace-buttons" class="marketplace-buttons"></div></div></div>
+  <div id="modal-pilih-jenis" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="tutupModalPilihJenis()">&times;</span>
+        <h2>Pilih Jenis untuk <strong id="nama-produk-pilihan"></strong></h2>
+        <div id="container-opsi-jenis" class="payment-options"></div>
+        <button id="btn-tambah-keranjang-final" class="btn-submit">Tambah ke Keranjang</button>
+    </div>
+  </div>
 
-  <div id="modal-pembelian" class="modal-overlay" style="display:none;">
+  <div id="modal-keranjang" class="modal-overlay" style="display:none;">
     <div class="modal-content">
       <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
-      <h2>Form Pembelian Langsung</h2>
-      <form id="form-beli" onsubmit="lanjutKePembayaran(event)">
-        <div class="form-group"><label>Produk:</label><input type="text" id="form-nama-produk" readonly><input type="hidden" id="form-harga-produk"></div>
-        <div class="form-group"><label for="kuantitas">Kuantitas:</label><div class="quantity-selector"><button type="button" onclick="ubahKuantitas(-1)">-</button><input type="number" id="kuantitas" value="1" min="1"><button type="button" onclick="ubahKuantitas(1)">+</button></div></div>
-        <div class="form-group" id="form-group-jenis" style="display: none;">
-            <label>Pilih Jenis:</label>
-            <div class="payment-options" id="jenis-options-container"></div>
+      <h2>Keranjang Belanja Anda</h2>
+      <div id="keranjang-list-container">
         </div>
-        <div class="form-group"><label for="nama-pelanggan">Nama Lengkap:</label><input type="text" id="nama-pelanggan" required></div>
-        <div class="form-group"><label for="alamat-lengkap">Alamat Lengkap / Patokan:</label><textarea id="alamat-lengkap" rows="3" placeholder="Contoh: Jl. Merdeka No. 12, RT 01/RW 02, seberang masjid" required></textarea></div>
-        <div class="address-grid"><div class="form-group"><label for="kota-kabupaten">Kota/Kabupaten:</label><input type="text" id="kota-kabupaten" placeholder="Contoh: Purwokerto" required></div><div class="form-group"><label for="provinsi">Provinsi:</label><input type="text" id="provinsi" placeholder="Contoh: Jawa Tengah" required></div></div>
-        <div class="form-group"><label for="kode-pos">Kode Pos:</label><input type="text" id="kode-pos" inputmode="numeric" placeholder="Contoh: 53182" required></div>
-        <div class="form-group"><label for="telepon-pelanggan">Nomor WhatsApp:</label><input type="tel" id="telepon-pelanggan" placeholder="Contoh: 08123456789" required><p id="wa-error" class="error-message"></p></div>
-        <div class="form-group"><label for="notes-tambahan">Catatan Tambahan (Opsional):</label><textarea id="notes-tambahan" rows="2" placeholder="Contoh: Ukuran knalpot khusus, jam pengiriman, dll."></textarea></div>
-        
-        <div class="form-group"><label>Metode Pembayaran:</label><div class="payment-options"><label><input type="radio" name="pembayaran" value="BCA" required> BCA</label><label><input type="radio" name="pembayaran" value="BRI"> BRI</label><label><input type="radio" name="pembayaran" value="BNI"> BNI</label><label><input type="radio" name="pembayaran" value="Mandiri"> Mandiri</label><label><input type="radio" name="pembayaran" value="QRIS"> QRIS</label></div></div>
-        
-        <button type="submit" class="btn-submit">Lanjutkan ke Pembayaran</button>
-      </form>
+      <div id="keranjang-kosong" style="display: none; text-align: center; padding: 20px;">
+        <p>Keranjang Anda masih kosong.</p>
+        <button onclick="tutupSemuaModal()" class="hero-btn">Lanjut Belanja</button>
+      </div>
+
+      <div id="checkout-form-container">
+        <div class="ringkasan-total">
+            <strong>Total Belanja:</strong>
+            <h3 id="keranjang-total-harga" class="harga-final">Rp0</h3>
+        </div>
+        <hr>
+        <h3>Lengkapi Data Pengiriman</h3>
+        <form id="form-beli" onsubmit="lanjutKePembayaran(event)">
+            <div class="form-group"><label for="nama-pelanggan">Nama Lengkap:</label><input type="text" id="nama-pelanggan" required></div>
+            <div class="form-group"><label for="alamat-lengkap">Alamat Lengkap / Patokan:</label><textarea id="alamat-lengkap" rows="3" placeholder="Contoh: Jl. Merdeka No. 12, RT 01/RW 02, seberang masjid" required></textarea></div>
+            <div class="address-grid"><div class="form-group"><label for="kota-kabupaten">Kota/Kabupaten:</label><input type="text" id="kota-kabupaten" placeholder="Contoh: Purwokerto" required></div><div class="form-group"><label for="provinsi">Provinsi:</label><input type="text" id="provinsi" placeholder="Contoh: Jawa Tengah" required></div></div>
+            <div class="form-group"><label for="kode-pos">Kode Pos:</label><input type="text" id="kode-pos" inputmode="numeric" placeholder="Contoh: 53182" required></div>
+            <div class="form-group"><label for="telepon-pelanggan">Nomor WhatsApp:</label><input type="tel" id="telepon-pelanggan" placeholder="Contoh: 08123456789" required><p id="wa-error" class="error-message"></p></div>
+            <div class="form-group"><label for="notes-tambahan">Catatan Tambahan (Opsional):</label><textarea id="notes-tambahan" rows="2" placeholder="Contoh: Ukuran knalpot khusus, jam pengiriman, dll."></textarea></div>
+            <div class="form-group"><label>Metode Pembayaran:</label><div class="payment-options"><label><input type="radio" name="pembayaran" value="BCA" required> BCA</label><label><input type="radio" name="pembayaran" value="BRI"> BRI</label><label><input type="radio" name="pembayaran" value="BNI"> BNI</label><label><input type="radio" name="pembayaran" value="Mandiri"> Mandiri</label><label><input type="radio" name="pembayaran" value="QRIS"> QRIS</label></div></div>
+            <button type="submit" class="btn-submit">Lanjutkan ke Pembayaran</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -104,16 +117,11 @@
         <span class="modal-close" onclick="tutupSemuaModal()">&times;</span>
         <h2>Selesaikan Pembayaran</h2>
         <p>Mohon selesaikan pembayaran untuk pesanan berikut:</p>
-        
-        <div class="ringkasan-pesanan">
-            <strong>Produk:</strong> <span id="final-nama-produk"></span><br>
-            <strong>Total Tagihan:</strong>
-            <h3 id="final-total-tagihan" class="harga-final"></h3>
-        </div>
-
-        <div id="final-instruksi-pembayaran" class="instruksi">
+        <div class="ringkasan-pesanan" id="final-ringkasan-produk">
             </div>
-
+        <strong>Total Tagihan:</strong>
+        <h3 id="final-total-tagihan" class="harga-final"></h3>
+        <div id="final-instruksi-pembayaran" class="instruksi"></div>
         <div class="warning-pembayaran">
             <p><strong>PENTING:</strong></p>
             <ul>
@@ -122,7 +130,6 @@
                 <li>Klik tombol di bawah ini untuk mengonfirmasi pesanan Anda via WhatsApp dan kirimkan bukti transfer di chat.</li>
             </ul>
         </div>
-        
         <button onclick="konfirmasiViaWhatsapp()" class="btn-submit"><i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp</button>
     </div>
   </div>
