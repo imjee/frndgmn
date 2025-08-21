@@ -247,10 +247,8 @@ body {
   border: 2px solid #e63946;
   position: relative;
   transition: box-shadow .2s;
-  /* === REVISI UNTUK SIMETRIS START === */
   display: flex;
   flex-direction: column;
-  /* === REVISI UNTUK SIMETRIS END === */
 }
 .produk-card:hover {
   box-shadow: 0 8px 26px #e6394640;
@@ -262,6 +260,10 @@ body {
   margin-bottom: 14px;
   background: #fff;
   border: 2px solid #e63946;
+  /* === REVISI FOTO SIMETRIS START === */
+  height: 180px;
+  object-fit: cover;
+  /* === REVISI FOTO SIMETRIS END === */
 }
 .produk-card h3 {
   font-family: 'Bebas Neue', cursive;
@@ -301,9 +303,7 @@ body {
   cursor: pointer;
   transition: background .2s, color .2s, transform .1s;
   font-weight: bold;
-  /* === REVISI UNTUK SIMETRIS START === */
   margin-top: auto;
-  /* === REVISI UNTUK SIMETRIS END === */
 }
 .produk-btn:hover { background: #fff; color: #e63946; border: 2px solid #fff; transform: scale(1.05);}
 .tentang-section {
