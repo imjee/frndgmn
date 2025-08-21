@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <title>DRC Racing Exhaust - Produk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <nav class="navbar">
     <div class="nav-logo">
-      <a href="index.html"><img src="/logo-drc.png" alt="DRC Victory" height="40"/></a>
+      <a href="/index.html"><img src="/logo-drc.png" alt="DRC Victory" height="40"/></a>
     </div>
     <ul class="nav-menu">
       <li><a href="#produk">Produk</a></li>
@@ -19,7 +19,7 @@
       <li><a href="#kontak">Kontak</a></li>
     </ul>
     <div class="nav-cart">
-        <a href="keranjang.html" class="cart-button">
+        <a href="/keranjang.html" class="cart-button">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count" class="cart-count-badge">0</span>
         </a>
@@ -76,7 +76,7 @@
   <section id="tentang" class="tentang-section">
     <div class="section-kicker">ABOUT US</div>
     <h2 class="tentang-title">Kualitas <span class="red">Juara Indonesia</span></h2>
-    <p>DRC Victory Racing Exhaust: spesialis knalpot racing stainless premium.<br>
+    <p>DRC Victory Racing Exhaust: spesialis knhalpot racing stainless premium.<br>
        Performa, suara, dan estetika yang menginspirasi dunia balap & harian.
     </p>
   </section>
@@ -97,6 +97,16 @@
     <small>© 2025 DRC Victory Racing Exhaust</small>
   </footer>
 
-  <script src="script.js"></script>
+  <div id="modal-marketplace" class="modal-beli-bg" style="display:none;">
+      <div class="modal-beli-card">
+          <button class="modal-marketplace-close"><i class="fas fa-times"></i></button>
+          <h3 id="modal-marketplace-title"></h3>
+          <p>Silakan pilih marketplace tujuan Anda:</p>
+          <div id="modal-marketplace-actions" class="modal-beli-actions">
+              </div>
+      </div>
+  </div>
+
+  <script src="/script.js"></script>
 </body>
 </html>
