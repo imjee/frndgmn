@@ -27,20 +27,18 @@ body { font-family: 'Montserrat', Arial, sans-serif; background: #111; color: #f
 .highlight-tab-btn { background: none; border: none; color: #888; cursor: pointer; padding: 0; text-align: center; transition: color 0.3s ease; }
 .highlight-tab-btn .section-kicker, .highlight-tab-btn .section-title { transition: color 0.3s ease; margin: 0; }
 .highlight-tab-btn .section-title { font-size: 32px; }
-.highlight-tab-btn.active, .highlight-tab-btn:hover { color: #fff; }
 .highlight-tab-btn.active .section-kicker, .highlight-tab-btn:hover .section-kicker { color: #e63946; }
 .highlight-tab-btn.active .section-title, .highlight-tab-btn:hover .section-title { color: #fff; }
 .highlight-tab-content { width: 100%; max-width: 1240px; }
-.highlight-list { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 20px 5px; }
+.highlight-list { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 20px 5px; min-height: 300px; }
 .produk-section { background: #111; padding: 60px 20px 40px 20px; }
 .produk-series-selector, .jenis-selector { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
 .series-btn, .jenis-btn { background: #222; color: #ccc; font-family: 'Bebas Neue', cursive; font-size: 18px; padding: 10px 24px; border-radius: 20px; border: 1px solid #444; cursor: pointer; transition: all .2s; font-weight: bold; }
 .series-btn:hover, .jenis-btn:hover { background: #333; color: #fff; }
 .series-btn.active, .jenis-btn.active { background: #e63946; color: #fff; border-color: #e63946; }
 .produk-searchbar { display: flex; justify-content: center; align-items: center; margin: 30px auto; max-width: 400px; }
-.produk-searchbar input { font-size: 16px; padding: 12px 18px; border-radius: 20px 0 0 20px; border: 1px solid #555; outline: none; width: 100%; background: #222; color: #fff; }
-.produk-searchbar button { background: #e63946; color: #fff; border: 1px solid #e63946; border-left: none; border-radius: 0 20px 20px 0; padding: 12px 18px; font-size: 16px; cursor: pointer; }
-.produk-list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 28px; max-width: 1200px; margin: 20px auto 0 auto; }
+.produk-searchbar input { font-size: 16px; padding: 12px 18px; border-radius: 20px; border: 1px solid #555; outline: none; width: 100%; background: #222; color: #fff; }
+.produk-list-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 28px; max-width: 1200px; margin: 20px auto 0 auto; min-height: 400px; }
 .produk-card { background: #1a1a1a; border-radius: 14px; padding: 22px; text-align: center; border: 1px solid #333; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
 .produk-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
 .produk-img { width: 100%; max-width: 180px; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; background: #fff; align-self: center; }
@@ -85,4 +83,10 @@ input, textarea { width: 100%; box-sizing: border-box; padding: 12px; background
 .qris-info { margin-top: 20px; text-align: center; }
 .qris-image { max-width: 200px; border-radius: 10px; border: 2px solid #fff; }
 #checkout-summary-items p { margin: 0 0 5px; font-size: 14px; }
+
+/* Tentang & Footer */
+.tentang-section { text-align: center; padding: 50px 20px; } /* PERBAIKAN SIMETRIS */
 .footer { border-top: 2px solid #e63946; padding: 28px 20px 18px 20px; text-align: center; }
+
+@media (max-width: 900px) { .checkout-container { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .navbar { flex-wrap: wrap; justify-content: space-between; padding: 12px 15px; } }
