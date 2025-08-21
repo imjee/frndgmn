@@ -118,22 +118,20 @@ body {
 .produk-highlight-col {
   flex: 1 1 45%;
   max-width: 600px;
-  overflow: hidden; /* Sembunyikan overflow vertikal */
+  overflow: hidden; 
 }
 
-/* === BAGIAN YANG DIUBAH START === */
 #launching-list, #best-seller-list {
   display: flex;
-  flex-direction: row;   /* 1. Mengatur kartu berjajar ke samping */
-  overflow-x: auto;      /* 2. Mengaktifkan scroll horizontal */
+  flex-direction: row;   
+  overflow-x: auto;      
   gap: 20px;
-  padding: 10px 5px 20px 5px;  /* Memberi sedikit ruang untuk scrollbar & bayangan */
-  -webkit-overflow-scrolling: touch; /* Scroll lebih mulus di mobile */
-  scrollbar-width: thin; /* Scrollbar tipis untuk Firefox */
-  scrollbar-color: #e63946 #111; /* Warna scrollbar untuk Firefox */
+  padding: 10px 5px 20px 5px;  
+  -webkit-overflow-scrolling: touch; 
+  scrollbar-width: thin; 
+  scrollbar-color: #e63946 #111; 
 }
 
-/* 3. Styling scrollbar agar sesuai tema (Chrome, Safari, Edge) */
 #launching-list::-webkit-scrollbar,
 #best-seller-list::-webkit-scrollbar {
   height: 8px;
@@ -149,13 +147,11 @@ body {
   border-radius: 10px;
 }
 
-/* 4. Mengatur ukuran kartu agar tidak memenuhi layar */
 #launching-list .produk-card,
 #best-seller-list .produk-card {
-  flex: 0 0 280px; /* Ukuran tetap: tidak membesar, tidak mengecil, lebar 280px */
+  flex: 0 0 280px; 
   max-width: 280px;
 }
-/* === BAGIAN YANG DIUBAH END === */
 
 .produk-card.highlight {
   border: 2px solid #e63946;
@@ -251,6 +247,10 @@ body {
   border: 2px solid #e63946;
   position: relative;
   transition: box-shadow .2s;
+  /* === REVISI UNTUK SIMETRIS START === */
+  display: flex;
+  flex-direction: column;
+  /* === REVISI UNTUK SIMETRIS END === */
 }
 .produk-card:hover {
   box-shadow: 0 8px 26px #e6394640;
@@ -297,11 +297,13 @@ body {
   border-radius: 22px;
   text-decoration: none;
   display: inline-block;
-  margin-top: 8px;
   border: none;
   cursor: pointer;
   transition: background .2s, color .2s, transform .1s;
   font-weight: bold;
+  /* === REVISI UNTUK SIMETRIS START === */
+  margin-top: auto;
+  /* === REVISI UNTUK SIMETRIS END === */
 }
 .produk-btn:hover { background: #fff; color: #e63946; border: 2px solid #fff; transform: scale(1.05);}
 .tentang-section {
