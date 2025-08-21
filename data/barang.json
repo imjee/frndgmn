@@ -3,7 +3,7 @@
     {
       "id": "drc001",
       "nama": "DRC Lumaca SS ( CARBON )",
-      "deskripsi": "Knalpot racing mantap untuk Vespa Small Frame.",
+      "deskripsi": "Knalpot racing performa tinggi yang dirancang khusus untuk Vespa Small Frame, memberikan akselerasi yang lebih responsif.",
       "harga": 1978000,
       "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYtaBWv/",
@@ -11,12 +11,15 @@
       "kategori": "vespa",
       "jenis": ["PTS"],
       "newlaunching": true,
-      "bestseller": false
+      "bestseller": false,
+      "bahan": "Stainless Steel 304",
+      "suara": "Garing & Bertenaga",
+      "rekomendasi_mesin": "Standar Tune / Harian"
     },
     {
       "id": "drc002",
       "nama": "DRC Rep. JL SERIES ( SS )",
-      "deskripsi": "Knalpot racing untuk Vespa PX",
+      "deskripsi": "Replika knalpot legendaris Jim Lomas (JL) untuk Vespa PX series, dirancang untuk torsi dan tenaga maksimal.",
       "harga": 1196000,
       "foto": "/images/pxjlseries-ss.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYt9nU3/",
@@ -24,12 +27,15 @@
       "kategori": "vespa",
       "jenis": ["PX", "SUPER"],
       "newlaunching": false,
-      "bestseller": true
+      "bestseller": true,
+      "bahan": "Full Stainless Steel",
+      "suara": "Kering & Nyaring",
+      "rekomendasi_mesin": "Touring / Semi Balap"
     },
     {
       "id": "drc003",
       "nama": "DRC Big BOX ( BLACK )",
-      "deskripsi": "Knalpot standart untuk Vespa PX",
+      "deskripsi": "Model knalpot standar racing (silent) yang ideal untuk penggunaan harian pada Vespa PX series. Tampilan standar, performa racing.",
       "harga": 950000,
       "foto": "/images/BB-Black.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYntCpA/",
@@ -37,12 +43,15 @@
       "kategori": "vespa",
       "jenis": ["PX"],
       "newlaunching": true,
-      "bestseller": true
+      "bestseller": true,
+      "bahan": "Plat Galvanis Hitam",
+      "suara": "Adem Ngebass (Silent)",
+      "rekomendasi_mesin": "Harian / Touring"
     },
     {
       "id": "drc004",
       "nama": "Kiri Khusus SS ( CARBON )",
-      "deskripsi": "Knalpot khusus 177 - 200cc Vespa PX",
+      "deskripsi": "Knalpot buang kiri yang dirancang khusus untuk mesin bore-up 177cc hingga 200cc pada Vespa PX. Tenaga atas yang luar biasa.",
       "harga": 1850000,
       "foto": "/images/pxkiri177-200.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYcXP2A/",
@@ -50,12 +59,15 @@
       "kategori": "vespa",
       "jenis": ["PX"],
       "newlaunching": false,
-      "bestseller": true
+      "bestseller": true,
+      "bahan": "Stainless Steel & Carbon",
+      "suara": "Garing & Kompetisi",
+      "rekomendasi_mesin": "Bore Up 177cc - 200cc"
     },
     {
       "id": "drc007",
       "nama": "Knalpot Vespa Excel",
-      "deskripsi": "Knalpot racing Vespa Excel.",
+      "deskripsi": "Knalpot racing kanan yang didesain plug-and-play untuk Vespa Excel series, meningkatkan akselerasi dan memberikan suara khas.",
       "harga": 410000,
       "foto": "/images/produk-vespa-excel.jpg",
       "tokopedia": "https://tokopedia.com/produk-vespa-excel",
@@ -63,12 +75,15 @@
       "kategori": "vespa",
       "jenis": ["Excel"],
       "newlaunching": false,
-      "bestseller": false
+      "bestseller": false,
+      "bahan": "Plat Berkualitas",
+      "suara": "Garing Kencang",
+      "rekomendasi_mesin": "Standar / Harian"
     },
     {
       "id": "drc008",
       "nama": "Knalpot Ninja R",
-      "deskripsi": "Knalpot racing Ninja R.",
+      "deskripsi": "Knalpot racing untuk Kawasaki Ninja R, memaksimalkan power band dan memberikan suara garing yang menjadi ciri khas mesin 2-tak.",
       "harga": 420000,
       "foto": "/images/produk-ninja-r.jpg",
       "tokopedia": "https://tokopedia.com/produk-ninja-r",
@@ -76,7 +91,10 @@
       "kategori": "ninja",
       "jenis": ["Ninja R"],
       "newlaunching": false,
-      "bestseller": false
+      "bestseller": false,
+      "bahan": "Stainless Steel",
+      "suara": "Garing Trincing",
+      "rekomendasi_mesin": "Standar / Porting Harian"
     }
   ]
 }
