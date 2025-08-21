@@ -1,13 +1,14 @@
 {
   "data": [
     {
-      "id": "drc001",
+      "_id": "1",
       "nama": "DRC Lumaca SS ( CARBON )",
       "deskripsi": "Knalpot racing performa tinggi yang dirancang khusus untuk Vespa Small Frame, memberikan akselerasi yang lebih responsif.",
       "harga": 1978000,
       "foto": "/images/produk-vario.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYtaBWv/",
       "shopee": "https://shopee.co.id/Knalpot-Vespa-Smallframe-Type-Lumaca-SS-Silincer-Carbon-i.144252929.5332672476",
+      "whatsapp": "62895363383732",
       "kategori": "vespa",
       "jenis": ["PTS"],
       "newlaunching": true,
@@ -17,13 +18,14 @@
       "rekomendasi_mesin": "Standar Tune / Harian"
     },
     {
-      "id": "drc002",
+      "_id": "2",
       "nama": "DRC Rep. JL SERIES ( SS )",
       "deskripsi": "Replika knalpot legendaris Jim Lomas (JL) untuk Vespa PX series, dirancang untuk torsi dan tenaga maksimal.",
       "harga": 1196000,
       "foto": "/images/pxjlseries-ss.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYt9nU3/",
       "shopee": "https://shopee.co.id/Knalpot-Vespa-Buang-Kiri-Replika-JL-SS-i.144252929.10666289611",
+      "whatsapp": "62895363383732",
       "kategori": "vespa",
       "jenis": ["PX", "SUPER"],
       "newlaunching": false,
@@ -33,13 +35,14 @@
       "rekomendasi_mesin": "Touring / Semi Balap"
     },
     {
-      "id": "drc003",
+      "_id": "3",
       "nama": "DRC Big BOX ( BLACK )",
       "deskripsi": "Model knalpot standar racing (silent) yang ideal untuk penggunaan harian pada Vespa PX series. Tampilan standar, performa racing.",
       "harga": 950000,
       "foto": "/images/BB-Black.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYntCpA/",
       "shopee": "https://shopee.co.id/Knalpot-Vespa-Big-Box-DRC-Racing-i.144252929.16934319599",
+      "whatsapp": "62895363383732",
       "kategori": "vespa",
       "jenis": ["PX"],
       "newlaunching": true,
@@ -49,13 +52,14 @@
       "rekomendasi_mesin": "Harian / Touring"
     },
     {
-      "id": "drc004",
+      "_id": "4",
       "nama": "Kiri Khusus SS ( CARBON )",
       "deskripsi": "Knalpot buang kiri yang dirancang khusus untuk mesin bore-up 177cc hingga 200cc pada Vespa PX. Tenaga atas yang luar biasa.",
       "harga": 1850000,
       "foto": "/images/pxkiri177-200.jpg",
       "tokopedia": "https://tk.tokopedia.com/ZSAYcXP2A/",
       "shopee": "https://shopee.co.id/Knalpot-Vespa-Kiri-Khusus-SS-Silincer-Carbon-Kevlar-i.144252929.19632298725",
+      "whatsapp": "62895363383732",
       "kategori": "vespa",
       "jenis": ["PX"],
       "newlaunching": false,
@@ -63,38 +67,6 @@
       "bahan": "Stainless Steel & Carbon",
       "suara": "Garing & Kompetisi",
       "rekomendasi_mesin": "Bore Up 177cc - 200cc"
-    },
-    {
-      "id": "drc007",
-      "nama": "Knalpot Vespa Excel",
-      "deskripsi": "Knalpot racing kanan yang didesain plug-and-play untuk Vespa Excel series, meningkatkan akselerasi dan memberikan suara khas.",
-      "harga": 410000,
-      "foto": "/images/produk-vespa-excel.jpg",
-      "tokopedia": "https://tokopedia.com/produk-vespa-excel",
-      "shopee": "#",
-      "kategori": "vespa",
-      "jenis": ["Excel"],
-      "newlaunching": false,
-      "bestseller": false,
-      "bahan": "Plat Berkualitas",
-      "suara": "Garing Kencang",
-      "rekomendasi_mesin": "Standar / Harian"
-    },
-    {
-      "id": "drc008",
-      "nama": "Knalpot Ninja R",
-      "deskripsi": "Knalpot racing untuk Kawasaki Ninja R, memaksimalkan power band dan memberikan suara garing yang menjadi ciri khas mesin 2-tak.",
-      "harga": 420000,
-      "foto": "/images/produk-ninja-r.jpg",
-      "tokopedia": "https://tokopedia.com/produk-ninja-r",
-      "shopee": "#",
-      "kategori": "ninja",
-      "jenis": ["Ninja R"],
-      "newlaunching": false,
-      "bestseller": false,
-      "bahan": "Stainless Steel",
-      "suara": "Garing Trincing",
-      "rekomendasi_mesin": "Standar / Porting Harian"
     }
   ]
 }
